@@ -3,8 +3,8 @@ import { AsyncStorage } from 'react-native'
 
 // More info here:  https://shift.infinite.red/shipping-persistant-reducers-7341691232b1
 const REDUX_PERSIST = {
-  active: true,
-  reducerVersion: '1.0',
+  active: false,
+  reducerVersion: '2.1',
   storeConfig: {
     key: 'primary',
     storage: AsyncStorage,

@@ -22,5 +22,13 @@
    "themeSettings": "Theme Settings",
    "deviceDetails": "Device Details",
    "noItems": "No Items",
-   "search": "Search"
+   "search": "Search",
+
+
+   "screenEventTitle": "Events",
+   "eventTitleInputField": "Title",
+   "eventDescInputField": "Description",
+   "eventDateInputField": "Date",
+   "screenEventFormTitle":"Create Event"
+
 }
