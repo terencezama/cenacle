@@ -98,7 +98,7 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.cenacle"
+        applicationId "com.terence.cenacle"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -143,8 +143,9 @@ dependencies {
     compile(project(':react-native-firebase')) {
         transitive = false
     }
-    implementation "com.google.android.gms:play-services-base:12.0.0"
-    implementation "com.google.firebase:firebase-core:12.0.0"
+    implementation "com.google.android.gms:play-services-base:15.0.0"
+    implementation "com.google.firebase:firebase-core:15.0.0"
+    implementation 'com.google.firebase:firebase-firestore:15.0.0'
 
     compile project(':react-native-device-info')
     compile project(':react-native-config')
