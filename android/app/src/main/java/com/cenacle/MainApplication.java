@@ -3,9 +3,9 @@ package com.cenacle;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.RNGooglePlacePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
+import com.reactlibrary.RNGooglePlacePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -29,9 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNGooglePlacePickerPackage(),
             new VectorIconsPackage(),
             new ReactNativeI18n(),
+            new RNGooglePlacePickerPackage(),
             new RNFirebasePackage(),
             new RNDeviceInfo(),
             new ReactNativeConfigPackage()

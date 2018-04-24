@@ -19,7 +19,8 @@ class EventScreen extends Component {
 
   constructor(props) {
     super(props)
-    this.ref = firebase.firestore().collection('events')
+    this.ref = firebase.firestore().collection('events').orderBy('values.date','asc')
+
     this.unsubscribe = null;
     this.state = {
       events: []
