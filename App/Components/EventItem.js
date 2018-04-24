@@ -22,12 +22,12 @@ export default class EventItem extends Component {
   //   data: {}
   // }
   _color = () => {
-    return Colors.ecstasy
+    return Colors.primary
   }
 
-  _dateView = (unix) => {
+  _dateView = (datestr) => {
     moment.locale('fr')
-    const date = moment.unix(unix).format('MMM/DD/YYYY').split('/')
+    const date = moment(datestr).format('MMM/DD/YYYY').split('/')
     const month = date[0].toUpperCase().replace('.', '');
     const day = date[1]
     const year = date[2]
@@ -51,6 +51,7 @@ export default class EventItem extends Component {
               <View style={styles.componentSubview}>
                 <Text style={styles.titleText}>{data.title}</Text>
                 <Text style={styles.descText}>{data.desc}</Text>
+                <Text style={[styles.descText,{color:this._color()}]}>{data.time}</Text>
                 <View style={styles.iconContainer}>
                   <Icon
                     name='map-marker'

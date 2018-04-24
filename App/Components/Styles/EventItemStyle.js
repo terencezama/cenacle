@@ -41,6 +41,7 @@ export default StyleSheet.create({
     flex:1,
     margin: 8,
     // backgroundColor:Colors.cloud
+    justifyContent:'space-between'
   },
   titleText:{
     fontSize:18,

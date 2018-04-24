@@ -1,82 +1,66 @@
 import React, { Component } from 'react'
-import { 
-  FlatList,Text
- } from 'react-native'
+import {
+  FlatList, Text
+} from 'react-native'
 import { connect } from 'react-redux'
 import i18n from 'react-native-i18n'
 import EventItem from '../Components/EventItem'
+import firebase from 'react-native-firebase'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
 import styles from './Styles/EventScreenStyle'
-
+import otron from 'reactotron-react-native'
 class EventScreen extends Component {
   static navigationOptions = {
     title: i18n.t('screenEventTitle'),
   };
 
-  constructor(props){
+  constructor(props) {
     super(props)
+    this.ref = firebase.firestore().collection('events')
+    this.unsubscribe = null;
+    this.state = {
+      events: []
+    }
+  }
+  componentDidMount() {
+    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
   }
 
-  componentWillMount(){
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+  onCollectionUpdate = (querySnapshot) => {
+    const events = [];
+    querySnapshot.forEach((doc) => {
+      events.push({
+        key: doc.id,
+        ...doc.data().values, // DocumentSnapshot
+      });
+    });
+    otron.log(events)
     this.setState({
-      events:[
-        { 
-          title: 'Prière a Henrietta',
-          date: 1524234941,
-          desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       { 
-        title: 'Prière a Cite Argy',
-        date: 1522627200,
-        desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       { 
-        title: 'Prière a Cite Argy',
-        date: 1522627200,
-        desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       { 
-        title: 'Prière a Cite Argy',
-        date: 1522627200,
-        desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deauVenez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       { 
-        title: 'Prière a Cite Argy',
-        date: 1522627200,
-        desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       { 
-        title: 'Prière a Cite Argy',
-        date: 1522627200,
-        desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       { 
-        title: 'Prière a Cite Argy',
-        date: 1522627200,
-        desc:'Venez en groupe la priere aura lieu a henrietta le 20 Avril 2018. Noublier pas votre bouteille deau'
-       },
-       
-       
-      ]
-    })
+      events,
+      loading: false,
+    });
+
   }
 
   //region FlatList
-  _onCellPress = (item,index)=>{
-    this.props.navigation.navigate('EventDetailsScreen',{event:item})
-    
+  _onCellPress = (item, index) => {
+    this.props.navigation.navigate('EventDetailsScreen', { event: item })
+
   }
   //endregion
 
   render() {
-    const {events} = this.state
+    const { events } = this.state
     return (
       <FlatList
         data={events}
-        renderItem={({ item,index }) => <EventItem onPress={()=>{this._onCellPress(item,index)}} index={index}  data={item}/>}
+        renderItem={({ item, index }) => <EventItem onPress={() => { this._onCellPress(item, index) }} index={index} data={item} />}
         keyExtractor={(item, index) => index}
       />
     )

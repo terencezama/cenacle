@@ -3,8 +3,10 @@ target 'cenacle' do
     
     # Required by RNFirebase
     pod 'Firebase/Core'
+    pod 'Firebase/Firestore'
     pod 'GooglePlacePicker', '= 2.0.1'
     pod 'GooglePlaces', '= 2.0.1'
     pod 'GoogleMaps', '= 2.0.1'
     
+
 end

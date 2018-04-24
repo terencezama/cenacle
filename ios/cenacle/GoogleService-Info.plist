@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>518913624530-0qomq5k83kfraqf1h9ln5gs0ar1vni1d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.518913624530-0qomq5k83kfraqf1h9ln5gs0ar1vni1d</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD-io_Tq6ERI6Ews0TP7ql2seD9TDTWbT8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>518913624530</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.terence.cenacle</string>
+	<key>PROJECT_ID</key>
+	<string>terence-838bd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>terence-838bd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:518913624530:ios:e2758114ec4d6c0d</string>
+	<key>DATABASE_URL</key>
+	<string>https://terence-838bd.firebaseio.com</string>
+</dict>
+</plist>

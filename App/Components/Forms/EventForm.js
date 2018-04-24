@@ -52,17 +52,17 @@ const EventForm = ({
 
   ]
 
-const currentDate = () => {
-  const m = moment()
-  m.locale('fr')
-  let str = m.format('DD MMM YYYY').replace('.', '').toUpperCase()
+// const currentDate = () => {
+//   const m = moment()
+//   m.locale('fr')
+//   let str = m.format('DD MMM YYYY').replace('.', '').toUpperCase()
 
-  return str
-}
+//   return str
+// }
 export default reduxForm({
   form: 'EventForm',
   initialValues: {
-    date: `${currentDate()}`,
+    date: new Date,
     time: '01:00 PM'
   }
 

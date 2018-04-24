@@ -6,15 +6,13 @@ import { connect } from 'react-redux'
 
 // Styles
 import styles from './Styles/EventDetailsScreenStyle'
+import { View } from 'react-native-animatable';
 
 class EventDetailsScreen extends Component {
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <KeyboardAvoidingView behavior='position'>
-          <Text>EventDetailsScreen</Text>
-        </KeyboardAvoidingView>
-      </ScrollView>
+      <View
+  />
     )
   }
 }

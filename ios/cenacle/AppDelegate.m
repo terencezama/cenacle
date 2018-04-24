@@ -8,7 +8,7 @@
  */
 
 #import "AppDelegate.h"
-
+#import <Firebase.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <GoogleMaps/GoogleMaps.h>
@@ -18,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   
   NSString *kAPIKey = @"AIzaSyAhS6KOUBaitdPglJD9lOB8CyzAe3GYyOI";
   [GMSPlacesClient provideAPIKey:kAPIKey];

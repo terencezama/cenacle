@@ -1,24 +1,22 @@
 import { StackNavigator } from 'react-navigation'
 import TextInputsScreen from '../Containers/TextInputsScreen'
-import EventFormScreen from '../Containers/EventFormScreen'
-import EventDetailsScreen from '../Containers/EventDetailsScreen'
-import EventScreen from '../Containers/EventScreen'
+import MenuNavigator from './DrawerNavigation'
 import OnboardingScreen from '../Containers/OnboardingScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
+import EventDetailsScreen from '../Containers/EventDetailsScreen'
 import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
   TextInputsScreen: { screen: TextInputsScreen },
-  EventFormScreen: { screen: EventFormScreen },
-  EventDetailsScreen: { screen: EventDetailsScreen },
-  EventScreen: { screen: EventScreen },
   OnboardingScreen: { screen: OnboardingScreen },
-  LaunchScreen: { screen: LaunchScreen }
+  LaunchScreen: { screen: LaunchScreen },
+  EventDetailsScreen : {screen: EventDetailsScreen},
+  Menu:{screen: MenuNavigator}
 }, {
   // Default config for all screens
   headerMode: 'float',
-  initialRouteName: 'EventFormScreen',
+  initialRouteName: 'Menu',
   navigationOptions: {
     headerStyle: styles.header,
   
