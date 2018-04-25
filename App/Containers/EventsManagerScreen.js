@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text, TouchableOpacity,Alert } from 'react-native'
+import { FlatList, View, Text, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment-with-locales-es6'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -51,16 +51,16 @@ class EventsManagerScreen extends Component {
 
   //region Item Action 
   _deleteAction = (item) => {
-    Alert.alert('Delete','Are you sure you want to delete this Event.',
-  [
-    {text: 'OK', onPress: () => {this._deleteItem(item)}, style:'destructive'},
-    {text: 'Cancel', style: 'cancel'},
-  ],
-  {cancelable:false}
-  )
+    Alert.alert('Delete', 'Are you sure you want to delete this Event.',
+      [
+        { text: 'OK', onPress: () => { this._deleteItem(item) }, style: 'destructive' },
+        { text: 'Cancel', style: 'cancel' },
+      ],
+      { cancelable: false }
+    )
 
   }
-  _deleteItem(item){
+  _deleteItem(item) {
     const { key } = item.item;
     otron.log(item);
     firebase.firestore().collection('events').doc(key).delete().then(function () {
@@ -70,7 +70,10 @@ class EventsManagerScreen extends Component {
     });
   }
   _editAction = (item) => {
-
+    this.props.navigation.navigate('EventFormEditScreen',{
+      update:item,
+      title:'Update'
+    })
   }
   //endregion
 
@@ -91,7 +94,7 @@ class EventsManagerScreen extends Component {
           </View>
         </View>
         <View style={styles.actionView}>
-          <TouchableOpacity style={styles.editView}>
+          <TouchableOpacity style={styles.editView} onPress={()=>{this._editAction(item)}}>
             <AwesomeIcon size={30} name='edit' color={'white'} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.deleteView} onPress={() => { this._deleteAction(item) }}>

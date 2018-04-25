@@ -12,7 +12,7 @@ import moment from 'moment-with-locales-es6'
 
 
 const EventForm = ({
-  invalid, handleSubmit, onSubmit, processing
+  invalid, handleSubmit, onSubmit, processing,update
 }) => [
     <ReduxInput
       key={1}
@@ -47,7 +47,7 @@ const EventForm = ({
       style={{ marginTop: 8 }}
       containerViewStyle={{marginRight:0,marginLeft:0}}
       backgroundColor={Colors.accent}
-      title="Submit"
+      title={update?"Update":"Create"}
     />
 
   ]
@@ -59,13 +59,15 @@ const EventForm = ({
 
 //   return str
 // }
+// EventForm = connect(
+//   state => ({
+//     initialValues: {
+//       time: '02:00 PM'
+//     }
+//   })
+// )(EventForm);
 export default reduxForm({
   form: 'EventForm',
-  initialValues: {
-    date: new Date,
-    time: '01:00 PM'
-  }
-
 })(EventForm)
 
 

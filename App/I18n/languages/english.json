@@ -29,6 +29,6 @@
    "eventTitleInputField": "Title",
    "eventDescInputField": "Description",
    "eventDateInputField": "Date",
-   "screenEventFormTitle":"Create Event",
+   "screenEventFormTitle":"Create Event"
 
 }

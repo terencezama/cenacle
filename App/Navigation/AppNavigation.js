@@ -5,6 +5,7 @@ import OnboardingScreen from '../Containers/OnboardingScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
 import EventDetailsScreen from '../Containers/EventDetailsScreen'
 import styles from './Styles/NavigationStyles'
+import EventFormScreen from '../Containers/EventFormScreen'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
@@ -12,7 +13,8 @@ const PrimaryNav = StackNavigator({
   OnboardingScreen: { screen: OnboardingScreen },
   LaunchScreen: { screen: LaunchScreen },
   EventDetailsScreen : {screen: EventDetailsScreen},
-  Menu:{screen: MenuNavigator}
+  Menu:{screen: MenuNavigator},
+  EventFormEditScreen: {screen:EventFormScreen}
 }, {
   // Default config for all screens
   headerMode: 'float',
