@@ -1,9 +1,24 @@
+/*
+ * Copyright 2016 Google Inc. All rights reserved.
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+ * file except in compliance with the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ * ANY KIND, either express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
 import UIKit
 import GoogleMaps
 
 /// A view controller which displays a map which continually pans around the area specified as
 /// a coordinate.
-class BackgroundMapViewController: UIViewController {
+class BackgroundMapViewController: UIViewController, CAAnimationDelegate {
   // MARK: - Properties
   private var mapView: GMSMapView?
   private let zoomLevel = Float(12)
@@ -28,34 +43,32 @@ class BackgroundMapViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.userInteractionEnabled = false
+    view.isUserInteractionEnabled = false
     updateCoordinate()
   }
 
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
     // Start animating the map when it becomes visible.
     startAnimatingMap()
 
-    if #available(iOS 8.0, *) {
-      // Restart the animation whenever the 'reduce motion' setting changes. This will allow the
-      // animation code to adjust for the setting. See the implementation of startAnimating() for
-      // more details.
-      let notificationName = UIAccessibilityReduceMotionStatusDidChangeNotification
-      reduceMotionChanged = NotificationObserver(name: notificationName, target: self,
-                                                 action: self.dynamicType.restartAnimation)
-    }
+    // Restart the animation whenever the 'reduce motion' setting changes. This will allow the
+    // animation code to adjust for the setting. See the implementation of startAnimating() for
+    // more details.
+    let notificationName = NSNotification.Name.UIAccessibilityReduceMotionStatusDidChange
+    reduceMotionChanged = NotificationObserver(name: notificationName, target: self,
+                                               action: type(of: self).restartAnimation)
 
     if #available(iOS 9.0, *) {
       // Much like 'reduce motion', detect changes in 'lower power mode' and restart the animation.
-      let notificationName = NSProcessInfoPowerStateDidChangeNotification
+      let notificationName = NSNotification.Name.NSProcessInfoPowerStateDidChange
       lowPowerModeChanged = NotificationObserver(name: notificationName, target: self,
-                                                 action: self.dynamicType.restartAnimation)
+                                                 action: type(of: self).restartAnimation)
     }
   }
 
-  override func viewWillDisappear(animated: Bool) {
+  override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
 
     // And stop it when it is no longer onscreen.
@@ -91,16 +104,14 @@ class BackgroundMapViewController: UIViewController {
   }
 
   private func startAnimatingMap() {
-    if #available(iOS 8.0, *) {
-      // If 'reduce motion' is enabled, don't start the animation.
-      if UIAccessibilityIsReduceMotionEnabled() {
-        return
-      }
+    // If 'reduce motion' is enabled, don't start the animation.
+    if UIAccessibilityIsReduceMotionEnabled() {
+      return
     }
 
     if #available(iOS 9.0, *) {
       // If 'low power mode' is enabled, don't start the animation.
-      if NSProcessInfo.processInfo().lowPowerModeEnabled {
+      if ProcessInfo.processInfo.isLowPowerModeEnabled {
         return
       }
     }
@@ -149,7 +160,7 @@ class BackgroundMapViewController: UIViewController {
     group.delegate = self
 
     // Start the animations.
-    mapView?.layer.addAnimation(group, forKey: nil)
+    mapView?.layer.add(group, forKey: nil)
   }
 
   private func randomOffset() -> CLLocationDegrees {
@@ -162,14 +173,14 @@ class BackgroundMapViewController: UIViewController {
     mapView?.layer.removeAllAnimations()
   }
 
-  override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     // Start the animation again if we're still running it.
     if isAnimating {
       startAnimatingMap()
     }
   }
 
-  override func preferredStatusBarStyle() -> UIStatusBarStyle {
-    return .Default
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .default
   }
 }

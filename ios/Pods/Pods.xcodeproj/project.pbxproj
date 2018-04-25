@@ -1507,11 +1507,9 @@
 		02D3409436279BCED26256B8473DF55A /* sha512.c */ = {isa = PBXFileReference; includeInIndex = 1; name = sha512.c; path = crypto/fipsmodule/sha/sha512.c; sourceTree = "<group>"; };
 		02EB29B9BB93DCEB4492DBAB411CB595 /* tcp_server_utils_posix.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tcp_server_utils_posix.h; path = src/core/lib/iomgr/tcp_server_utils_posix.h; sourceTree = "<group>"; };
 		02F972340A0D3623D7A1357963A1BC17 /* tls13_server.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = tls13_server.cc; path = ssl/tls13_server.cc; sourceTree = "<group>"; };
-		0357F9A1CB654D53505432A374EF9FD0 /* GooglePlacePicker.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlacePicker.bundle; path = Frameworks/GooglePlacePicker.framework/Versions/A/Resources/GooglePlacePicker.bundle; sourceTree = "<group>"; };
 		035BC47EB58D133630A1859ACF97B773 /* algorithm_metadata.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = algorithm_metadata.h; path = src/core/lib/compression/algorithm_metadata.h; sourceTree = "<group>"; };
 		035D219E8B715D628D5725907F4DD8BA /* status.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = status.h; path = include/leveldb/status.h; sourceTree = "<group>"; };
 		037F4EB0C9E388813F24A334DC2AA1E1 /* NSData+GRPC.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+GRPC.m"; path = "src/objective-c/GRPCClient/private/NSData+GRPC.m"; sourceTree = "<group>"; };
-		037F8227E917B94B933290B30DC14C41 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Subspecs/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		040B1C14CF723F4951928D9DB13A4A0C /* GoogleToolboxForMac-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-prefix.pch"; sourceTree = "<group>"; };
 		0466316200972B5575395F2F4F846E73 /* ev_epollsig_linux.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ev_epollsig_linux.h; path = src/core/lib/iomgr/ev_epollsig_linux.h; sourceTree = "<group>"; };
 		04CB27C171353D2837303707309B686E /* tcp_posix.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tcp_posix.h; path = src/core/lib/iomgr/tcp_posix.h; sourceTree = "<group>"; };
@@ -1743,6 +1741,7 @@
 		2B99080B2ECE660B9395C86FD7D354DF /* GPBDescriptor_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBDescriptor_PackagePrivate.h; path = objectivec/GPBDescriptor_PackagePrivate.h; sourceTree = "<group>"; };
 		2BDCD06AB1A76903DA33570DC51AD714 /* histogram.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = histogram.cc; path = util/histogram.cc; sourceTree = "<group>"; };
 		2BFDEDFB4DF7DC1CD54C5F4BEF8E6236 /* v3_akeya.c */ = {isa = PBXFileReference; includeInIndex = 1; name = v3_akeya.c; path = crypto/x509v3/v3_akeya.c; sourceTree = "<group>"; };
+		2C0D843B1EE96213E432849AC6932CDD /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		2C4D9EEC30DC15E6D3AEF4C14B483F37 /* connectivity_state.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = connectivity_state.h; path = src/core/lib/transport/connectivity_state.h; sourceTree = "<group>"; };
 		2C9C6948FDD742BF76FE9F55231AA29A /* security_connector.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = security_connector.cc; path = src/core/lib/security/security_connector/security_connector.cc; sourceTree = "<group>"; };
 		2D2FFC6D8083C66A50DCEAB403F69183 /* digest.c */ = {isa = PBXFileReference; includeInIndex = 1; name = digest.c; path = crypto/fipsmodule/digest/digest.c; sourceTree = "<group>"; };
@@ -1789,7 +1788,6 @@
 		35785905C69919DC3BE1552393C756F8 /* client_auth_filter.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = client_auth_filter.cc; path = src/core/lib/security/transport/client_auth_filter.cc; sourceTree = "<group>"; };
 		35B9652AB0580973766C01BE63953924 /* status_conversion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = status_conversion.h; path = src/core/lib/transport/status_conversion.h; sourceTree = "<group>"; };
 		3609BA7C43972140DB10C30A1EBFB18B /* testutil.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = testutil.cc; path = util/testutil.cc; sourceTree = "<group>"; };
-		3627B7348C8827321D1CDAB4E7EEDBAC /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Subspecs/Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		362DE752881349CC65CF29BCA69F2558 /* polling_entity.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = polling_entity.cc; path = src/core/lib/iomgr/polling_entity.cc; sourceTree = "<group>"; };
 		3668B75C7BED742C7CBCE6AEC3C71A5F /* pcy_int.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pcy_int.h; path = crypto/x509v3/pcy_int.h; sourceTree = "<group>"; };
 		36D9B700865DAC9A9DD726B2D7CF2AF9 /* time_averaged_stats.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = time_averaged_stats.h; path = src/core/lib/iomgr/time_averaged_stats.h; sourceTree = "<group>"; };
@@ -1840,7 +1838,6 @@
 		3DCCF4B92FB5FBEBEE6958426BDCF8D5 /* client_channel.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = client_channel.cc; path = src/core/ext/filters/client_channel/client_channel.cc; sourceTree = "<group>"; };
 		3DE0FE1617540C10EF61A880C20E2DF5 /* spinlock.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = spinlock.h; path = src/core/lib/gpr/spinlock.h; sourceTree = "<group>"; };
 		3DFF518961E3E5E9613A84481A2C135D /* dbformat.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = dbformat.cc; path = db/dbformat.cc; sourceTree = "<group>"; };
-		3E0D6609C0B6D05F080BF2F72899C81F /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Subspecs/Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		3E1FF2B4BF873B257C708570B2E39A5D /* lhash.c */ = {isa = PBXFileReference; includeInIndex = 1; name = lhash.c; path = crypto/lhash/lhash.c; sourceTree = "<group>"; };
 		3E227107D9EA62A3C6023729A364117B /* completion_queue_factory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = completion_queue_factory.h; path = src/core/lib/surface/completion_queue_factory.h; sourceTree = "<group>"; };
 		3E7F0137D1AC52382B2901920BD4184E /* internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = internal.h; path = crypto/pool/internal.h; sourceTree = "<group>"; };
@@ -2035,6 +2032,7 @@
 		639840C5C166A08166F20E50775ADC42 /* fake_resolver.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = fake_resolver.cc; path = src/core/ext/filters/client_channel/resolver/fake/fake_resolver.cc; sourceTree = "<group>"; };
 		63AB0FB699A1684292633E687E66727C /* internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = internal.h; path = crypto/fipsmodule/cipher/internal.h; sourceTree = "<group>"; };
 		63E54D99456DD1FD17D051A401166401 /* GRXConcurrentWriteable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GRXConcurrentWriteable.h; path = "src/objective-c/RxLibrary/GRXConcurrentWriteable.h"; sourceTree = "<group>"; };
+		640252507468CAFDAC117ED6676B46E2 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		640464AB285E55F18A54B9588FE9317A /* useful.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = useful.h; path = src/core/lib/gpr/useful.h; sourceTree = "<group>"; };
 		641C4092BBE0C18EF0DF0065ED22E6F6 /* resolve_address_windows.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = resolve_address_windows.cc; path = src/core/lib/iomgr/resolve_address_windows.cc; sourceTree = "<group>"; };
 		6425CC18BEDC633D84338E163F3EF258 /* alts_zero_copy_grpc_protector.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = alts_zero_copy_grpc_protector.h; path = src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.h; sourceTree = "<group>"; };
@@ -2120,7 +2118,6 @@
 		71DCBC97299F5C20CC9F6BE2419E755A /* lb_policy_registry.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = lb_policy_registry.cc; path = src/core/ext/filters/client_channel/lb_policy_registry.cc; sourceTree = "<group>"; };
 		71EC43EF66B5DF19127199947EC08525 /* db_iter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = db_iter.h; path = db/db_iter.h; sourceTree = "<group>"; };
 		72017B438AEB999C519F7CD1D72614B3 /* iam_credentials.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = iam_credentials.h; path = src/core/lib/security/credentials/iam/iam_credentials.h; sourceTree = "<group>"; };
-		7253617D187FD47C2D2DB40920358BDF /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Subspecs/Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		727B07D3F9DAEDBD0B582679A5082AA3 /* dns_resolver_ares.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = dns_resolver_ares.cc; path = src/core/ext/filters/client_channel/resolver/dns/c_ares/dns_resolver_ares.cc; sourceTree = "<group>"; };
 		72A79B386D41D9E740E46AB83DCDAD7E /* iomgr_internal.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = iomgr_internal.cc; path = src/core/lib/iomgr/iomgr_internal.cc; sourceTree = "<group>"; };
 		72D0A7C42341E47237018FF1CD4AE4A8 /* ev_epollex_linux.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = ev_epollex_linux.cc; path = src/core/lib/iomgr/ev_epollex_linux.cc; sourceTree = "<group>"; };
@@ -2170,6 +2167,7 @@
 		7A87836FA2EA61F4073A612E9852BD0F /* memtable.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = memtable.cc; path = db/memtable.cc; sourceTree = "<group>"; };
 		7A98B354FE8D39343B9CE29B8B1DA6D1 /* obj.c */ = {isa = PBXFileReference; includeInIndex = 1; name = obj.c; path = crypto/obj/obj.c; sourceTree = "<group>"; };
 		7A9DE6C4E1EA0CEF5708C9BA3DFD2A2B /* host_port.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = host_port.cc; path = src/core/lib/gpr/host_port.cc; sourceTree = "<group>"; };
+		7AE95493C1CBA4674EF107016E9E2629 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		7AFA5EC83D9B5397BDAD738F01DA5A9D /* GooglePlaces.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlaces.framework; path = Frameworks/GooglePlaces.framework; sourceTree = "<group>"; };
 		7B0AF8DD65773041546C1C4D1FC8C89C /* httpcli.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = httpcli.cc; path = src/core/lib/http/httpcli.cc; sourceTree = "<group>"; };
 		7B114C329D55C602037C329324A63804 /* oct.c */ = {isa = PBXFileReference; includeInIndex = 1; name = oct.c; path = crypto/fipsmodule/ec/oct.c; sourceTree = "<group>"; };
@@ -2206,6 +2204,7 @@
 		8262F55D8C33DD33E5E5103E1A697F62 /* gRPC-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "gRPC-prefix.pch"; sourceTree = "<group>"; };
 		827813CEE819C9722FB3D1981ECADDA2 /* cipher_extra.c */ = {isa = PBXFileReference; includeInIndex = 1; name = cipher_extra.c; path = crypto/cipher_extra/cipher_extra.c; sourceTree = "<group>"; };
 		829A010AAFAD4C81FE286F3682F57010 /* gRPCCertificates.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = gRPCCertificates.bundle; path = "gRPC-gRPCCertificates.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		82C6694828D3C453657F11D8AE91365C /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle; sourceTree = "<group>"; };
 		83F874861BEEFDCBB21CAA46DF1D37BC /* b64.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = b64.cc; path = src/core/lib/slice/b64.cc; sourceTree = "<group>"; };
 		8405A6C7E87A83FE5BAA1690D8DB88CB /* channel_args.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = channel_args.cc; path = src/core/lib/channel/channel_args.cc; sourceTree = "<group>"; };
 		840EC7F3A91F0579734B2D4C5E7A9C3C /* mpscq.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mpscq.h; path = src/core/lib/gpr/mpscq.h; sourceTree = "<group>"; };
@@ -2447,7 +2446,6 @@
 		AE260FB8E2F2453F46140A0B2A365B18 /* transport_security_interface.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = transport_security_interface.h; path = src/core/tsi/transport_security_interface.h; sourceTree = "<group>"; };
 		AED7F404567B8C3CEED1ED71212FCA47 /* connectivity_state.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = connectivity_state.cc; path = src/core/lib/transport/connectivity_state.cc; sourceTree = "<group>"; };
 		AF156DF880147D653A71F059B1BE3A41 /* repair.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = repair.cc; path = db/repair.cc; sourceTree = "<group>"; };
-		AF42968C81781F137F627DB663CA9D71 /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Frameworks/GooglePlaces.framework/Versions/A/Resources/GooglePlaces.bundle; sourceTree = "<group>"; };
 		AF8CA351031EC336A799D4CCB9D9E118 /* refcount_lock.c */ = {isa = PBXFileReference; includeInIndex = 1; name = refcount_lock.c; path = crypto/refcount_lock.c; sourceTree = "<group>"; };
 		AF93612FFCE9FD3DB8AFC0285A6D5E40 /* thd_id.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = thd_id.h; path = include/grpc/support/thd_id.h; sourceTree = "<group>"; };
 		AFA3650C37C511C3899BA5BA889CBF72 /* env_posix_test_helper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = env_posix_test_helper.h; path = util/env_posix_test_helper.h; sourceTree = "<group>"; };
@@ -2563,6 +2561,7 @@
 		C41AAB7262B39AEF001D12BB1501B951 /* frame_rst_stream.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = frame_rst_stream.cc; path = src/core/ext/transport/chttp2/transport/frame_rst_stream.cc; sourceTree = "<group>"; };
 		C44BD585734575C40468BA6996A25CD6 /* sha.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha.h; path = include/openssl/sha.h; sourceTree = "<group>"; };
 		C4D381631C7C45AF57660D3028B38809 /* by_dir.c */ = {isa = PBXFileReference; includeInIndex = 1; name = by_dir.c; path = crypto/x509/by_dir.c; sourceTree = "<group>"; };
+		C4E28E2EC70FB046A0CAE30D768EEDCD /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		C4E8F032C7B04257596725625A08FBE7 /* service_config.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = service_config.cc; path = src/core/lib/transport/service_config.cc; sourceTree = "<group>"; };
 		C53DCCE5462D4CC2A5DE0A6BB08C3F9F /* gRPC-ProtoRPC-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "gRPC-ProtoRPC-dummy.m"; sourceTree = "<group>"; };
 		C55569474E05A0905405E495934ADB85 /* server.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = server.cc; path = src/core/lib/surface/server.cc; sourceTree = "<group>"; };
@@ -2669,6 +2668,7 @@
 		D80F7B8F19695C9F80B453AE135A3C0B /* combiner.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = combiner.h; path = src/core/lib/iomgr/combiner.h; sourceTree = "<group>"; };
 		D8132C55EF393959ECAABCEAD385CCDB /* handshaker.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = handshaker.cc; path = src/core/lib/channel/handshaker.cc; sourceTree = "<group>"; };
 		D83FFD26C3D11A4E966F87797C3F871C /* x_pkey.c */ = {isa = PBXFileReference; includeInIndex = 1; name = x_pkey.c; path = crypto/x509/x_pkey.c; sourceTree = "<group>"; };
+		D844B2C5AF729C9A581B9D029BBAC596 /* GooglePlacePicker.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlacePicker.bundle; path = Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle; sourceTree = "<group>"; };
 		D853707AA67C4EF912DD8A8FF190D071 /* skiplist.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = skiplist.h; path = db/skiplist.h; sourceTree = "<group>"; };
 		D8AA58104A8CB59ABF8FBE26C3D3F727 /* internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = internal.h; path = crypto/fipsmodule/rand/internal.h; sourceTree = "<group>"; };
 		D93D71B0DA92859AC21535BC85A40B91 /* orphanable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = orphanable.h; path = src/core/lib/gprpp/orphanable.h; sourceTree = "<group>"; };
@@ -2980,7 +2980,7 @@
 			isa = PBXGroup;
 			children = (
 				CB6E981D76288274E15508715307575D /* Frameworks */,
-				BE9B3F83354417E8DD2CFDFCE89FCDF4 /* Resources */,
+				EA4FE3971EDF4E819489F20DA3401C3B /* Resources */,
 			);
 			name = GooglePlaces;
 			path = GooglePlaces;
@@ -3076,8 +3076,8 @@
 		362138AAB1B8977D09EF4CBDCFDEDB3A /* Maps */ = {
 			isa = PBXGroup;
 			children = (
-				AA3A5E072118AEFB45D755789BB6EAF4 /* Frameworks */,
-				70958B1C95C5665313AAF428EAD33490 /* Resources */,
+				4424A2FD5725DDE00525E6148EBBE284 /* Frameworks */,
+				C48D28DA7E83CC0277A647AFC17C95D5 /* Resources */,
 			);
 			name = Maps;
 			sourceTree = "<group>";
@@ -3104,7 +3104,7 @@
 			isa = PBXGroup;
 			children = (
 				302C5DBD969ECCC7F5D1BC73B1DBEE6B /* Frameworks */,
-				8833A566B067DAB4AF8F3A5EBEF2AA9D /* Resources */,
+				CED395A9A0A858FE3C078A378591ADB6 /* Resources */,
 			);
 			name = GooglePlacePicker;
 			path = GooglePlacePicker;
@@ -3743,10 +3743,19 @@
 			name = Implementation;
 			sourceTree = "<group>";
 		};
-		46A9F83AE94E82DDD109AC74FE848205 /* Frameworks */ = {
+		4424A2FD5725DDE00525E6148EBBE284 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7253617D187FD47C2D2DB40920358BDF /* GoogleMapsBase.framework */,
+				640252507468CAFDAC117ED6676B46E2 /* GoogleMaps.framework */,
+				C4E28E2EC70FB046A0CAE30D768EEDCD /* GoogleMapsCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		45009E07C17A2570CECC8C4D3AD5F339 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7AE95493C1CBA4674EF107016E9E2629 /* GoogleMapsBase.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3801,14 +3810,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/gRPC-RxLibrary";
-			sourceTree = "<group>";
-		};
-		70958B1C95C5665313AAF428EAD33490 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				037F8227E917B94B933290B30DC14C41 /* GoogleMaps.bundle */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		71AC5C9EE2C1B0FAB3F29A505AFC9DAF /* Implementation */ = {
@@ -4374,14 +4375,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		8833A566B067DAB4AF8F3A5EBEF2AA9D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				0357F9A1CB654D53505432A374EF9FD0 /* GooglePlacePicker.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		8B2B70EA2558F76991A3A4A7403A91E5 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -4539,15 +4532,6 @@
 			path = "gRPC-Core";
 			sourceTree = "<group>";
 		};
-		AA3A5E072118AEFB45D755789BB6EAF4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3627B7348C8827321D1CDAB4E7EEDBAC /* GoogleMaps.framework */,
-				3E0D6609C0B6D05F080BF2F72899C81F /* GoogleMapsCore.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B2BEED629631C15217DE8E14896B7DA5 /* encode */ = {
 			isa = PBXGroup;
 			children = (
@@ -4574,10 +4558,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BE9B3F83354417E8DD2CFDFCE89FCDF4 /* Resources */ = {
+		C48D28DA7E83CC0277A647AFC17C95D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AF42968C81781F137F627DB663CA9D71 /* GooglePlaces.bundle */,
+				2C0D843B1EE96213E432849AC6932CDD /* GoogleMaps.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -4593,7 +4577,7 @@
 		C516E362F8BD2921ACAD376ADE7F44BB /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				46A9F83AE94E82DDD109AC74FE848205 /* Frameworks */,
+				45009E07C17A2570CECC8C4D3AD5F339 /* Frameworks */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -4637,6 +4621,14 @@
 			);
 			name = "gRPC-ProtoRPC";
 			path = "gRPC-ProtoRPC";
+			sourceTree = "<group>";
+		};
+		CED395A9A0A858FE3C078A378591ADB6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D844B2C5AF729C9A581B9D029BBAC596 /* GooglePlacePicker.bundle */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
@@ -4804,6 +4796,14 @@
 			);
 			name = Protobuf;
 			path = Protobuf;
+			sourceTree = "<group>";
+		};
+		EA4FE3971EDF4E819489F20DA3401C3B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				82C6694828D3C453657F11D8AE91365C /* GooglePlaces.bundle */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		F6CD6EBE8008FB6EB54FB2E1CF952240 /* BoringSSL */ = {
