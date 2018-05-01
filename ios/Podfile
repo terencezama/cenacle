@@ -1,12 +1,21 @@
 target 'cenacle' do
     platform :ios, '9.0'
-    
+    rn_maps_path = '../local_modules/react-native-maps'
     # Required by RNFirebase
     pod 'Firebase/Core'
     pod 'Firebase/Firestore'
+    pod 'Firebase/Auth'
+
+    # Dependency required by google place picker
     pod 'GooglePlacePicker'
     pod 'GooglePlaces'
     pod 'GoogleMaps'
+    
+
+    # react-native-maps dependencies
+    # pod 'react-native-maps', path: rn_maps_path
+    # pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
+    # pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
     
 
 

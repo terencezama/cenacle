@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'com.google.android.gms:play-services-location:8.4.0'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.google.android.gms:play-services-location:15.0.0'
+    implementation 'com.google.android.gms:play-services-places:15.0.0'
 }

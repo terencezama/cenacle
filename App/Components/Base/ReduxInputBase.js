@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import {
-  Jiro,
+  Hoshi,
 } from 'react-native-textinput-effects';
 import otron from 'reactotron-react-native'
 /**
@@ -18,13 +18,14 @@ export default function ReduxInputBase(props) {
 
 
   return (
-    <Jiro 
+    <Hoshi 
       borderColor={Colors.primary}
-      inputStyle={{ color: 'white' }}
       onChangeText={input.onChange}
       onBlur={input.onBlur}
       onFocus={input.onFocus}
       value={input.value}
+      // blurOnSubmit={false}
+      
       {...props}
     />
   );

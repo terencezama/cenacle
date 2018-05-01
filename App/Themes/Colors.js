@@ -8,10 +8,10 @@ const colors = {
   error: 'rgba(200, 0, 0, 0.8)',
   ricePaper: 'rgba(255,255,255, 0.75)',
   frost: '#D8D8D8',
-  cloud: 'rgba(200,200,200, 0.35)',
+  
   windowTint: 'rgba(0, 0, 0, 0.4)',
   panther: '#161616',
-  charcoal: '#595959',
+  charcoal: '#454545',
   coal: '#2d2d2d',
   bloodOrange: '#fb5f26',
   snow: 'white',
@@ -26,6 +26,7 @@ const colors = {
   primary:'#F76926',
   accent:'#03A9F4',
   secondary: '#FFB90C',
+  cloud: '#ecf0f1',
 
   white:  '#ffffff',
   flatRed: '#e74c3c',
@@ -33,6 +34,7 @@ const colors = {
   flatGreen: '#1abc9c',
   flatYellow: '#f1c40f',
   ecstasy: '#F76926',
+  normal: '#1d1d26'
 
 }
 

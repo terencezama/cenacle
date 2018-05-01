@@ -2,7 +2,7 @@ import Colors from '../../Themes/Colors'
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {
-  Jiro,
+  Hoshi,
 } from 'react-native-textinput-effects';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import otron from 'reactotron-react-native'
@@ -33,11 +33,10 @@ export default class ReduxTimePickerBase extends Component {
     return (
       <View>
         <TouchableOpacity onPress={this._showDateTimePicker}>
-          <Jiro
+          <Hoshi
             editable={false}
             pointerEvents="none"
             borderColor={Colors.primary}
-            inputStyle={{ color: 'white' }}
             // onChangeText={input.onChange}
             // onBlur={input.onBlur}
             // onFocus={this._showDateTimePicker}

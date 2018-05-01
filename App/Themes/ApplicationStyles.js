@@ -21,7 +21,7 @@ const ApplicationStyles = {
     container: {
       flex: 1,
       paddingTop: Metrics.baseMargin,
-      backgroundColor: Colors.transparent
+      backgroundColor: Colors.white
     },
     section: {
       margin: Metrics.section,
@@ -74,6 +74,25 @@ const ApplicationStyles = {
     borderColor: Colors.ember,
     alignItems: 'center',
     textAlign: 'center'
+  },
+  form:{
+    flex:1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    // backgroundColor: 'gray'
+  },
+  formCenterItems:{
+    flex:1,
+    flexDirection: 'column',
+    justifyContent:'center'
+    
+  },
+  submitButton:{
+    // fontSize:12
+  },
+  testView:{
+    height:100,
+    backgroundColor:'orange'
   }
 }
 

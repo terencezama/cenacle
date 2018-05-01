@@ -29,6 +29,18 @@
    "eventTitleInputField": "Title",
    "eventDescInputField": "Description",
    "eventDateInputField": "Date",
-   "screenEventFormTitle":"Create Event"
+   "screenEventFormTitle":"Create Event",
+
+   "fieldUsername":"Email",
+   "fieldEmail":"Email",
+   "fieldPassword":"Password",
+   "fieldConfirm":"Confirm Password",
+   "fieldSignin":"SIGN IN",
+   "fieldSignup":"SIGN UP",
+   "fieldMobile":"Mobile Number",
+
+   "forgotPassword":"FORGOT PASSWORD",
+   "register":"SIGN UP",
+   "login":"SIGN IN"
 
 }

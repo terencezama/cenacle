@@ -21,5 +21,7 @@
   "apiTesting": "API Testing",
   "themeSettings": "Réglage des thèmes",
   "deviceDetails": "Détails du périphérique",
-  "noItems": "Aucun"
+  "noItems": "Aucun",
+
+  "screenEventTitle": "Evenement"
 }

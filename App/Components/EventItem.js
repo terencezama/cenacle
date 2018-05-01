@@ -51,7 +51,7 @@ export default class EventItem extends Component {
               <View style={styles.componentSubview}>
                 <Text style={styles.titleText}>{data.title}</Text>
                 <Text style={styles.descText}>{data.desc}</Text>
-                <Text style={[styles.descText,{color:this._color()}]}>{data.time}</Text>
+                <Text  style={[styles.descText,{color:this._color()}]}>{data.time}</Text>
                 <View style={styles.iconContainer}>
                   <Icon
                     name='map-marker'

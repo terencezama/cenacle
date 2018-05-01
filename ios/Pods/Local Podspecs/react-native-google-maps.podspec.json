@@ -1,0 +1,23 @@
+{
+  "name": "react-native-google-maps",
+  "version": "0.21.0",
+  "summary": "React Native Mapview component for iOS + Android",
+  "authors": {
+    "intelligibabble": "leland.m.richardson@gmail.com"
+  },
+  "homepage": "https://github.com/airbnb/react-native-maps#readme",
+  "license": "MIT",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": "https://github.com/airbnb/react-native-maps.git"
+  },
+  "source_files": "lib/ios/AirGoogleMaps/**/*.{h,m}",
+  "compiler_flags": "-fno-modules",
+  "dependencies": {
+    "GoogleMaps": [
+      "2.0.1"
+    ]
+  }
+}
