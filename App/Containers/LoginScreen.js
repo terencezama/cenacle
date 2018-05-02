@@ -5,9 +5,10 @@ import otron from 'reactotron-react-native'
 import i18n from 'react-native-i18n'
 // Styles
 import FormScreen from '../Components/FormScreen';
-import { View, TouchableOpacity,Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity,Text, StyleSheet, Keyboard } from 'react-native';
 import { Colors } from '../Themes';
-
+import firebase from 'react-native-firebase'
+import Tips from 'react-native-root-tips'
 
 class LoginScreen extends FormScreen {
   // static navigationOptions = { title: 'Welcome', header: { visible:false } };
@@ -18,11 +19,28 @@ class LoginScreen extends FormScreen {
   }
 
   _onSubmit=(values)=>{
+    Keyboard.dismiss()
     otron.log(values)
+    // firebase.auth().sig
+    const {email,password} = values;
+    
+    Tips.showLoading('loading...');
+    firebase.auth()
+    .signInAndRetrieveDataWithEmailAndPassword(email,password)
+    .then(user=>{
+      otron.log({user:user})
+      Tips.hide();
+    })
+    .catch(reason=>{
+      otron.log({reason:reason})
+      Tips.showFail('em...failed');
+
+    });
   }
 
   _registerAction = ()=>{
     this.props.navigation.navigate('RegisterScreen',null,null,'register')
+    otron.log(this.props.navigation.state)
   }
 
   _forgetPasswordAction = ()=>{

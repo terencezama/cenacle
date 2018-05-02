@@ -7,6 +7,8 @@ import i18n from 'react-native-i18n'
 import FormScreen from '../Components/FormScreen';
 import { View, TouchableOpacity,Text, StyleSheet } from 'react-native';
 import { Colors } from '../Themes';
+import firebase from 'react-native-firebase'
+import Tips from 'react-native-root-tips'
 
 
 class RegisterScreen extends FormScreen {
@@ -19,10 +21,24 @@ class RegisterScreen extends FormScreen {
 
   _onSubmit=(values)=>{
     otron.log(values)
+    const {email, password, mobile}     = values
+
+    Tips.showLoading('loading...');
+    firebase.auth()
+    .createUserAndRetrieveDataWithEmailAndPassword(email,password)
+    .then(user=>{
+      otron.log({user:user})
+      Tips.hide();
+    }).catch(reason=>{
+      otron.log({reason:reason})
+      Tips.showFail(reason.userInfo.NSLocalizedDescription);
+    });
   }
 
   _loginAction = ()=>{
+    otron.log(this.props.navigation.state)
     this.props.navigation.navigate('LoginScreen',null,null,'login')
+    otron.log(this.props.navigation.state)
   }
 
   _forgetPasswordAction = ()=>{

@@ -8,25 +8,30 @@ import otron from 'reactotron-react-native'
  * to be wrapped with redux-form Field component
  */
 import Colors from '../../Themes/Colors'
+
 export default function ReduxInputBase(props) {
-  const { input, meta, } = props;
+  const { input,meta, meta:{valid,error},label } = props;
   // otron.log(meta)
   // otron.log(input)
   // if(input.value == '' && ){
   //   input.value = meta.initial
-  // }
+  // }t
 
 
   return (
     <Hoshi 
-      borderColor={Colors.primary}
+      borderColor={valid?Colors.primary:Colors.error}
       onChangeText={input.onChange}
       onBlur={input.onBlur}
       onFocus={input.onFocus}
       value={input.value}
-      // blurOnSubmit={false}
       
       {...props}
+      label={error == undefined?label: `${label} (${error})`}
+      // labelStyle={{color:error != undefined?Colors.error:Colors.text}}
+      // blurOnSubmit={false}
+      
+      
     />
   );
 }

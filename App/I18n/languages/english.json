@@ -31,7 +31,7 @@
    "eventDateInputField": "Date",
    "screenEventFormTitle":"Create Event",
 
-   "fieldUsername":"Email",
+   "fieldUsername":"Username",
    "fieldEmail":"Email",
    "fieldPassword":"Password",
    "fieldConfirm":"Confirm Password",

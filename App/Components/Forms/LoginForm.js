@@ -11,6 +11,7 @@ import Colors from '../../Themes/Colors'
 import moment from 'moment-with-locales-es6'
 import { View } from 'react-native-animatable';
 import { ApplicationStyles } from '../../Themes'
+import {Validate,Normalize} from '../../Lib'
 
 const LoginForm = ({
     invalid, handleSubmit, onSubmit, processing, update
@@ -23,12 +24,15 @@ const LoginForm = ({
                     key={1}
                     label={I18n.t('fieldEmail')}
                     name='email'
+                    validate={[Validate.isEmail,Validate.isRequired]}
+                    keyboardType='email-address'
                 />
                 <ReduxInput
                     key={2}
                     label={I18n.t('fieldPassword')}
                     name='password'
                     secureTextEntry
+                    validate={[Validate.isMinLength6,Validate.isRequired]}
                 />
             </View>
             <Button
@@ -41,6 +45,7 @@ const LoginForm = ({
                 // containerViewStyle={{ marginRight: 0, marginLeft: 0 }}
                 backgroundColor={Colors.primary}
                 title={I18n.t('fieldSignin')}
+                disabled={invalid}
             />
         </View>
 

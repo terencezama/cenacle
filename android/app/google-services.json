@@ -40,15 +40,15 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "518913624530-6ee3gcie874a1h601qu53gri74v37aau.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
               "client_id": "518913624530-0qomq5k83kfraqf1h9ln5gs0ar1vni1d.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.terence.cenacle"
               }
-            },
-            {
-              "client_id": "518913624530-6ee3gcie874a1h601qu53gri74v37aau.apps.googleusercontent.com",
-              "client_type": 3
             }
           ]
         },

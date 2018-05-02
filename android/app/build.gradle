@@ -73,7 +73,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+        entryFile: "index.js"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -101,11 +101,15 @@ android {
         applicationId "com.terence.cenacle"
         minSdkVersion 16
         targetSdkVersion 22
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
     splits {
         abi {
@@ -126,7 +130,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -143,6 +147,7 @@ dependencies {
     implementation(project(':react-native-firebase')) {
         transitive = false
     }
+//    compile("com.google.android.gms:play-services:15.0.0")
     implementation "com.google.android.gms:play-services-base:15.0.0"
     implementation "com.google.firebase:firebase-core:15.0.0"
     implementation "com.google.firebase:firebase-firestore:15.0.0"
@@ -162,4 +167,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-//apply plugin: 'com.google.gms.google-services'
+
+
+apply plugin: 'com.google.gms.google-services'

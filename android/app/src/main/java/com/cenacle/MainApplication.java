@@ -7,6 +7,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.reactlibrary.RNGooglePlacePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -34,9 +35,11 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeI18n(),
             new RNGooglePlacePickerPackage(),
             new RNFirebasePackage(),
+              new RNFirebaseAuthPackage(),
             new RNDeviceInfo(),
             new ReactNativeConfigPackage(),
               new RNFirebaseFirestorePackage()
+
       );
     }
 
