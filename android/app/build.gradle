@@ -141,6 +141,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sensitive-info')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-i18n')
     implementation project(':react-native-google-place-picker')

@@ -40,7 +40,6 @@ const isMobilePhone = (prefix, locale) => value => (value && !validator.isMobile
   ? 'Invalid number'
   : undefined)
 const isMobilePhoneZa = isMobilePhone('27', 'en-ZA')
-
 const isMaxLength = max => value => (value && !validator.isLength(value.toString(), { min: 0, max })
   ? `Must be ${max} characters or less`
   : undefined)

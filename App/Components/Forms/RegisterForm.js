@@ -11,6 +11,7 @@ import Colors from '../../Themes/Colors'
 import moment from 'moment-with-locales-es6'
 import { View } from 'react-native-animatable';
 import { ApplicationStyles } from '../../Themes'
+import {Validate,Normalize} from '../../Lib'
 
 const RegisterForm = ({
     invalid, handleSubmit, onSubmit, processing, update
@@ -23,17 +24,22 @@ const RegisterForm = ({
                     key={1}
                     label={I18n.t('fieldEmail')}
                     name='email'
+                    validate={[Validate.isEmail,Validate.isRequired]}
+                    keyboardType='email-address'
                 />
                 <ReduxInput
                     key={2}
                     label={I18n.t('fieldPassword')}
                     name='password'
                     secureTextEntry
+                    validate={[Validate.isMinLength6,Validate.isRequired]}
                 />
                 <ReduxInput
                     key={4}
                     label={I18n.t('fieldMobile')}
                     name='mobile'
+                    normalize={Normalize.mobile}
+                    validate={[Validate.isRequired]}
                     
                 />
             </View>
@@ -47,6 +53,7 @@ const RegisterForm = ({
                 // containerViewStyle={{ marginRight: 0, marginLeft: 0 }}
                 backgroundColor={Colors.primary}
                 title={I18n.t('fieldSignup')}
+                disabled={invalid}
             />
         </View>
 

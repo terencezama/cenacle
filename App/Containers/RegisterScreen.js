@@ -19,6 +19,12 @@ class RegisterScreen extends FormScreen {
     this.iconName = "user-plus"
   }
 
+  componentWillMount(){
+    this.setState({
+      loading:false
+    })
+  }
+
   _onSubmit=(values)=>{
     otron.log(values)
     const {email, password, mobile}     = values
@@ -27,10 +33,6 @@ class RegisterScreen extends FormScreen {
     firebase.auth()
     .createUserAndRetrieveDataWithEmailAndPassword(email,password)
     .then(user=>{
-      // otron.log({user:user})
-      const currentUser = firebase.auth().currentUser;
-      otron.log('currentuswr??=')
-      otron.log({user:currentUser})
       this.setState({loading:false})
       
     }).catch(reason=>{
@@ -55,7 +57,7 @@ class RegisterScreen extends FormScreen {
       <TouchableOpacity style={styles.actionButton}>
         <Text style={styles.leftText}>{i18n.t('forgotPassword')}</Text>
       </TouchableOpacity> 
-      <TouchableOpacity style={styles.actionButton} onPress={()=>this._loginAction()}> 
+      <TouchableOpacity style={styles.actionButton} onPress={()=>{this._loginAction()}}> 
         <Text style={styles.rightText}>{i18n.t('login')}</Text>
       </TouchableOpacity>
 

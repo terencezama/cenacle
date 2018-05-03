@@ -58,10 +58,10 @@ const cardNumber = (value) => {
     const numbers = value.replace(/[^\d]/g, '')
   
     if (numbers.length === 1 && numbers < 1) return ''
-    if (numbers.length <= 2) return numbers
-    if (numbers.length <= 5) return `${numbers.slice(0, 2)} ${numbers.slice(2)}`
+    if (numbers.length <= 3) return numbers
+    
   
-    return `${numbers.slice(0, 2)} ${numbers.slice(2, 5)} ${numbers.slice(5)}`
+    return `${numbers.slice(0, 1)} ${numbers.slice(1, 4)} ${numbers.slice(4)}`
   }
   
   const number = (value) => {
