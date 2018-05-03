@@ -8,7 +8,7 @@ import FormScreen from '../Components/FormScreen';
 import { View, TouchableOpacity,Text, StyleSheet } from 'react-native';
 import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
-import Tips from 'react-native-root-tips'
+
 
 
 class RegisterScreen extends FormScreen {
@@ -23,15 +23,19 @@ class RegisterScreen extends FormScreen {
     otron.log(values)
     const {email, password, mobile}     = values
 
-    Tips.showLoading('loading...');
+    this.setState({loading:true})
     firebase.auth()
     .createUserAndRetrieveDataWithEmailAndPassword(email,password)
     .then(user=>{
-      otron.log({user:user})
-      Tips.hide();
+      // otron.log({user:user})
+      const currentUser = firebase.auth().currentUser;
+      otron.log('currentuswr??=')
+      otron.log({user:currentUser})
+      this.setState({loading:false})
+      
     }).catch(reason=>{
       otron.log({reason:reason})
-      Tips.showFail(reason.userInfo.NSLocalizedDescription);
+      this.setState({loading:false})
     });
   }
 

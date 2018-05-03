@@ -41,6 +41,18 @@
 
    "forgotPassword":"FORGOT PASSWORD",
    "register":"SIGN UP",
-   "login":"SIGN IN"
+   "login":"SIGN IN",
+
+   "auth/account-exists-with-different-credential":"Account already exists",
+   "auth/invalid-credential":"Invalid Credential",
+   "auth/operation-not-allowed":"Operation not allowed",
+   "auth/user-disabled":"User disabled",
+   "auth/user-not-found":"User not found",
+   "auth/wrong-password":"Wrong password",
+   "auth/invalid-verification-code":"Invalid verification code",
+   "auth/invalid-verification-id":"Invalid verification Id"
+
+
+
 
 }

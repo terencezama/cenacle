@@ -21,7 +21,10 @@ const images = {
   backButton: require('../Images/Icons/back-button.png'),
   closeButton: require('../Images/Icons/close-button.png'),
 
-  headerLogo:require('../Images/header_logo.jpg')
+  headerLogo:require('../Images/header_logo.jpg'),
+  bgGradient:require('../Images/bg_gradient.jpg'),
+  bgSpirit:require('../Images/bg_spirit.png'),
+  holySpirit:require('../Images/holy_spirit.jpg'),
 }
 
 export default images

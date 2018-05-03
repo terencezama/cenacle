@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation'
+import ForgetScreen from '../Containers/ForgetScreen'
 import RegisterScreen from '../Containers/RegisterScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import TextInputsScreen from '../Containers/TextInputsScreen'
@@ -11,6 +12,7 @@ import EventFormScreen from '../Containers/EventFormScreen'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
+  ForgetScreen: { screen: ForgetScreen },
   RegisterScreen: { screen: RegisterScreen },
   LoginScreen: { screen: LoginScreen },
   TextInputsScreen: { screen: TextInputsScreen },
@@ -21,8 +23,8 @@ const PrimaryNav = StackNavigator({
   EventFormEditScreen: {screen:EventFormScreen}
 }, {
   // Default config for all screens
-  headerMode: 'none',
-  initialRouteName: 'LoginScreen',
+  headerMode: 'float',
+  initialRouteName: 'OnboardingScreen',
   key:'login',
   navigationOptions: {
     headerStyle: styles.header,

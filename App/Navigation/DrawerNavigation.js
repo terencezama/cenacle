@@ -7,7 +7,8 @@ import EventScreen from '../Containers/EventScreen'
 import EventsManagerScreen from '../Containers/EventsManagerScreen'
 
 const navOptions = ({ navigation }) => ({
-    headerLeft: <Icon name="bars" size={35} onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <Icon name="bars" size={35} onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerVisibile: true
 })
 
 

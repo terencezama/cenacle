@@ -8,7 +8,7 @@ import FormScreen from '../Components/FormScreen';
 import { View, TouchableOpacity,Text, StyleSheet, Keyboard } from 'react-native';
 import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
-import Tips from 'react-native-root-tips'
+
 
 class LoginScreen extends FormScreen {
   // static navigationOptions = { title: 'Welcome', header: { visible:false } };
@@ -18,23 +18,30 @@ class LoginScreen extends FormScreen {
     this.iconName = "sign-in"
   }
 
+  componentWillMount(){
+    this.setState({
+      loading:false
+    })
+  }
+
   _onSubmit=(values)=>{
     Keyboard.dismiss()
     otron.log(values)
     // firebase.auth().sig
     const {email,password} = values;
     
-    Tips.showLoading('loading...');
+    this.setState({loading:true})
     firebase.auth()
     .signInAndRetrieveDataWithEmailAndPassword(email,password)
     .then(user=>{
       otron.log({user:user})
-      Tips.hide();
+      this.setState({loading:false})
+      this.props.navigation.navigate('Menu',null,null,'menu')
     })
     .catch(reason=>{
       otron.log({reason:reason})
-      Tips.showFail('em...failed');
-
+      this.setState({loading:false})
+      this.setState({error:i18n.t(reason.code)})
     });
   }
 

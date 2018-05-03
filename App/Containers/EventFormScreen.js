@@ -6,7 +6,6 @@ import EventForm from '../Components/Forms/EventForm'
 import Reactoctron from 'reactotron-react-native'
 import i18n from 'react-native-i18n'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Tips from 'react-native-root-tips'
 import firebase from 'react-native-firebase'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -65,10 +64,8 @@ class EventFormScreen extends Component {
     
     if(!update){
       this.ref.add(values)
-      Tips.showSuccess('Created');
     }else{
       this.ref.doc(initialValues.key).update(values)
-      Tips.showSuccess('Updated');
     }
     
   }
