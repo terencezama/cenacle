@@ -7,36 +7,48 @@ import firebase from 'react-native-firebase'
 import otron from 'reactotron-react-native'
 import SInfo from 'react-native-sensitive-info'
 import k from '../Services/Globals'
+import { NavigationActions } from 'react-navigation';;
 const timeoutInt = 3000;
 class OnboardingScreen extends Component {
   static navigationOptions = { header: null };
 
+  _reset= navigator =>{
+    navAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: navigator }),
+      ],
+      key: 'root'
+    });
+    this.props.navigation.dispatch(navAction);
+  }
+
   componentDidMount() {
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user == undefined || user == null) {
-        //show registration screen
-        
-        SInfo.getItem(k.key_device_init, {}).then(value => {
-          let navigator = ''
-          if(value == undefined){
-            navigator = 'RegisterScreen'
-          }else{
-            navigator = 'LoginScreen'
-          }
-          setTimeout(()=>{
-            this.props.navigation.navigate(navigator)
-          },timeoutInt)
-        });
-      } else {
-        //show login screen
-        setTimeout(()=>{
-          this.props.navigation.navigate('Menu')
-        },timeoutInt)
-        
-
-      }
-    });
+    setTimeout(()=>{
+      this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        otron.log(user)
+        if (user == undefined || user == null) {
+          //show registration screen
+          const inapp = true;
+  
+          SInfo.getItem(k.key_device_init, {}).then(value => {
+            let navigator = ''
+            if (value == undefined) {
+              this._reset('RegisterScreen')
+            } else {
+              this._reset('LoginScreen')
+            }
+          });
+        } else {
+          //show login screen
+          this._reset('Menu')
+        }
+      });
+    },timeoutInt)
+  }
+  componentWillUnmount(){
+    // this.unsubscribe()
   }
   render() {
     return (

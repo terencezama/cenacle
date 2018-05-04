@@ -16,7 +16,12 @@ import styles from './Styles/FormScreenStyle'
 
 
 class FormScreen extends Component {
-  static navigationOptions = {  header: null };
+  // static navigationOptions = {  header: null };
+  static navigationOptions = ({ navigation,screenProps }) => {
+    const options = {header: null}
+    otron.log(screenProps)
+    return options
+  }
   constructor() {
     super()
     this.iconName = "check"

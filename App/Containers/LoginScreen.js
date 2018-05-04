@@ -8,6 +8,8 @@ import FormScreen from '../Components/FormScreen';
 import { View, TouchableOpacity,Text, StyleSheet, Keyboard } from 'react-native';
 import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
+import SInfo from 'react-native-sensitive-info'
+import k from '../Services/Globals'
 
 
 class LoginScreen extends FormScreen {
@@ -35,8 +37,8 @@ class LoginScreen extends FormScreen {
     .signInAndRetrieveDataWithEmailAndPassword(email,password)
     .then(user=>{
       otron.log({user:user})
-      this.setState({loading:false})
-      this.props.navigation.navigate('Menu',null,null,'menu')
+      // this.setState({loading:false})
+      SInfo.setItem(k.key_device_init,'true',{})
     })
     .catch(reason=>{
       otron.log({reason:reason})

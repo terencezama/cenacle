@@ -25,7 +25,7 @@ const PrimaryNav = StackNavigator({
   // Default config for all screens
   headerMode: 'float',
   initialRouteName: 'OnboardingScreen',
-  key:'login',
+  key:'root',
   navigationOptions: {
     headerStyle: styles.header,
   
