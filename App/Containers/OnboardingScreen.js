@@ -12,6 +12,15 @@ const timeoutInt = 3000;
 class OnboardingScreen extends Component {
   static navigationOptions = { header: null };
 
+  constructor(props){
+    super(props)
+    
+    this.state={
+      launched:false,
+      action:''
+    }
+  }
+
   _reset= navigator =>{
     navAction = NavigationActions.reset({
       index: 0,
@@ -25,27 +34,31 @@ class OnboardingScreen extends Component {
 
   componentDidMount() {
 
-    setTimeout(()=>{
-      this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        otron.log(user)
-        if (user == undefined || user == null) {
-          //show registration screen
-          const inapp = true;
-  
-          SInfo.getItem(k.key_device_init, {}).then(value => {
-            let navigator = ''
-            if (value == undefined) {
-              this._reset('RegisterScreen')
-            } else {
-              this._reset('LoginScreen')
-            }
-          });
-        } else {
-          //show login screen
-          this._reset('Menu')
-        }
-      });
-    },timeoutInt)
+    const {launched,action} = this.state
+
+    if(!launched){
+      setTimeout(()=>{
+        this.setState({launched:true})
+        this._reset(action)
+      },timeoutInt)
+    }
+    
+    this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      otron.log(user)
+      let navigator = ''
+      if (user == undefined || user == null) {
+        SInfo.getItem(k.key_device_init, {}).then(value => {
+          if (value == undefined) {
+            navigator = 'RegisterScreen'
+          } else {
+            navigator = 'LoginScreen'
+          }
+        });
+      } else {
+        navigator = 'Menu'
+      }
+      (launched)?this._reset(navigator):this.setState({action:navigator})
+    });
   }
   componentWillUnmount(){
     // this.unsubscribe()
