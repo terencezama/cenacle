@@ -12,16 +12,24 @@ const timeoutInt = 3000;
 class OnboardingScreen extends Component {
   static navigationOptions = { header: null };
 
-  constructor(props){
+  constructor(props) {
     super(props)
-    
-    this.state={
-      launched:false,
-      action:''
+
+    this.state = {
+      launched: false,
+      action: ''
     }
   }
 
-  _reset= navigator =>{
+  _setNavigator=(navigator)=>{
+    if(this.state.launched) {
+      this._reset(navigator)
+    }else{
+      this.setState({ action: navigator })
+    }
+  }
+
+  _reset = navigator => {
     navAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -34,15 +42,15 @@ class OnboardingScreen extends Component {
 
   componentDidMount() {
 
-    const {launched,action} = this.state
+    const { launched } = this.state
 
-    if(!launched){
-      setTimeout(()=>{
-        this.setState({launched:true})
-        this._reset(action)
-      },timeoutInt)
+    if (!launched) {
+      setTimeout(() => {
+        this.setState({ launched: true })
+        this._reset(this.state.action)
+      }, timeoutInt)
     }
-    
+
     this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       otron.log(user)
       let navigator = ''
@@ -53,14 +61,16 @@ class OnboardingScreen extends Component {
           } else {
             navigator = 'LoginScreen'
           }
+          this._setNavigator(navigator)
         });
       } else {
         navigator = 'Menu'
+        this._setNavigator(navigator)
       }
-      (launched)?this._reset(navigator):this.setState({action:navigator})
+      
     });
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     // this.unsubscribe()
   }
   render() {

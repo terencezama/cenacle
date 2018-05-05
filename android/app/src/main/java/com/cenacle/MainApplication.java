@@ -1,4 +1,4 @@
-package com.cenacle;
+package com.terence.cenacle;
 
 import android.app.Application;
 
