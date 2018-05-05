@@ -22,7 +22,7 @@ export default class Drawer extends Component {
         return (
             <ScrollView>
                 <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always', horizontal: 'never' }}>
-                <Image style={styles.image} source={Images.holySpirit} resizeMode='contain'/>
+                <Image style={styles.image} source={Images.logo} resizeMode='contain'/>
                     <DrawerItems {...this.props} />
                     {logout(this.props)}
                 </SafeAreaView>
