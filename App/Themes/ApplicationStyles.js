@@ -89,6 +89,7 @@ const ApplicationStyles = {
   },
   submitButton:{
     // fontSize:12
+    // height: 30
   },
   testView:{
     height:100,

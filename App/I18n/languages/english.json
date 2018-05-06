@@ -32,6 +32,9 @@
    "screenEventFormTitle":"Create Event",
 
    "fieldUsername":"Username",
+   "fieldFirstName":"First Name",
+   "fieldLastName":"Last Name",
+   "fieldNickname":"Nickname",
    "fieldEmail":"Email",
    "fieldPassword":"Password",
    "fieldConfirm":"Confirm Password",

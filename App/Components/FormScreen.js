@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import {
   ScrollView, Text, KeyboardAvoidingView, View, Image, StatusBar, BackHandler,
-  Alert
+  Alert, Keyboard
 } from 'react-native'
+import InputScrollView from 'react-native-input-scroll-view';
 import { Images, Colors } from '../Themes/'
 import Icon from 'react-native-vector-icons/FontAwesome'
 // import LoginForm from '../Components/Forms/LoginForm'
@@ -10,9 +11,12 @@ import otron from 'reactotron-react-native'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import LoadingView from '../Components/LoadingView'
-
+import CView from '../Components/View'
 // Styles
 import styles from './Styles/FormScreenStyle'
+import {
+  Hoshi,
+} from 'react-native-textinput-effects';
 
 
 class FormScreen extends Component {
@@ -26,16 +30,33 @@ class FormScreen extends Component {
     super()
     this.iconName = "check"
     this.state = {
-      loading: true
+      loading: true,
+      hide:false,
     }
   }
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    // this.setState({inputRefs:this.refs.formview.refs})
+    // otron.log(this.refs)
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow =()=> {
+    // alert('Keyboard Shown');
+    this.setState({hide:true})
+  }
+
+  _keyboardDidHide =()=> {
+    // alert('Keyboard Hidden');
+    this.setState({hide:false})
   }
 
 
@@ -60,7 +81,7 @@ class FormScreen extends Component {
 
 
   render() {
-    const { error } = this.state
+    const { error,hide } = this.state
     if (error != undefined) {
       Alert.alert(
         'Error',
@@ -73,35 +94,32 @@ class FormScreen extends Component {
 
     }
 
-
     return (
       <View>
-        <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
+        <InputScrollView keyboardShouldPersistTaps="always"  >
           <StatusBar
             backgroundColor={Colors.primary}
             barStyle="light-content"
           />
-          <KeyboardAvoidingView behavior='position'>
-            <View style={styles.container}>
-              <View style={styles.section1}>
+          <View style={styles.container}>
+              <CView style={styles.section1} hide={hide}>
                 <Image style={styles.headerImage} source={Images.headerLogo} resizeMode={Image.resizeMode.stretch}>
 
                 </Image>
-              </View>
+              </CView>
               <View style={styles.section2}>
-                <View style={styles.formView}>
+                <View ref='formview' style={styles.formView}>
                   {this.renderForm()}
                 </View>
                 <View style={styles.actionView}>
                   {this.renderActionView()}
                 </View>
               </View>
-              <View style={styles.iconContainer}>
+              <CView style={styles.iconContainer} hide={hide}>
                 <Icon name={this.iconName} size={50} color='white' />
-              </View>
+              </CView>
             </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
+        </InputScrollView>
         <LoadingView loading={this.state.loading}/>
         </View>
 

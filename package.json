@@ -41,6 +41,7 @@
     "react-native-firebase": "^4.0.4",
     "react-native-google-place-picker": "file:local_modules/react-native-google-place-picker",
     "react-native-i18n": "1.0.0",
+    "react-native-input-scroll-view": "^1.6.5",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-modal-datetime-picker": "^5.1.0",
     "react-native-sensitive-info": "^5.1.0",
