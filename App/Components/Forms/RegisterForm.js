@@ -66,7 +66,7 @@ const RegisterForm = ({
 }
 
 export default reduxForm({
-    form: 'RegisterForm',
+    form: 'AuthForm',
 })(RegisterForm)
 
 

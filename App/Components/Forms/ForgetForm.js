@@ -37,7 +37,7 @@ const LoginForm = ({
                 // style={{ marginTop: 8 }}
                 // containerViewStyle={{ marginRight: 0, marginLeft: 0 }}
                 backgroundColor={Colors.primary}
-                title={I18n.t('fieldSignin')}
+                title={I18n.t('fieldForgetPassword')}
                 disabled={invalid}
             />
         </View>
@@ -46,7 +46,7 @@ const LoginForm = ({
 }
 
 export default reduxForm({
-    form: 'LoginForm',
+    form: 'AuthForm',
 })(LoginForm)
 
 

@@ -10,7 +10,7 @@ import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
 import SInfo from 'react-native-sensitive-info'
 import k from '../Services/Globals'
-
+import {show} from '../Redux/NavigationRedux'
 
 class LoginScreen extends FormScreen {
   // static navigationOptions = { title: 'Welcome', header: { visible:false } };
@@ -48,18 +48,17 @@ class LoginScreen extends FormScreen {
   }
 
   _registerAction = ()=>{
-    this.props.navigation.navigate('RegisterScreen',null,null,'register')
-    otron.log(this.props.navigation.state)
+    this.props.show('register')
   }
 
   _forgetPasswordAction = ()=>{
-
+    this.props.show('forget')
   }
 
   renderActionView(){
     return (
     <View style={styles.actionView}>
-      <TouchableOpacity style={styles.actionButton}>
+      <TouchableOpacity style={styles.actionButton}  onPress={()=>{this._forgetPasswordAction()}}>
         <Text style={styles.leftText}>{i18n.t('forgotPassword')}</Text>
       </TouchableOpacity> 
       <TouchableOpacity style={styles.actionButton} onPress={()=>this._registerAction()}> 
@@ -101,6 +100,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    show: payload => dispatch(show(payload))
   }
 }
 

@@ -12,14 +12,14 @@ import EventFormScreen from '../Containers/EventFormScreen'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
-  ForgetScreen: { screen: ForgetScreen },
-  RegisterScreen: { screen: RegisterScreen },
-  LoginScreen: { screen: LoginScreen },
+  forget: { screen: ForgetScreen },
+  register: { screen: RegisterScreen },
+  login: { screen: LoginScreen },
   TextInputsScreen: { screen: TextInputsScreen },
   OnboardingScreen: { screen: OnboardingScreen },
   LaunchScreen: { screen: LaunchScreen },
   EventDetailsScreen : {screen: EventDetailsScreen},
-  Menu:{screen: MenuNavigator},
+  menu:{screen: MenuNavigator},
   EventFormEditScreen: {screen:EventFormScreen}
 }, {
   // Default config for all screens

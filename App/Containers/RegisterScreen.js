@@ -5,87 +5,96 @@ import otron from 'reactotron-react-native'
 import i18n from 'react-native-i18n'
 // Styles
 import FormScreen from '../Components/FormScreen';
-import { View, TouchableOpacity,Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
-
+import {show} from '../Redux/NavigationRedux'
 
 
 class RegisterScreen extends FormScreen {
   // static navigationOptions = { title: 'Welcome', header: { visible:false } };
 
-  constructor(){
+  constructor() {
     super()
     this.iconName = "user-plus"
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({
-      loading:false
+      loading: false
     })
   }
 
-  _onSubmit=(values)=>{
+  _onSubmit = (values) => {
     otron.log(values)
-    const {email, password, mobile}     = values
+    const { email, password, mobile, nickname } = values
 
-    this.setState({loading:true})
+    this.setState({ loading: true })
     firebase.auth()
-    .createUserAndRetrieveDataWithEmailAndPassword(email,password)
-    .then(user=>{
-      this.setState({loading:false})
-      
-    }).catch(reason=>{
-      otron.log({reason:reason})
-      this.setState({loading:false})
-    });
+      .createUserAndRetrieveDataWithEmailAndPassword(email, password)
+      .then(user => {
+        this.setState({ loading: false })
+        otron.log({user:user})
+        user.updateProfile({
+          ...values
+        }).then(function () {
+          // Update successful.
+          otron.log('update successfull')
+        }).catch(function (error) {
+          // An error happened.
+          otron.log({error:error})
+        });
+
+      }).catch(reason => {
+        otron.log({ reason: reason })
+        this.setState({loading:false})
+        this.setState({error:i18n.t(reason.code)})
+      });
   }
 
-  _loginAction = ()=>{
-    otron.log(this.props.navigation.state)
-    this.props.navigation.navigate('LoginScreen',null,null,'login')
-    otron.log(this.props.navigation.state)
+  _loginAction = () => {
+    this.props.show('login')
   }
 
-  _forgetPasswordAction = ()=>{
-
+  _forgetPasswordAction = () => {
+    this.props.show('forget')
   }
 
-  renderActionView(){
+  renderActionView() {
     return (
-    <View style={styles.actionView}>
-      <TouchableOpacity style={styles.actionButton}>
-        <Text style={styles.leftText}>{i18n.t('forgotPassword')}</Text>
-      </TouchableOpacity> 
-      <TouchableOpacity style={styles.actionButton} onPress={()=>{this._loginAction()}}> 
-        <Text style={styles.rightText}>{i18n.t('login')}</Text>
-      </TouchableOpacity>
+      <View style={styles.actionView}>
+        <TouchableOpacity style={styles.actionButton} onPress={() => { this._forgetPasswordAction() }}>
+          <Text style={styles.leftText}>{i18n.t('forgotPassword')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={() => { this._loginAction() }}>
+          <Text style={styles.rightText}>{i18n.t('login')}</Text>
+        </TouchableOpacity>
 
-    </View>)
+      </View>)
   }
 
-  renderForm(){
-    return (<RegisterForm  onSubmit={(values)=>this._onSubmit(values)}/>)
+  renderForm() {
+    return (<RegisterForm onSubmit={(values) => this._onSubmit(values)} />)
   }
 
 
 }
 
 const styles = StyleSheet.create({
-  actionView:{
+  actionView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  leftText:{
+  leftText: {
     color: Colors.normal,
     fontWeight: '100',
   },
-  rightText:{
+  rightText: {
     color: Colors.primary,
     fontWeight: '100',
   },
-  actionButton:{
-    height:20
+  actionButton: {
+    height: 20
   }
 });
 
@@ -96,6 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    show: payload => dispatch(show(payload))
   }
 }
 

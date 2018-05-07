@@ -7,7 +7,8 @@ import firebase from 'react-native-firebase'
 import otron from 'reactotron-react-native'
 import SInfo from 'react-native-sensitive-info'
 import k from '../Services/Globals'
-import { NavigationActions } from 'react-navigation';;
+import { NavigationActions } from 'react-navigation';
+import {show, LOGIN} from '../Redux/NavigationRedux'
 const timeoutInt = 3000;
 class OnboardingScreen extends Component {
   static navigationOptions = { header: null };
@@ -29,15 +30,15 @@ class OnboardingScreen extends Component {
     }
   }
 
-  _reset = navigator => {
-    navAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: navigator }),
-      ],
-      key: 'root'
-    });
-    this.props.navigation.dispatch(navAction);
+  _reset = (navigator) => {
+    // navAction = NavigationActions.reset({
+    //   index: 0,
+    //   actions: [
+    //     NavigationActions.navigate({ routeName: navigator }),
+    //   ],
+    // });
+    // this.props.navigation.dispatch(navAction);
+    this.props.show(navigator)
   }
 
   componentDidMount() {
@@ -47,7 +48,7 @@ class OnboardingScreen extends Component {
     if (!launched) {
       setTimeout(() => {
         this.setState({ launched: true })
-        this._reset(this.state.action)
+        this._reset(this.state.action,this.state.key)
       }, timeoutInt)
     }
 
@@ -57,21 +58,21 @@ class OnboardingScreen extends Component {
       if (user == undefined || user == null) {
         SInfo.getItem(k.key_device_init, {}).then(value => {
           if (value == undefined) {
-            navigator = 'RegisterScreen'
+            navigator = 'register'
           } else {
-            navigator = 'LoginScreen'
+            navigator = 'login'
           }
           this._setNavigator(navigator)
         });
       } else {
-        navigator = 'Menu'
+        navigator = 'menu'
         this._setNavigator(navigator)
       }
       
     });
   }
   componentWillUnmount() {
-    // this.unsubscribe()
+    this.unsubscribe()
   }
   render() {
     return (
@@ -95,6 +96,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    show: payload => dispatch(show(payload))
   }
 }
 

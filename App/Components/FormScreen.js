@@ -23,7 +23,6 @@ class FormScreen extends Component {
   // static navigationOptions = {  header: null };
   static navigationOptions = ({ navigation,screenProps }) => {
     const options = {header: null}
-    otron.log(screenProps)
     return options
   }
   constructor() {
@@ -38,7 +37,7 @@ class FormScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     // this.setState({inputRefs:this.refs.formview.refs})
-    // otron.log(this.refs)
+    otron.log(this.props.navigation)
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }

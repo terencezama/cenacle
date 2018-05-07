@@ -40,11 +40,14 @@
    "fieldConfirm":"Confirm Password",
    "fieldSignin":"SIGN IN",
    "fieldSignup":"SIGN UP",
+   "fieldForgetPassword":"Submit",
    "fieldMobile":"Mobile Number",
 
    "forgotPassword":"FORGOT PASSWORD",
    "register":"SIGN UP",
    "login":"SIGN IN",
+
+   "success-forgetpassword":"An email with the reset link has been sent to you. Please check.",
 
    "auth/account-exists-with-different-credential":"Account already exists",
    "auth/invalid-credential":"Invalid Credential",
@@ -53,7 +56,11 @@
    "auth/user-not-found":"User not found",
    "auth/wrong-password":"Wrong password",
    "auth/invalid-verification-code":"Invalid verification code",
-   "auth/invalid-verification-id":"Invalid verification Id"
+   "auth/invalid-verification-id":"Invalid verification Id",
+   "auth/email-already-in-use":"Email already in use",
+   "auth/invalid-email":"Invalid email address",
+   "auth/weak-password":"Password is weak"
+
 
 
 
