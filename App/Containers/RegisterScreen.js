@@ -44,6 +44,7 @@ class RegisterScreen extends FormScreen {
           // An error happened.
           otron.log({error:error})
         });
+        
 
       }).catch(reason => {
         otron.log({ reason: reason })

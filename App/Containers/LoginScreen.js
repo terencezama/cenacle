@@ -37,7 +37,7 @@ class LoginScreen extends FormScreen {
     .signInAndRetrieveDataWithEmailAndPassword(email,password)
     .then(user=>{
       otron.log({user:user})
-      // this.setState({loading:false})
+      this.setState({loading:false})
       SInfo.setItem(k.key_device_init,'true',{})
     })
     .catch(reason=>{

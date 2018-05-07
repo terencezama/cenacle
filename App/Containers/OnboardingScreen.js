@@ -67,8 +67,7 @@ class OnboardingScreen extends Component {
       } else {
         navigator = 'menu'
         this._setNavigator(navigator)
-      }
-      
+      }  
     });
   }
   componentWillUnmount() {
