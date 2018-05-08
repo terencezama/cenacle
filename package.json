@@ -21,7 +21,8 @@
     "lint": "standard --verbose | snazzy",
     "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
     "fixcode": "standard --fix",
-    "git-hook": "npm run lint -s && npm run test -s"
+    "git-hook": "npm run lint -s && npm run test -s",
+    "android:emulator": "~/Library/Android/sdk/emulator/emulator -avd Nexus_5X_API_P"
   },
   "dependencies": {
     "apisauce": "^0.14.2",
@@ -35,6 +36,7 @@
     "react": "16.0.0",
     "react-native": "0.50.4",
     "react-native-animatable": "^1.2.4",
+    "react-native-communications": "^2.2.1",
     "react-native-config": "^0.10.0",
     "react-native-device-info": "0.11.0",
     "react-native-elements": "^0.19.1",

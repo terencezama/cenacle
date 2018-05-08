@@ -4,7 +4,7 @@ let _navigator;
 
 function setTopLevelNavigator(navigatorRef) {
     if(navigatorRef != null){
-        console.tron.log({navon:navigatorRef.props})
+        // console.tron.log({navon:navigatorRef.props})
         _navigator = navigatorRef;
     }
     

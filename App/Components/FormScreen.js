@@ -37,7 +37,7 @@ class FormScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     // this.setState({inputRefs:this.refs.formview.refs})
-    otron.log(this.props.navigation)
+    // otron.log(this.props.navigation)
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }

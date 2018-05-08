@@ -20,7 +20,7 @@ export function* navigate(action) {
   // otron.log({navigateaction:action})
   const { type, payload } = action
   const routes = NavigationService.getTopLevelNavigator().props.navigation.routes
-  otron.log({navigroutes:routes})
+  // otron.log({navigroutes:routes})
   let contains = false
   let _key = null
   let index = 0
@@ -34,7 +34,7 @@ export function* navigate(action) {
     index++
   }
   if (contains) {
-    otron.log({goback:_key,payload:payload})
+    // otron.log({goback:_key,payload:payload})
     yield put(NavigationActions.back({
       key: _key,
       immediate: false

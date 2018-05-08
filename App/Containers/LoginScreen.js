@@ -28,7 +28,7 @@ class LoginScreen extends FormScreen {
 
   _onSubmit=(values)=>{
     Keyboard.dismiss()
-    otron.log(values)
+    // otron.log(values)
     // firebase.auth().sig
     const {email,password} = values;
     
@@ -36,12 +36,12 @@ class LoginScreen extends FormScreen {
     firebase.auth()
     .signInAndRetrieveDataWithEmailAndPassword(email,password)
     .then(user=>{
-      otron.log({user:user})
+      // otron.log({user:user})
       this.setState({loading:false})
       SInfo.setItem(k.key_device_init,'true',{})
     })
     .catch(reason=>{
-      otron.log({reason:reason})
+      // otron.log({reason:reason})
       this.setState({loading:false})
       this.setState({error:i18n.t(reason.code)})
     });

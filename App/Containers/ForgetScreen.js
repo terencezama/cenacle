@@ -43,7 +43,7 @@ class ForgetScreen extends FormScreen {
       )
     })
     .catch(reason=>{
-      otron.log({reason:reason})
+      // otron.log({reason:reason})
       this.setState({loading:false})
       this.setState({error:i18n.t(reason.code)})
     })

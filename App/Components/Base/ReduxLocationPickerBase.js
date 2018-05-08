@@ -13,20 +13,18 @@ export default class ReduxLocationPickerBase extends Component {
     }
 
     _onLocationPress = () => {
-        otron.log('Location Pressed');
         RNGooglePlacePicker.show((response) => {
             if (response.didCancel) {
-                otron.log('User cancelled GooglePlacePicker');
+                // otron.log('User cancelled GooglePlacePicker');
             }
             else if (response.error) {
-                otron.log('GooglePlacePicker Error: ', response.error);
+                // otron.log('GooglePlacePicker Error: ', response.error);
             }
             else {
                 //   this.setState({
                 //     location: response
                 //   });
                 const { input, meta, } = this.props;
-                otron.log(`A location has been picked: \n${JSON.stringify(response)}`);
                 input.onChange(response)
             }
         })
@@ -35,7 +33,7 @@ export default class ReduxLocationPickerBase extends Component {
     render() {
         const { input, meta, } = this.props;
         return (
-            <View>
+            <View style={{marginTop: 8,marginBottom: 8,}}>
                 <Button
                     key={5}
                     onPress={this._onLocationPress}

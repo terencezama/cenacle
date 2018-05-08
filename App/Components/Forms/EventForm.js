@@ -39,6 +39,7 @@ const EventForm = ({
     <ReduxtLocationPicker
       key={5}
       name='location'
+      
     />,
     <Button
       raised

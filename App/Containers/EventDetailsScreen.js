@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, KeyboardAvoidingView, TouchableOpacity ,
+Linking} from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -10,69 +11,101 @@ import { View } from 'react-native-animatable';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import otron from 'reactotron-react-native'
 import moment from 'moment-with-locales-es6'
+import FAIcon from 'react-native-vector-icons/FontAwesome'
+import Colors from '../Themes/Colors';
+import openMap from '../Lib/OpenMaps'
+import I18n from 'react-native-i18n'
 
 class EventDetailsScreen extends Component {
 
   static navigationOptions = {
     title: 'Events Manager',
+    header: null
   };
   constructor(props) {
     super(props)
     this.state = {
       event: props.navigation.state.params.event
     }
-    otron.log(props)
+    // otron.log(props)
 
   }
 
-  componentWillMount(){
-    this.props.navigation.setParams({title:'Update Event'})
+  componentWillMount() {
+    this.props.navigation.setParams({ title: 'Update Event' })
   }
+
+  //region Action
+  _locationAction =location=>{
+    const { longitude, name, latitude, address } = location
+    openMap({
+      latitude,
+      longitude, 
+      zoomLevel:5,
+      name})
+  }
+  _callAction = mobile=>{
+    mobile = mobile.replace(' ','')
+    Linking.openURL(`tel:${mobile}`)
+  }
+  //endregion
+
+
+  //region Render
+  _renderLocation= location=>{
+    const { longitude, name, latitude, address } = location
+    return(<TouchableOpacity style={styles.default} onPress={()=>{this._locationAction(location)}}>
+      <View style={styles.locTextContainer}>
+        <Text style={styles.locAddressText}>{address}</Text>
+        <Text style={styles.locationText}>{`${latitude},${longitude}`}</Text>
+        <Text>{I18n.t('event/viewlocation')}</Text>
+      </View>
+      <View style={styles.iconContainer}>
+        <FAIcon name={'map-marker'} size={50} color={Colors.white} />
+      </View>
+    </TouchableOpacity>)
+  }
+  _renderContact = mobile =>{
+    return(
+      <TouchableOpacity style={styles.default} onPress={()=>{this._callAction(mobile)}}> 
+        <View style={styles.iconContainer}>
+          <FAIcon name={'phone'} size={50} color={Colors.white} />
+      </View>
+      <View style={styles.mobileTextContainer} >
+        <Text style={styles.mobileText}>{mobile}</Text>
+        <Text style={styles.guide}>{I18n.t('event/call')}</Text>
+      </View>
+      </TouchableOpacity>
+    )
+  }
+
+  _renderSchedule = (date,time) => {
+    return(
+      <TouchableOpacity style={styles.default} onPress={()=>{this._callAction(mobile)}}> 
+        <View style={styles.iconContainer}>
+          <FAIcon name={'phone'} size={50} color={Colors.white} />
+      </View>
+      <View style={styles.iconContainer}>
+          <FAIcon name={'phone'} size={50} color={Colors.white} />
+      </View>
+      </TouchableOpacity>
+    )
+  }
+  //endregion
+
   render() {
     const { time, date, location, title, desc } = this.state.event
     const m = moment(date).locale('fr').format('DD/MMMM/YYYY').split('/')
     const day = m[0]
     const month = m[1].replace('.', '').toUpperCase()
     const year = m[2]
-
     
 
     return (
       <ScrollView>
-        <View style={styles.container}>
-        <View style={styles.dateContainer}>
-            <View style={styles.row}>
-              <Text style={styles.dateText}>{day}</Text>
-              <Text style={styles.dateText}>{month}</Text>
-            </View>
-            <Text style={styles.dateText}>{year}</Text>
-          </View>
-          <View style={styles.header}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>{title}</Text>
-            </View>
-            
-          </View>
-          
-
-
-          <View style={styles.body}>
-            <Text>{desc}</Text>
-            <View style={styles.timeContainer}>
-              <Text style={styles.timeText}>{time}</Text>
-            </View>
-          </View>
-          {/* <MapView
-        style={styles.container}
-          // provider={PROVIDER_GOOGLE}cd 
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        /> */}
-        </View>
+        {this._renderLocation(location)}
+        {this._renderContact('+230 7527187')}
+        {this._renderSchedule(date,time)}
       </ScrollView>
     )
   }

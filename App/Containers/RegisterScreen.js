@@ -26,7 +26,7 @@ class RegisterScreen extends FormScreen {
   }
 
   _onSubmit = (values) => {
-    otron.log(values)
+    // otron.log(values)
     const { email, password, mobile, nickname } = values
 
     this.setState({ loading: true })
@@ -34,20 +34,10 @@ class RegisterScreen extends FormScreen {
       .createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then(user => {
         this.setState({ loading: false })
-        otron.log({user:user})
-        user.updateProfile({
-          ...values
-        }).then(function () {
-          // Update successful.
-          otron.log('update successfull')
-        }).catch(function (error) {
-          // An error happened.
-          otron.log({error:error})
-        });
         
 
       }).catch(reason => {
-        otron.log({ reason: reason })
+        // otron.log({ reason: reason })
         this.setState({loading:false})
         this.setState({error:i18n.t(reason.code)})
       });

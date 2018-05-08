@@ -23,7 +23,6 @@ export default class ReduxDatePickerBase extends Component {
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
   _handleDatePicked = (date) => {
     const { input, meta, } = this.props;
-    otron.log(`A date has been picked: \n${JSON.stringify(date)}`);
     this._hideDateTimePicker();
 
 

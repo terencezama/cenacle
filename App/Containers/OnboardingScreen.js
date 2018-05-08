@@ -53,7 +53,7 @@ class OnboardingScreen extends Component {
     }
 
     this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      otron.log(user)
+      // otron.log(user)
       let navigator = ''
       if (user == undefined || user == null) {
         SInfo.getItem(k.key_device_init, {}).then(value => {

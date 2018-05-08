@@ -41,7 +41,7 @@ class EventScreen extends Component {
         ...doc.data().values, // DocumentSnapshot
       });
     });
-    otron.log(events)
+    // otron.log(events)
     this.setState({
       events,
       loading: false,

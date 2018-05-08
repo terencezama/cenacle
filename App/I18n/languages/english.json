@@ -59,7 +59,10 @@
    "auth/invalid-verification-id":"Invalid verification Id",
    "auth/email-already-in-use":"Email already in use",
    "auth/invalid-email":"Invalid email address",
-   "auth/weak-password":"Password is weak"
+   "auth/weak-password":"Password is weak",
+
+   "event/viewlocation":"Click to view location",
+   "event/call":"Click to call"
 
 
 

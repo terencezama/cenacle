@@ -1,51 +1,61 @@
 import { StyleSheet } from 'react-native'
 import { ApplicationStyles } from '../../Themes/'
 import Colors from '../../Themes/Colors'
+import Metrics from '../../Lib/Metrics'
 export default StyleSheet.create({
   row:{
     flexDirection: 'row',
   },
   container:{
-    flex:1,
+    height:Metrics.windowHeight*1/3,
+    width:Metrics.windowWidth,
     backgroundColor:Colors.white
   },
-  header:{
-    // flex: 0.1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  default:{
+    margin: 8,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    height: 100,
+    flexDirection:'row',
+    flex: 1,
+    overflow: 'hidden'
   },
-  titleContainer:{
+  locTextContainer:{
     flex:0.8,
-    backgroundColor:Colors.white,
+    justifyContent:'space-around',
+    alignItems: 'center',
+    marginLeft: 8,
+    marginRight: 8,
   },
-  titleText:{
-    fontSize: 30,
-    fontWeight: 'bold',
-    color:Colors.charcoal
-  },
-  dateContainer:{
+  iconContainer:{
     flex:0.2,
-    backgroundColor:Colors.white,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:Colors.primary
   },
-  dateText:{
+  locAddressText:{
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 8,
+    textAlign:'center'
+  },
+  locationText:{
     color:Colors.primary,
-    fontSize:50,
-    fontWeight:'bold',
   },
-  timeContainer:{
-    // flex:0.2,
-    backgroundColor:Colors.primary,
+  mobileTextContainer:{
+    flex:0.8,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  timeText:{
-    color:Colors.white,
-    fontSize:35,
-    fontWeight:'bold'
+  mobileText:{
+    fontSize:30,
+    fontWeight:'bold',
+    textAlign:'center',
+    // backgroundColor:'red'
   },
-  body:{
-
+  guide:{
+    alignSelf: 'center',
+    position:'absolute',
+    bottom:8
   }
 })

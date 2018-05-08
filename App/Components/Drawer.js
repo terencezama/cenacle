@@ -8,7 +8,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Images from '../Themes/Images'
 import firebase from 'react-native-firebase'
 const logout = (props)=>{
-    otron.log(props)
+    // otron.log(props)
     return (
         <TouchableOpacity style={styles.item} onPress={()=>{firebase.auth().signOut();}}>
         <FAIcon style={styles.icon} name="sign-out" size={20} color={Colors.flatRed}/>

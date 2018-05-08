@@ -40,7 +40,7 @@ class EventsManagerScreen extends Component {
         ...doc.data().values, // DocumentSnapshot
       });
     });
-    otron.log(events)
+    // otron.log(events)
     this.setState({
       events,
       loading: false,
@@ -62,9 +62,9 @@ class EventsManagerScreen extends Component {
   }
   _deleteItem(item) {
     const { key } = item.item;
-    otron.log(item);
+    // otron.log(item);
     firebase.firestore().collection('events').doc(key).delete().then(function () {
-      otron.log("Document successfully deleted!");
+      // otron.log("Document successfully deleted!");
     }).catch(function (error) {
       otron.error("Error removing document: ", error);
     });
