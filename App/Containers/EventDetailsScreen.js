@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, KeyboardAvoidingView, TouchableOpacity ,
-Linking} from 'react-native'
+Linking, Platform} from 'react-native'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
-
-// Styles
 import styles from './Styles/EventDetailsScreenStyle'
 import { View } from 'react-native-animatable';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -15,6 +11,8 @@ import FAIcon from 'react-native-vector-icons/FontAwesome'
 import Colors from '../Themes/Colors';
 import openMap from '../Lib/OpenMaps'
 import I18n from 'react-native-i18n'
+import RNCalendarEvents from 'react-native-calendar-events'
+
 
 class EventDetailsScreen extends Component {
 
@@ -48,6 +46,21 @@ class EventDetailsScreen extends Component {
     mobile = mobile.replace(' ','')
     Linking.openURL(`tel:${mobile}`)
   }
+  _saveEvent = (event)=>{
+    const { time, date, location, title, desc } = event
+    RNCalendarEvents.saveEvent(title, {
+      startDate: date,
+      endDate: date
+    })
+    if(Platform.OS === 'ios') {
+      const referenceDate = moment.utc('2001-01-01');
+      const secondsSinceRefDate = date.unix() - referenceDate.unix();
+      Linking.openURL('calshow:' + secondsSinceRefDate);
+    } else if(Platform.OS === 'android') {
+      const msSinceEpoch = date.valueOf(); // milliseconds since epoch
+      Linking.openURL('content://com.android.calendar/time/' + msSinceEpoch);
+    }
+  }
   //endregion
 
 
@@ -79,9 +92,9 @@ class EventDetailsScreen extends Component {
     )
   }
 
-  _renderSchedule = (date,time) => {
+  _renderSchedule = (event) => {
     return(
-      <TouchableOpacity style={styles.default} onPress={()=>{this._callAction(mobile)}}> 
+      <TouchableOpacity style={styles.default} onPress={()=>{this._saveEvent(event)}}> 
         <View style={styles.iconContainer}>
           <FAIcon name={'phone'} size={50} color={Colors.white} />
       </View>
@@ -105,7 +118,7 @@ class EventDetailsScreen extends Component {
       <ScrollView>
         {this._renderLocation(location)}
         {this._renderContact('+230 7527187')}
-        {this._renderSchedule(date,time)}
+        {this._renderSchedule(this.state.event)}
       </ScrollView>
     )
   }
