@@ -12,6 +12,8 @@ export default StyleSheet.create({
     // justifyContent:'space-between',
     flexDirection: 'row',
     flex:1,
+    borderRadius: 10,
+    overflow: 'hidden',
   },
   dateView:{
     flex: 0.3,

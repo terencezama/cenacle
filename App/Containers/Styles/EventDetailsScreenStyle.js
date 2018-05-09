@@ -15,10 +15,29 @@ export default StyleSheet.create({
     margin: 8,
     backgroundColor: Colors.white,
     borderRadius: 10,
-    height: 100,
+    minHeight: 100,
     flexDirection:'row',
     flex: 1,
     overflow: 'hidden'
+  },
+  content:{
+    margin: 8,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    minHeight: 100,
+    flexDirection:'column',
+    flex: 1,
+    overflow: 'hidden'
+  },
+  contentText:{
+    margin: 8,
+  },
+  titleText:{
+    fontSize:18,
+    fontWeight:'bold'
+  },
+  descText:{
+    fontSize:16,
   },
   locTextContainer:{
     flex:0.8,
@@ -57,5 +76,41 @@ export default StyleSheet.create({
     alignSelf: 'center',
     position:'absolute',
     bottom:8
+  },
+  scheduleYearContainer:{
+    // ...this.iconContainer,
+    // flex:0.3
+    flex:0.3,
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:Colors.primary
+  },
+  scheduleTimeContainer:{
+    // ...this.iconContainer,
+    // flex:0.3
+    flex:0.5,
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:Colors.white
+  },
+  scheduleDayText:{
+    color:Colors.white,
+    fontSize:30,
+    fontWeight:'bold'
+  },
+  scheduleMonthText:{
+    color:Colors.white,
+    fontSize:18,
+    fontWeight:'bold'
+  },
+  scheduleYearText:{
+    color:Colors.white,
+    fontSize:30,
+    fontWeight:'bold'
+  },
+  scheduleTimeText:{
+    color:Colors.primary,
+    fontSize:30,
+    fontWeight:'bold'
   }
 })

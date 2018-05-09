@@ -26,7 +26,7 @@ export default class EventItem extends Component {
   }
 
   _dateView = (datestr) => {
-    moment.locale('fr')
+    // moment.locale('fr')
     const date = moment(datestr).format('MMM/DD/YYYY').split('/')
     const month = date[0].toUpperCase().replace('.', '');
     const day = date[1]
@@ -50,14 +50,14 @@ export default class EventItem extends Component {
             <View style={styles.componentView}>
               <View style={styles.componentSubview}>
                 <Text style={styles.titleText}>{data.title}</Text>
-                <Text style={styles.descText}>{data.desc}</Text>
+                <Text numberOfLines={2} style={styles.descText}>{data.desc}</Text>
                 <Text  style={[styles.descText,{color:this._color()}]}>{data.time}</Text>
                 <View style={styles.iconContainer}>
-                  <Icon
+                  {/* <Icon
                     name='map-marker'
                     size={60}
                     color={this._color()}
-                  />
+                  /> */}
                 </View>
 
               </View>

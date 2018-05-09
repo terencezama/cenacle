@@ -29,6 +29,7 @@
    "eventTitleInputField": "Title",
    "eventDescInputField": "Description",
    "eventDateInputField": "Date",
+   "eventTitleContactField":"Contact",
    "screenEventFormTitle":"Create Event",
 
    "fieldUsername":"Username",
@@ -62,7 +63,8 @@
    "auth/weak-password":"Password is weak",
 
    "event/viewlocation":"Click to view location",
-   "event/call":"Click to call"
+   "event/call":"Click to call",
+   "event/schedule":"Click to schedule"
 
 
 

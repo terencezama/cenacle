@@ -28,6 +28,12 @@ const EventForm = ({
       height={200}
 
     />,
+    <ReduxInput
+      key={1}
+      label={I18n.t('eventTitleContactField')}
+      name='contact'
+      keyboardType={'phone-pad'}
+    />,
     <ReduxDatePicker
       key={3}
       name='date'

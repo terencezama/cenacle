@@ -32,7 +32,7 @@ export default class ReduxDatePickerBase extends Component {
   _formatedDate(date) {
     const m = moment(date)
     // m.locale('fr')
-    return m.format('DD MMM YYYY').replace('.', '').toUpperCase()
+    return m.format('DD/MMM/YY').toUpperCase()
   }
 
   render() {
@@ -49,10 +49,11 @@ export default class ReduxDatePickerBase extends Component {
             // onBlur={input.onBlur}
             // onFocus={this._showDateTimePicker}
 
-            value={input.value instanceof Date?this._formatedDate(input.value):input.value}
+            // value={input.value instanceof Date?this._formatedDate(input.value):input.value}
             {...this.props}
             disable
             onPress={this._showDateTimePicker}
+            value={input.value instanceof Date?this._formatedDate(input.value):input.value}
           />
         </TouchableOpacity>
         <DateTimePicker

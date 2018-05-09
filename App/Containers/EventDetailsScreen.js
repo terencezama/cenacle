@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, KeyboardAvoidingView, TouchableOpacity ,
-Linking, Platform} from 'react-native'
+import {
+  ScrollView, Text, KeyboardAvoidingView, TouchableOpacity,
+  Linking, Platform
+} from 'react-native'
 import { connect } from 'react-redux'
 import styles from './Styles/EventDetailsScreenStyle'
 import { View } from 'react-native-animatable';
@@ -12,13 +14,13 @@ import Colors from '../Themes/Colors';
 import openMap from '../Lib/OpenMaps'
 import I18n from 'react-native-i18n'
 import RNCalendarEvents from 'react-native-calendar-events'
-
+import openDate from '../Lib/OpenDates'
 
 class EventDetailsScreen extends Component {
 
   static navigationOptions = {
-    title: 'Events Manager',
-    header: null
+    title: 'Details',
+
   };
   constructor(props) {
     super(props)
@@ -34,40 +36,60 @@ class EventDetailsScreen extends Component {
   }
 
   //region Action
-  _locationAction =location=>{
+  _locationAction = location => {
     const { longitude, name, latitude, address } = location
     openMap({
       latitude,
-      longitude, 
-      zoomLevel:5,
-      name})
+      longitude,
+      zoomLevel: 5,
+      name
+    })
   }
-  _callAction = mobile=>{
-    mobile = mobile.replace(' ','')
+  _callAction = mobile => {
+    mobile = mobile.replace(' ', '')
     Linking.openURL(`tel:${mobile}`)
   }
-  _saveEvent = (event)=>{
+  _saveEvent = (event) => {
     const { time, date, location, title, desc } = event
-    RNCalendarEvents.saveEvent(title, {
-      startDate: date,
-      endDate: date
-    })
-    if(Platform.OS === 'ios') {
-      const referenceDate = moment.utc('2001-01-01');
-      const secondsSinceRefDate = date.unix() - referenceDate.unix();
-      Linking.openURL('calshow:' + secondsSinceRefDate);
-    } else if(Platform.OS === 'android') {
-      const msSinceEpoch = date.valueOf(); // milliseconds since epoch
-      Linking.openURL('content://com.android.calendar/time/' + msSinceEpoch);
+    const t = time.split(' ')
+    const hm = t[0].split(':')
+    const hour = (t[1].toLowerCase() == 'pm') ? parseInt(hm[0]) + 12 : parseInt(hm[0])
+    const min = parseInt(hm[1])
+
+    let diff = 0
+    let delta = 7
+    if (hour > delta) {
+      diff = hour - delta
+    } else {
+      diff = delta - hour
     }
+
+
+    otron.log(diff)
+
+    let eventStartDate = new Date(date.setHours(hour, min))
+    //13-x=7
+    RNCalendarEvents.saveEvent(title, {
+      startDate: eventStartDate,
+      endDate: eventStartDate,
+      alarms: [{
+        date: diff * 60
+      }]
+    })
+
+    openDate(eventStartDate)
+
   }
   //endregion
 
 
   //region Render
-  _renderLocation= location=>{
+  _renderLocation = location => {
+    if (location == null || location == undefined) {
+      return null
+    }
     const { longitude, name, latitude, address } = location
-    return(<TouchableOpacity style={styles.default} onPress={()=>{this._locationAction(location)}}>
+    return (<TouchableOpacity style={styles.default} onPress={() => { this._locationAction(location) }}>
       <View style={styles.locTextContainer}>
         <Text style={styles.locAddressText}>{address}</Text>
         <Text style={styles.locationText}>{`${latitude},${longitude}`}</Text>
@@ -78,46 +100,61 @@ class EventDetailsScreen extends Component {
       </View>
     </TouchableOpacity>)
   }
-  _renderContact = mobile =>{
-    return(
-      <TouchableOpacity style={styles.default} onPress={()=>{this._callAction(mobile)}}> 
+  _renderContact = mobile => {
+    if (mobile == null || mobile == undefined) {
+      return null
+    }
+    return (
+      <TouchableOpacity style={styles.default} onPress={() => { this._callAction(mobile) }}>
         <View style={styles.iconContainer}>
           <FAIcon name={'phone'} size={50} color={Colors.white} />
-      </View>
-      <View style={styles.mobileTextContainer} >
-        <Text style={styles.mobileText}>{mobile}</Text>
-        <Text style={styles.guide}>{I18n.t('event/call')}</Text>
-      </View>
+        </View>
+        <View style={styles.mobileTextContainer} >
+          <Text style={styles.mobileText}>{mobile}</Text>
+          <Text style={styles.guide}>{I18n.t('event/call')}</Text>
+        </View>
       </TouchableOpacity>
     )
   }
 
   _renderSchedule = (event) => {
-    return(
-      <TouchableOpacity style={styles.default} onPress={()=>{this._saveEvent(event)}}> 
+    const { time, date: adate, location, title, desc } = event
+    const date = moment(adate).format('MMM/DD/YYYY').split('/')
+    const month = date[0].toUpperCase().replace('.', '');
+    const day = date[1]
+    const year = date[2]
+    return (
+      <TouchableOpacity style={styles.default} onPress={() => { this._saveEvent(event) }}>
         <View style={styles.iconContainer}>
-          <FAIcon name={'phone'} size={50} color={Colors.white} />
-      </View>
-      <View style={styles.iconContainer}>
-          <FAIcon name={'phone'} size={50} color={Colors.white} />
-      </View>
+          <Text style={styles.scheduleDayText}>{day}</Text>
+          <Text style={styles.scheduleMonthText}>{month}</Text>
+        </View>
+        <View style={styles.scheduleYearContainer}>
+          <Text style={styles.scheduleYearText}>{year}</Text>
+        </View>
+        <View style={styles.scheduleTimeContainer}>
+          <Text style={styles.scheduleTimeText}>{time}</Text>
+          <Text style={styles.guide}>{I18n.t('event/schedule')}</Text>
+        </View>
       </TouchableOpacity>
     )
   }
   //endregion
 
   render() {
-    const { time, date, location, title, desc } = this.state.event
-    const m = moment(date).locale('fr').format('DD/MMMM/YYYY').split('/')
-    const day = m[0]
-    const month = m[1].replace('.', '').toUpperCase()
-    const year = m[2]
-    
+    const { time, date, location, title, desc, contact } = this.state.event
+
 
     return (
       <ScrollView>
+        <View style={styles.content}>
+          <View style={styles.contentText}>
+            <Text style={styles.titleText}>{title}</Text>
+            <Text style={styles.descText}>{desc}</Text>
+          </View>
+        </View>
         {this._renderLocation(location)}
-        {this._renderContact('+230 7527187')}
+        {this._renderContact(contact)}
         {this._renderSchedule(this.state.event)}
       </ScrollView>
     )
