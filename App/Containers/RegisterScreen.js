@@ -5,14 +5,13 @@ import otron from 'reactotron-react-native'
 import i18n from 'react-native-i18n'
 // Styles
 import FormScreen from '../Components/FormScreen';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Keyboard } from 'react-native';
 import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
-import {show} from '../Redux/NavigationRedux'
-
-
+import { change,reset } from 'redux-form'
+import {reset as navreset} from '../Redux/NavigationRedux'
 class RegisterScreen extends FormScreen {
-  // static navigationOptions = { title: 'Welcome', header: { visible:false } };
+  // static navigationOptions = { gesturesEnabled: false };
 
   constructor() {
     super()
@@ -23,9 +22,28 @@ class RegisterScreen extends FormScreen {
     this.setState({
       loading: false
     })
+    const { email } = this.props.auth
+    if (email) {
+      this.props.change('email', email)
+    }
+  }
+
+  _resetFields(){
+    this.props.reset()
+    const {email} = this.props.auth
+    if(email){
+      this.props.change('email',email)
+    }
+  }
+
+  _saveEmailField() {
+    const values = this.props.form.RegisterForm.values
+    if (values && values.email) this.props.saveEmail(values.email)
   }
 
   _onSubmit = (values) => {
+    this._saveEmailField()
+    Keyboard.dismiss()
     // otron.log(values)
     const { email, password, mobile, nickname } = values
 
@@ -34,20 +52,38 @@ class RegisterScreen extends FormScreen {
       .createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then(user => {
         this.setState({ loading: false })
-        
+        // otron.log(user)
+        let collection = firebase.firestore().collection('cenacle').doc('user').collection('details')
+        const data = {
+          uid: user.user.uid,
+          email,
+          mobile,
+          nickname,
+          role: 'user'
+        }
+
+        collection.doc(user.user.uid).set(data)
+
+        this._resetFields()
+        this.props.navreset('menu')
+          
 
       }).catch(reason => {
         // otron.log({ reason: reason })
-        this.setState({loading:false})
-        this.setState({error:i18n.t(reason.code)})
+        this.setState({ loading: false })
+        this.setState({ error: i18n.t(reason.code) })
       });
   }
 
   _loginAction = () => {
+    this._saveEmailField()
+    Keyboard.dismiss()
     this.props.show('login')
   }
 
   _forgetPasswordAction = () => {
+    this._saveEmailField()
+    Keyboard.dismiss()
     this.props.show('forget')
   }
 
@@ -89,15 +125,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//   }
+// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    show: payload => dispatch(show(payload))
+    ...FormScreen.mapDispatchToProps(dispatch),
+    change: (key, value) => dispatch(change('RegisterForm', key, value)),
+    reset:()=>dispatch(reset('RegisterForm')),
+    navreset:payload=>dispatch(navreset(payload))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen)
+export default connect(FormScreen.mapStateToProps, mapDispatchToProps)(RegisterScreen)
+// export default RegisterScreen

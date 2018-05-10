@@ -19,31 +19,56 @@ import otron from 'reactotron-react-native'
 export function* navigate(action) {
   // otron.log({navigateaction:action})
   const { type, payload } = action
-  const routes = NavigationService.getTopLevelNavigator().props.navigation.routes
-  // otron.log({navigroutes:routes})
-  let contains = false
-  let _key = null
-  let index = 0
-  for (let route of routes) {
-    const {routeName} = route
-    if (routeName == payload) {
-      contains  = true
-      _key      = routes[index+1].key // thanks to react navigation tricky go back from key...
-      break;
-    }
-    index++
-  }
-  if (contains) {
-    // otron.log({goback:_key,payload:payload})
-    yield put(NavigationActions.back({
-      key: _key,
-      immediate: false
-    }))
-  } else {
-    yield put(NavigationActions.navigate({
-      routeName: payload,
-      key: payload
-    }))
-  }
+  // const routes = NavigationService.getTopLevelNavigator().props.navigation.routes
+  // // otron.log({navigroutes:routes})
+  // let contains = false
+  // let _key = null
+  // let index = 0
+  // for (let route of routes) {
+  //   const {routeName} = route
+  //   if (routeName == payload) {
+  //     contains  = true
+  //     _key      = routes[index+1].key // thanks to react navigation tricky go back from key...
+  //     break;
+  //   }
+  //   index++
+  // }
+  // if (contains) {
+  //   // otron.log({goback:_key,payload:payload})
+  //   yield put(NavigationActions.back({
+  //     key: _key,
+  //     immediate: false
+  //   }))
+  // } else {
+  //   yield put(NavigationActions.navigate({
+  //     routeName: payload,
+  //     key: payload
+  //   }))
+  // }
+
+  // yield put(NavigationActions.reset({
+  //   index: 0,
+  //   actions: [
+  //     NavigationActions.navigate({routeName:payload})
+  //   ]
+  // }))
+
+  yield put(NavigationActions.navigate({
+    routeName: payload,
+    key: payload
+  }))
+
+}
+
+export function* reset(action) {
+  // otron.log({navigateaction:action})
+  const { type, payload } = action
+
+  yield put(NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({routeName:payload})
+    ]
+  }))
 
 }

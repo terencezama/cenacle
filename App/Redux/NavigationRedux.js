@@ -12,7 +12,7 @@ import otron from 'reactotron-react-native'
 // export default Creators
 
 export const SHOW = "CustomNavigate/Show"
-
+export const RESET = "CustomNavigate/Reset"
 export const show = payload => {
   return ({
     type:SHOW,
@@ -20,6 +20,12 @@ export const show = payload => {
   })
 }
 
+export const reset = payload => {
+  return ({
+    type:RESET,
+    payload:payload
+  })
+}
 export const reducer = (state, action) => {
   const newState = AppNavigation.router.getStateForAction(action, state)
   return newState || state

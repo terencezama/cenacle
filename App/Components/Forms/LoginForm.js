@@ -53,7 +53,7 @@ const LoginForm = ({
 }
 
 export default reduxForm({
-    form: 'AuthForm',
+    form: 'LoginForm',
 })(LoginForm)
 
 

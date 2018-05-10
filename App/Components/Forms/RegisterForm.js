@@ -28,21 +28,21 @@ const RegisterForm = ({
                     // keyboardType='email-address'
                 />
                 <ReduxInput
-                    key={1}
+                    key={2}
                     label={I18n.t('fieldEmail')}
                     name='email'
                     validate={[Validate.isEmail, Validate.isRequired]}
                     keyboardType='email-address'
                 />
                 <ReduxInput
-                    key={2}
+                    key={3}
                     label={I18n.t('fieldPassword')}
                     name='password'
                     secureTextEntry
                     validate={[Validate.isMinLength6, Validate.isRequired]}
                 />
                 <ReduxInput
-                    key={3}
+                    key={4}
                     label={I18n.t('fieldMobile')}
                     name='mobile'
                     // normalize={Normalize.mobile}
@@ -51,7 +51,7 @@ const RegisterForm = ({
             <Button
                 // raised
                 large
-                key={6}
+                key={5}
                 onPress={handleSubmit(onSubmit)}
                 textStyle={ApplicationStyles.submitButton}
                 // style={{ marginTop: 8 }}
@@ -66,7 +66,7 @@ const RegisterForm = ({
 }
 
 export default reduxForm({
-    form: 'AuthForm',
+    form: 'RegisterForm',
 })(RegisterForm)
 
 

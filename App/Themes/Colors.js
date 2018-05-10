@@ -34,7 +34,8 @@ const colors = {
   flatGreen: '#1abc9c',
   flatYellow: '#f1c40f',
   ecstasy: '#F76926',
-  normal: '#1d1d26'
+  normal: '#1d1d26',
+  body:'#808080'
 
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Proptypes from 'prop-types'
 import {
   ScrollView, Text, KeyboardAvoidingView, View, Image, StatusBar, BackHandler,
   Alert, Keyboard
@@ -17,7 +18,9 @@ import styles from './Styles/FormScreenStyle'
 import {
   Hoshi,
 } from 'react-native-textinput-effects';
-
+import {show} from '../Redux/NavigationRedux'
+import {saveEmail} from '../Redux/AuthRedux'
+import {reset,change,untouch} from 'redux-form'
 
 class FormScreen extends Component {
   // static navigationOptions = {  header: null };
@@ -25,8 +28,27 @@ class FormScreen extends Component {
     const options = {header: null}
     return options
   }
-  constructor() {
-    super()
+
+  static mapStateToProps = (state) => {
+    // otron.log(state)
+    return {
+      auth:state.auth,
+      form:state.form
+    }
+  }
+  
+  static mapDispatchToProps = (dispatch) => {
+    return {
+      // change: (key,value) => dispatch(change('AuthForm',key,value)),
+      // untouch: (key,value) => dispatch(untouch('AuthForm',key)),
+      // reset:()=> dispatch(reset('AuthForm')),
+      show: payload => dispatch(show(payload)),
+      saveEmail:payload=>dispatch(saveEmail(payload))
+    }
+  }
+
+  constructor(props) {
+    super(props)
     this.iconName = "check"
     this.state = {
       loading: true,
@@ -35,15 +57,14 @@ class FormScreen extends Component {
   }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     // this.setState({inputRefs:this.refs.formview.refs})
     // otron.log(this.props.navigation)
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
@@ -59,12 +80,6 @@ class FormScreen extends Component {
   }
 
 
-
-
-  onBackButtonPressAndroid = () => {
-    this.props.navigation.goBack()
-    return true;
-  };
 
 
   //region sub render components
@@ -125,6 +140,5 @@ class FormScreen extends Component {
     )
   }
 }
-
 
 export default FormScreen

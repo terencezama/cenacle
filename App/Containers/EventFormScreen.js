@@ -20,6 +20,10 @@ class EventFormScreen extends Component {
   // };
   static navigationOptions = ({ navigation }) => {
     const options = {}
+    if(navigation == null || navigation == undefined){
+      options.title = i18n.t('screenEventFormTitle')
+      return options
+   }
     const {params} = navigation.state
     if(params != undefined && 'title' in params){
       options.title = params.title

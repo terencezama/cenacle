@@ -8,7 +8,8 @@ import FormScreen from '../Components/FormScreen';
 import { View, TouchableOpacity,Text, StyleSheet,Keyboard,Alert } from 'react-native';
 import { Colors } from '../Themes';
 import firebase from 'react-native-firebase'
-import {show} from '../Redux/NavigationRedux'
+import {change} from 'redux-form'
+
 
 
 class ForgetScreen extends FormScreen {
@@ -23,9 +24,19 @@ class ForgetScreen extends FormScreen {
     this.setState({
       loading:false
     })
+
+    const {email} = this.props.auth
+    if(email){
+      this.props.change('email',email)
+    }
   }
 
+  _saveEmailField(){
+    const values = this.props.form.ForgetForm.values
+    if(values && values.email)this.props.saveEmail(values.email)
+  }
   _onSubmit=(values)=>{
+    this._saveEmailField()
     Keyboard.dismiss()
     const {email}     = values
     this.setState({loading:true})
@@ -51,10 +62,14 @@ class ForgetScreen extends FormScreen {
   }
 
   _loginAction = ()=>{
+    this._saveEmailField()
+    Keyboard.dismiss()
     this.props.show('login')
   }
 
   _registerAction = ()=>{
+    this._saveEmailField()
+    Keyboard.dismiss()
     this.props.show('register')
   }
 
@@ -96,15 +111,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//   }
+// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    show: payload => dispatch(show(payload))
+    ...FormScreen.mapDispatchToProps(dispatch),
+    change:(key,value)=>dispatch(change('ForgetForm',key,value))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgetScreen)
+export default connect(FormScreen.mapStateToProps, mapDispatchToProps)(ForgetScreen)
+// export default ForgetScreen
+

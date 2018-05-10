@@ -13,7 +13,7 @@ import { View } from 'react-native-animatable';
 import { ApplicationStyles } from '../../Themes'
 import {Validate,Normalize} from '../../Lib'
 
-const LoginForm = ({
+const ForgetForm = ({
     invalid, handleSubmit, onSubmit, processing, update
 }) => {
 
@@ -46,8 +46,8 @@ const LoginForm = ({
 }
 
 export default reduxForm({
-    form: 'AuthForm',
-})(LoginForm)
+    form: 'ForgetForm',
+})(ForgetForm)
 
 
 
