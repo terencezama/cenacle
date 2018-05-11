@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
+  ViewPropTypes
 } from 'react-native';
 
 const MyView = (props) => {
@@ -32,7 +33,7 @@ MyView.propTypes = {
       PropTypes.element,
     ])),
   ]).isRequired,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
   hide: PropTypes.bool,
 };
 

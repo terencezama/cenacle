@@ -2,7 +2,7 @@ package com.terence.cenacle;
 
 import android.app.Application;
 
-import com.airbnb.android.react.maps.MapsPackage;
+//import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -42,7 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNDeviceInfo(),
             new ReactNativeConfigPackage(),
               new RNFirebaseFirestorePackage(),
-              new MapsPackage(),
+//              new MapsPackage(),
               new CalendarEventsPackage()
 
       );

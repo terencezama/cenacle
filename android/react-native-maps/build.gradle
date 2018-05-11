@@ -4,7 +4,7 @@ apply from: 'gradle-maven-push.gradle'
 def DEFAULT_COMPILE_SDK_VERSION             = 25
 def DEFAULT_BUILD_TOOLS_VERSION             = "25.0.3"
 def DEFAULT_TARGET_SDK_VERSION              = 25
-def DEFAULT_GOOGLE_PLAY_SERVICES_VERSION    = "10.2.4"
+def DEFAULT_GOOGLE_PLAY_SERVICES_VERSION    = "15.0.0"
 def DEFAULT_ANDROID_MAPS_UTILS_VERSION      = "0.5+"
 
 android {
