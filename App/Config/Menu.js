@@ -3,6 +3,7 @@ import EventFormScreen from '../Containers/EventFormScreen'
 import EventScreen from '../Containers/EventScreen'
 import EventsManagerScreen from '../Containers/EventsManagerScreen'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import AdminUserScreen from '../Containers'
 const navOptions = ({ navigation }) => ({
     headerLeft: <Icon name="bars" size={35} onPress={() => navigation.navigate('DrawerOpen')} />,
     headerVisibile: true
@@ -17,7 +18,7 @@ const member = {
 }
 
 const admin = {
-
+    AdminUserScreen: { screen: AdminUserScreen, navigationOptions:navOptions },
 }
 
 export default {
