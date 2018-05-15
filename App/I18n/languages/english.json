@@ -64,7 +64,9 @@
 
    "event/viewlocation":"Click to view location",
    "event/call":"Click to call",
-   "event/schedule":"Click to schedule"
+   "event/schedule":"Click to schedule",
+
+   "bible/menutitle":"Bible LSG"
 
 
 

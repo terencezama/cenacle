@@ -1,5 +1,6 @@
 import AdminUserScreen from './AdminUserScreen'
-
-export default {
-    AdminUserScreen
+import BiblePageScreen from './BiblePageScreen'
+export {
+    AdminUserScreen,
+    BiblePageScreen
 }

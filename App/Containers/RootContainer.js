@@ -12,7 +12,7 @@ import k from '../Services/Globals'
 // Styles
 import styles from './Styles/RootContainerStyles'
 import {show,reset} from '../Redux/NavigationRedux'
-const timeoutInt = 3000;
+const timeoutInt = 1000;
 class RootContainer extends Component {
 
   constructor(props){

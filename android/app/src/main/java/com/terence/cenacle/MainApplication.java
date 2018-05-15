@@ -11,6 +11,8 @@ import com.reactlibrary.RNGooglePlacePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+//import io.realm.react.RealmReactPackage;
+
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
@@ -44,6 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
               new RNFirebaseFirestorePackage(),
 //              new MapsPackage(),
               new CalendarEventsPackage()
+//              new RealmReactPackage()
 
       );
     }
