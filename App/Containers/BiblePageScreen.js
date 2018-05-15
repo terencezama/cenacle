@@ -29,24 +29,72 @@ const headerFont = {
     color: Colors.white
   }
 }
-let self = null
+const navTitleStyle = {
+  container:{
+    backgroundColor: Colors.primary,
+    borderRadius: 5,
+    marginRight: 8,
+    marginLeft: 8,
+    padding: 5,
+  },
+  text:{
+    fontSize:18,
+    fontWeight: 'bold',
+    color:Colors.white
+  }
+}
+let biblePageScreen = null
 
 
 class BiblePageScreen extends Component {
   //region navbar options
-  static navigationOptions = {
-    title: i18n.t('bible/menutitle'),
-    headerRight: (
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity style={headerFont.container} onPress={() => { self.increaseFontSize() }}>
-          <Text style={headerFont.text}>A+</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={headerFont.container} onPress={() => { self.decreaseFontSize() }}>
-          <Text style={headerFont.text}>A-</Text>
-        </TouchableOpacity>
-      </View>
-    ),
-  };
+  static navigationOptions = ({ navigation }) => {
+    // const {state} = navigation
+    let ztitle = i18n.t('bible/menutitle')
+    if(navigation && navigation.state.params){
+      const {state:{params:{title}}} = navigation
+      if(title){
+        ztitle = title
+      }
+      
+    }
+    // if(navigation == )
+    console.log('typeof nav',(typeof navigation))
+    const options = {
+      title: ztitle,
+      headerTitle:(
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={navTitleStyle.container} onPress={() => {  }}>
+            <Text style={navTitleStyle.text}>{ ztitle}</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+      headerRight: (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => { biblePageScreen.increaseFontSize() }}>
+            <Text style={headerFont.text}>A+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => { biblePageScreen.decreaseFontSize() }}>
+            <Text style={headerFont.text}>A-</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+    }
+  //   if(navigation == null || navigation == undefined){
+  //     options.title = i18n.t('screenEventFormTitle')
+  //     return options
+  //  }
+  //   const {params} = navigation.state
+  //   if(params != undefined && 'title' in params){
+  //     options.title = params.title
+  //   }else{
+  //     options.title = i18n.t('screenEventFormTitle')
+  //   }
+    return options
+  }
+  
+  
+  
 
   //endregion
 
@@ -56,9 +104,20 @@ class BiblePageScreen extends Component {
     this.state = {
       baseFontSize: 14
     }
-    self = this
+    biblePageScreen = this
     this.offset = 0
 
+    // this.props.navigation.setParams({
+    //   headerTitle:(
+    //     <View style={{ flexDirection: 'row' }}>
+    //       <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+    //         <Text style={headerFont.text}>{ 'nice'}</Text>
+    //       </TouchableOpacity>
+    //     </View>
+    //   ),
+    // })
+
+    
     Realm.open({
       path:fs.DocumentDirectoryPath+'/default.realm',
       schema:[schema.BookSchema,schema.ChapterSchema],
@@ -78,6 +137,12 @@ class BiblePageScreen extends Component {
     // })
 
     
+  }
+
+  componentDidMount(){
+    this.props.navigation.setParams({ title: 'Gen 1' })
+    // this.props.navigation.setParams({ title: 'Update Event' })
+    console.log(this.props.navigation)
   }
   //endregion
 

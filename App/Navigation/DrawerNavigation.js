@@ -25,7 +25,10 @@ const MenuNavigator = DrawerNavigator(
     //DrawerNavigatorconfigs
     {
         contentComponent:Drawer,
-        drawerPosition      : 'left'
+        drawerPosition      : 'left',
+        navigationOptions:{
+            // header: null
+        }
     }
 );
 
