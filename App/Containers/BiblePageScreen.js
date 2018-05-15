@@ -9,6 +9,9 @@ import HTML from 'react-native-render-html'
 import { _constructStyles } from 'react-native-render-html/src/HTMLStyles'
 import { Colors } from '../Themes';
 import FAIcon from 'react-native-vector-icons/FontAwesome'
+import schema from '../../bible/schema'
+import Realm from 'realm'
+import fs from 'react-native-fs'
 
 const headerFont = {
   container: {
@@ -55,6 +58,26 @@ class BiblePageScreen extends Component {
     }
     self = this
     this.offset = 0
+
+    Realm.open({
+      path:fs.DocumentDirectoryPath+'/default.realm',
+      schema:[schema.BookSchema,schema.ChapterSchema],
+      // readOnly: true
+    }).then(realm=>{
+      console.log('realm loaded')
+      let books = realm.objects('Book')
+      console.log(books.length)
+      // realm.write(() => {
+      //   realm.create('Book', {make: 'Honda', model: 'RSX'});
+      // });
+    })
+
+    // console.log(fs.ExternalDirectoryPath)
+    // fs.readDir('').then(item=>{
+    //   console.log(item)
+    // })
+
+    
   }
   //endregion
 

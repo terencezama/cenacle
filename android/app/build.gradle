@@ -177,7 +177,8 @@ dependencies {
     // From node_modules
 //    implementation project(':react-native-maps')
     implementation project(':react-native-calendar-events')
-//    implementation project(':realm')
+    implementation project(':realm')
+    implementation project(':react-native-fs')
 }
 
 // Run this once to be able to run the application with BUCK

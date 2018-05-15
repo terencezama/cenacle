@@ -60,7 +60,7 @@ class Drawer extends Component {
         const index = this.props.navigation.state.index
         const _data = adata || this.state.data
         const data = _data.slice(0)
-        // otron.log(index)
+        // otron.log(_data)
         for (let i in data) {
             data[i].active = false
         }

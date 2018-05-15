@@ -11,7 +11,7 @@ import com.reactlibrary.RNGooglePlacePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
-//import io.realm.react.RealmReactPackage;
+import io.realm.react.RealmReactPackage;
 
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -20,6 +20,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.calendarevents.CalendarEventsPackage;
+import com.rnfs.RNFSPackage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,9 +46,10 @@ public class MainApplication extends Application implements ReactApplication {
             new RNDeviceInfo(),
             new ReactNativeConfigPackage(),
               new RNFirebaseFirestorePackage(),
+            new RNFSPackage(),
 //              new MapsPackage(),
-              new CalendarEventsPackage()
-//              new RealmReactPackage()
+              new CalendarEventsPackage(),
+              new RealmReactPackage()
 
       );
     }
