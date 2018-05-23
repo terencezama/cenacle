@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import LoginForm from '../Components/Forms/LoginForm'
-import otron from 'reactotron-react-native'
 import i18n from 'react-native-i18n'
 // Styles
 import FormScreen from '../Components/FormScreen';
@@ -26,7 +25,6 @@ class LoginScreen extends FormScreen {
     this.setState({
       loading:false
     })
-    otron.log('component will mount ')
     const {email} = this.props.auth
     if(email){
       this.props.change('email',email)

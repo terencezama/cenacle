@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {BiblePageScreen} from '../Containers'
 
 const navOptions = ({ navigation }) => ({
-    headerLeft: <Icon name="bars" size={35} onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerLeft: <Icon style={{marginLeft:8}} name="bars" size={35} onPress={() => navigation.navigate('DrawerOpen')} />,
     headerVisibile: true
 })
 const user = {

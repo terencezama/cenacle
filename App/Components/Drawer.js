@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
     View, Text, ScrollView, Button, SafeAreaView, TouchableOpacity
-    , StyleSheet, Image, FlatList
+    , StyleSheet, Image, FlatList, AsyncStorage
 } from 'react-native';
 import { DrawerItems } from 'react-navigation'
-import otron from 'reactotron-react-native'
 import Colors from '../Themes/Colors'
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Images from '../Themes/Images'
@@ -22,56 +21,69 @@ class Drawer extends Component {
         }
     }
 
-    componentWillMount() {
-        // otron.log(Menu['admin'].EventFormScreen.screen.navigationOptions(this.props.navigation))
-        // otron.log(this.props.navigation)
+    setMenu = (role)=>{
+        menu = Menu[role]
+        const _data = Object.keys(menu).map(key => {
+            let title = 'Fake'
+            if (typeof menu[key].screen.navigationOptions == 'function') {
+                title = menu[key].screen.navigationOptions(this.props.navigation).title
+                
+            } else {
+                title = menu[key].screen.navigationOptions.title
+            }
 
+            return { key: key, title: title, active: false }
+        })
+        
+        // this.setState({data:_data})
+        
+        this._setActive(_data)
+    }
 
+    setMenuAsync = async () =>{
+        
         const { uid } = firebase.auth().currentUser
-        otron.log({ user: uid })
-        const details = firebase.firestore().collection('cenacle').doc('user').collection('details')
-        details.doc(uid).get()
-            .then(doc => {
-                const { role } = doc.data()
-                menu = Menu[role]
-                const _data = Object.keys(menu).map(key => {
-                    let title = 'Fake'
-                    if (typeof menu[key].screen.navigationOptions == 'function') {
-                        title = menu[key].screen.navigationOptions(this.props.navigation).title
-                        // otron.log(menu[key].screen.navigationOptions(null))
-                    } else {
-                        title = menu[key].screen.navigationOptions.title
-                    }
+        let role = await AsyncStorage.getItem(uid)
+        if(role){
+            
+            this.setMenu(role)
+        }else{
+            const details = firebase.firestore().collection('cenacle').doc('user').collection('details')
+            let doc = await details.doc(uid).get()
+            role = doc.data().role
+            
+            await AsyncStorage.setItem(uid,role)
+            this.setMenu(role)
+        }
+        
+    }
 
-                    return { key: key, title: title, active: false }
-                })
-                // otron.log(_data)
-                // this.setState({data:_data})
-                this._setActive(_data)
-
-            })
-            .catch(error => {
-                otron.log({ error })
-            })
+    componentWillMount() {
+        this.setMenu('user')
+        this.setMenuAsync()
 
     }
 
     _setActive = adata => {
         const index = this.props.navigation.state.index
         const _data = adata || this.state.data
+        if(!_data) return;
         const data = _data.slice(0)
-        // otron.log(_data)
+        
+        
         for (let i in data) {
             data[i].active = false
         }
         data[index].active = true
-        // otron.log(data)
-        this.setState({ data: data })
+        
+        this.setState({ data: data.slice(0) })
+
     }
 
     componentWillReceiveProps() {
-        // otron.log(this.props.navigation.state)
-        // this.setState({index:this.props.navigation.index})
+        
+        
+        
         this._setActive()
     }
 
@@ -101,7 +113,10 @@ class Drawer extends Component {
                     <FlatList
                         data={this.state.data}
                         renderItem={({ item, index }) => {
-                            return (<DrawerItem item={item} index={index} onPress={() => { this.props.navigation.navigate(item.key) }} />)
+                            return (<DrawerItem item={item} index={index} onPress={() => { 
+                                this.props.navigation.navigate(item.key) 
+                                this.setState({index:this.props.navigation.index})
+                            }} />)
                         }}
                         keyExtractor={(item, index) => index}
                     />

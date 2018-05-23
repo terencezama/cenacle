@@ -4,6 +4,7 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 const Realm = require('realm')
 var schema = require('../schema')
+var fs_ex = require('fs-extra')
 
 const version = "fra-LSG"
 const username = "bhouNU2wkiTEIv6sTrHZRDkTBMuFn6XXbg0l1InP"
@@ -117,7 +118,7 @@ const parseVerseToHtml = async (chapterId, versesJson) => {
 
     await asyncMkdir(`html/${ver}/${book}`)
     let file = `html/${ver}/${book}/${chapterId}.html`
-    const text = parseVerse(versesJson)
+    const text = parseVerses(versesJson)
     await asyncWrite(file, text)
 
 
@@ -129,40 +130,44 @@ const parseVerseToJson = async (chapterId, versesJson) => {
 
     await asyncMkdir(`json/${ver}/${book}`)
     let file = `json/${ver}/${book}/${chapterId}.json`
-    let text = parseVerse(versesJson)
+    let text = parseVerses(versesJson)
     text = escape(text)
     await asyncWrite(file, `{"data":"${text}"}`)
 
 
 }
-const parseVerse = (versesJson) => {
+const parseVerses = (versesJson) => {
     const { response: { verses } } = versesJson
     let text = ""
     const versesLength = verses.length
 
     for (let i = 0; i < versesLength; i++) {
         const verse = verses[i]
-        let vhtml = verse.text
-
-        //add space to all verse number sup>6
-        vhtml = vhtml.replace('</sup>', ' </sup>')
-
-        //Remove all begining whitespace characters
-        const regex = /(?<=\/sup>)\s*.*(?=<\/p>)/gm;
-        const vtext = regex.exec(vhtml)
-        if (vtext != null) {
-            const ntext = vtext[0].replace(/^\s+/, '') //trim all whitespace characters
-            vhtml = vhtml.replace(vtext[0], ntext)
-        }
-
-        //Convert all p tag to verse tag
-        vhtml = vhtml.replace(/<p class="p">/g, `<verse verse="${i + 1}" verse-id="${verse.id}">`)
-        vhtml = vhtml.replace(/<\/p>/g, '</verse>')
-
-        text += vhtml
+        text += parseVerse(verse)
     }
     return text
 
+}
+
+const parseVerse = verse => {
+    let vhtml = verse.text
+
+    //add space to all verse number sup>6
+    vhtml = vhtml.replace('</sup>', ' </sup>')
+
+    //Remove all begining whitespace characters
+    const regex = /(?<=\/sup>)\s*.*(?=<\/p>)/gm;
+    const vtext = regex.exec(vhtml)
+    if (vtext != null) {
+        const ntext = vtext[0].replace(/^\s+/, '') //trim all whitespace characters
+        vhtml = vhtml.replace(vtext[0], ntext)
+    }
+
+    //Convert all p tag to verse tag
+    vhtml = vhtml.replace(/<p class="p">/g, `<span data-verse="${verse.id}">`)
+    vhtml = vhtml.replace(/<\/p>/g, '</span>')
+
+    return vhtml
 }
 
 const generateJsonIndex = async () => {
@@ -245,7 +250,13 @@ const test = async () => {
 }
 
 const saveRealm = async () => {
-    const zrealm = await Realm.open({ schema: [schema.BookSchema, schema.ChapterSchema] });
+    await fs_ex.remove('default.realm')
+    await fs_ex.remove('default.realm.lock')
+    await fs_ex.remove('default.realm.management')
+    await fs_ex.remove('../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm')
+    await fs_ex.remove('../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm.lock')
+    await fs_ex.remove('../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm.note')
+    const zrealm = await Realm.open({ schema: [schema.BookSchema, schema.ChapterSchema, schema.VerseSchema] });
     const booksJson = await fetchBooks()
     const { response: { books } } = booksJson
     const booksLength = books.length
@@ -257,30 +268,61 @@ const saveRealm = async () => {
         let chaptersData = []
         for (let j = 0; j < chaptersLength; j++) {
             const chapter = chapters[j]
-            let verseJson = await fetchVerse(chapter.id)
-            const text = parseVerse(verseJson)
+            let versesJson = await fetchVerse(chapter.id)
+            // const text = parseVerses(verseJson)
+            const { response: { verses } } = versesJson
+            let text = ""
+            const versesLength = verses.length
+
+            const vwrite = await zrealm.write(() => {
+                for (let i = 0; i < versesLength; i++) {
+                    const verse = verses[i]
+                    const vtext = parseVerse(verse)
+                    text += vtext
+                    const verseData = {
+                        id: verse.id,
+                        data: vtext,
+                        ord: parseInt(verse.id.split('.')[2]),
+                        bookId: book.id,
+                        chapterId: chapter.id
+                    }
+                    zrealm.create('Verse', verseData, true)
+
+                }
+            })
+
             const chapterData = {
                 id: chapter.id,
-                data: text,
-                bookId:book.id
+                // data: text,
+                bookId: book.id
             }
+            const write = await zrealm.write(() => {
+                zrealm.create('Chapter', chapterData, true)
+            });
             chaptersData.push(chapterData)
         }
         const bookData = {
             id: book.id,
             name: book.name,
-            ord: book.ord,
+            ord: parseInt(book.ord),
             version: version,
-            chapters:chaptersData
+            // chapters:chaptersData,
+            chaptersCount: chaptersData.length
         }
-        
+
         const write = await zrealm.write(() => {
-            zrealm.create('Book',bookData,true)
-          });
-          
+            zrealm.create('Book', bookData, true)
+        });
+
 
     }
     console.log('done')
+
+    await fs_ex.copy('default.realm', '../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm')
+    // ../android/app/src/main/assets/bible.realm'
+    // ../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm
+    zrealm.close()
+    process.exit()
 
 }
 // test()

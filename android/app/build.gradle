@@ -104,7 +104,7 @@ android {
         applicationId "com.terence.cenacle"
         minSdkVersion 16
         targetSdkVersion 22
-//        multiDexEnabled true
+        multiDexEnabled true
         versionCode config.buildNumber
         versionName config.versionName
         ndk {
@@ -177,8 +177,9 @@ dependencies {
     // From node_modules
 //    implementation project(':react-native-maps')
     implementation project(':react-native-calendar-events')
-    implementation project(':realm')
+//    implementation project(':realm')
     implementation project(':react-native-fs')
+    implementation project(':react-native-bible-realm')
 }
 
 // Run this once to be able to run the application with BUCK

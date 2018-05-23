@@ -12,6 +12,7 @@ import k from '../Services/Globals'
 // Styles
 import styles from './Styles/RootContainerStyles'
 import {show,reset} from '../Redux/NavigationRedux'
+import { Colors } from '../Themes';
 const timeoutInt = 1000;
 class RootContainer extends Component {
 
@@ -99,7 +100,7 @@ class RootContainer extends Component {
   render () {
     return (
       <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
+        <StatusBar barStyle='light-content' backgroundColor={Colors.primary} />
         <ReduxNavigation />
       </View>
     )

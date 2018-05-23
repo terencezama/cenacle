@@ -7,11 +7,12 @@ import com.facebook.react.ReactApplication;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
+import com.holy.RNBibleRealmPackage;
 import com.reactlibrary.RNGooglePlacePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
-import io.realm.react.RealmReactPackage;
+
 
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -24,6 +25,7 @@ import com.rnfs.RNFSPackage;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -49,7 +51,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFSPackage(),
 //              new MapsPackage(),
               new CalendarEventsPackage(),
-              new RealmReactPackage()
+              new RNBibleRealmPackage()
+
 
       );
     }

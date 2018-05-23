@@ -6,9 +6,9 @@ const BookSchema = {
   properties: {
     id:  'string',
     name: 'string',
-    ord: 'string',
+    ord: 'int',
     version: 'string',
-    chapters: 'Chapter[]'
+    chaptersCount:'int'
   }
 };
 const ChapterSchema = {
@@ -16,16 +16,31 @@ const ChapterSchema = {
   primaryKey: 'id',
   properties: {
     id:     'string',
-    data: 'string',
+    data: 'string?',
     bookId: 'string'
     // birthday: 'date',
     // cars:     'Car[]',
     // picture:  'data?' // optional property
   }
 };
+const VerseSchema = {
+  name: 'Verse',
+  primaryKey: 'id',
+  properties: {
+    id:     'string',
+    data: 'string',
+    ord: 'int',
+    bookId: 'string',
+    chapterId: 'string'
+    // birthday: 'date',
+    // cars:     'Car[]',
+    // picture:  'data?' // optional property
+  }
+}
 
 module.exports =  {
   BookSchema,
-  ChapterSchema
+  ChapterSchema,
+  VerseSchema
 }
 

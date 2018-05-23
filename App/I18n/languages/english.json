@@ -66,7 +66,9 @@
    "event/call":"Click to call",
    "event/schedule":"Click to schedule",
 
-   "bible/menutitle":"Bible LSG"
+   "bible/menutitle":"Bible LSG",
+   "bible/traditional":"Traditional",
+   "bible/alphabetical":"Alphabetical"
 
 
 

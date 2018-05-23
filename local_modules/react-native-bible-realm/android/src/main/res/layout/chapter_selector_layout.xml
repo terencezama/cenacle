@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/layout_manager">
+
+    <LinearLayout
+        android:id="@+id/listlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:tabIndicatorColor="#F76926"
+            app:tabSelectedTextColor="#F76926"
+            android:id="@+id/tablayout">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Traditional" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alphabetical" />
+
+
+        </android.support.design.widget.TabLayout>
+
+
+
+        <com.holy.BRListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </com.holy.BRListView>
+    </LinearLayout>
+
+    <com.holy.BRChapterView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:horizontalSpacing="4dp"
+        android:verticalSpacing="4dp"
+        android:numColumns="5"
+        >
+
+    </com.holy.BRChapterView>
+
+
+
+</RelativeLayout>

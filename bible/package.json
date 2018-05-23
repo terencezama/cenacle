@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs-extra": "^6.0.1",
     "realm": "^2.5.0"
   }
 }
