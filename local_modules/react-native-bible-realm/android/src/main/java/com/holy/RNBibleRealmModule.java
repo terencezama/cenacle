@@ -5,29 +5,31 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.facebook.common.logging.LoggingDelegate;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.holy.R;
+import com.holy.schema.Book;
+import com.holy.schema.History;
+import com.holy.schema.Verse;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class RNBibleRealmModule extends ReactContextBaseJavaModule {
 
@@ -87,14 +89,64 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
     fontSize = _fontSize;
   }
 
+  //region History Api
+  @ReactMethod
+  public void fetchHistories(final Promise promise){
+    new Handler().post(new Runnable() {
+      @Override
+      public void run() {
+        Realm realm = null;
+        try {
+          realm = Realm.getInstance(config);
+          realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+
+              RealmResults<History> result = realm.where(History.class).findAll().sort("date", Sort.DESCENDING);
+
+              WritableArray histories = Arguments.createArray();
+              for(History history:result){
+                histories.pushMap(history.getWritableMap());
+              }
+              promise.resolve(histories);
+
+
+            }
+          });
+        } finally {
+          if(realm != null) {
+            realm.close();
+          }
+        }
+      }
+    });
+  }
+  //endregion
+
   //region Bible Page Api Method
   private String parseVerses(RealmResults<Verse> results){
 
-    String data = "<html><body style=\"font-size:"+fontSize+"px;\">\n";
+    String data = "<html>" +
+            "<meta name=\"viewport\" content=\"initial-scale=1.0, maximum-scale=1.0\">" +
+            //add styles
+            "<style>.underline{border-bottom: 2px dotted;color:rgb(247, 105, 38);}</style>"+
+            "<body style=\"font-size:"+fontSize+"px;\">\n";
     for(Verse verse:results){
       data+= verse.getData();
     }
-    data += "<script></script><div style=\"height:50px;\"></div></body></html>";
+    //Font size handling
+    data += "<script>\n" +
+            "        \n" +
+            "        document.addEventListener('message', function (e) {\n" +
+            "            if (document.body.style.fontSize == \"\") {\n" +
+            "                document.body.style.fontSize = \"${this.fontSize}px\";\n" +
+            "            }\n" +
+            "            var delta = parseInt(e.data);\n" +
+            "            document.body.style.fontSize = (parseFloat(document.body.style.fontSize) + delta) + \"px\";\n" +
+            "        });\n" +
+            "    </script>";
+    data += "<div style=\"height:50px;\"></div></body></html>";
     return data;
   }
 
@@ -111,12 +163,18 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
             public void execute(Realm realm) {
 //              Chapter chapter = realm.where(Chapter.class).equalTo("id",chapterId).findFirst();
 //              sendEvent("bible-realm-set-chapter",chapter.getWritableMap());
+              String chapter = String.valueOf(map.getInt("chapter"));
               String bookId = map.getString("version")+":"+map.getString("book");
-              String chapterId = bookId+"."+map.getInt("chapter");
+              String chapterId = bookId+"."+chapter;
+              boolean nohistory =  map.hasKey("nohistory");
+              Log.d("nice","nohistory "+String.valueOf(nohistory));
 
 
-              WritableMap index = Arguments.createMap();
-              index.merge(map);
+              Map<String,Object> mindex = map.toHashMap();
+              mindex.remove("nohistory");
+              WritableMap index = Arguments.makeNativeMap(mindex);
+
+
 
               Book book = realm.where(Book.class).equalTo("id",bookId).findFirst();
               chapters = book.getChaptersCount();
@@ -124,12 +182,24 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
 
               RealmResults<Verse> results = realm.where(Verse.class).equalTo("chapterId",chapterId).findAll();
               String data = parseVerses(results);
-
               WritableMap map = Arguments.createMap();
               map.putString("data",data);
               map.putMap("index",index);
               map.putMap("book",book.getWritableMap());
               sendEvent("bible-realm-set-chapter",map);
+
+              //Keeping track of your history
+              if(!nohistory){
+                History history = realm.createObject(History.class);
+                history.setChapterId(chapterId);
+                history.setDate(new Date());
+                history.setTitle(book.getName()+" "+chapter);
+                RealmResults<History> histories = realm.where(History.class).findAll().sort("date",Sort.DESCENDING);
+                if(histories.size() > 200){
+                  histories.last().deleteFromRealm();
+                }
+              }
+
 
 
 

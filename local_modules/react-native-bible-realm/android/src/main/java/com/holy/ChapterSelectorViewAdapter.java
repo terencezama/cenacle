@@ -6,22 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.react.uimanager.events.Event;
-import com.facebook.react.uimanager.events.EventDispatcher;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.holy.schema.Book;
 
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by Terence on 22/05/2018.

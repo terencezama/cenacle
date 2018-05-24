@@ -12,6 +12,7 @@ import { _constructStyles } from 'react-native-render-html/src/HTMLStyles'
 import { Colors } from '../Themes';
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import BiblePageSelectScreen from './BiblePageSelectScreen'
+import BibleHistoryScreen from './BibleHistoryScreen'
 import {RNBibleRealm} from 'react-native-bible-realm'
 // import HTMLView from 'react-native-htmlview'
 import K from '../Services/Globals'
@@ -57,6 +58,7 @@ let biblePageScreen = null
 
 
 class BiblePageScreen extends Component {
+  underline = []
   //region navbar options
   static navigationOptions = ({ navigation }) => {
     // const {state} = navigation
@@ -105,6 +107,8 @@ class BiblePageScreen extends Component {
     }
 
     this.state = {
+      isUnderlined: false,
+      historyVisible: false,
       booksVisible: false,
       index: index,
       html: '<h1>Welcome to cenacle</h1>',
@@ -140,7 +144,9 @@ class BiblePageScreen extends Component {
       if(result){
         nindex = JSON.parse(result);
       }
+      nindex['nohistory'] = 'nohistory';
       RNBibleRealm.setChapter(nindex)
+      // nindex['nohistory'] = undefined;
     })
     
   }
@@ -148,11 +154,12 @@ class BiblePageScreen extends Component {
 
   //region Events
   bibleRealmSetChapter = (chapter) => {
-    console.log('setting chapter',chapter.index)
     this.setState({
       html: chapter.data,
-      index: chapter.index
+      index: chapter.index,
+      isUnderlined: false
     })
+    this.underline.splice(0)
     const{ book:{name}, index} = chapter
     this.props.navigation.setParams({ title: `${name} ${index.chapter}` })
     AsyncStorage.setItem(K.bibleLastView,JSON.stringify(chapter.index))
@@ -182,42 +189,6 @@ class BiblePageScreen extends Component {
     this.setState({ booksVisible: visible });
   }
   _setChapter = async (state) => {
-    /*
-    const { index: { version, book,chapter, ord }, chapters } = state
-    console.log(this.state.index)
-    const chapterId = `${version}:${book}.${chapter}`
-    const bookId  = `${version}:${book}`
-    //set navigation title 
-    this.props.navigation.setParams({ title: `${book} ${chapter}` })
-
-    await nextFrame();
-    //load verse in html
-    console.log('fetching verse',chapterId)
-    const query1 = realm().objects('Chapter').filtered('id == $0', chapterId)
-    const verse = query1[0]
-    
-    //set number of chapters if not computed
-    let chaptersLength = chapters
-    if(chapters == -1){
-      console.log('calculating chapters length')
-      const query2 = realm().objects('Book').filtered('id == $0',bookId)
-      chaptersLength = query2[0].chapters.length
-    }
-    
-    const index = {
-      version,
-      book,
-      chapter,
-      ord
-    }
-    
-    this.setState({
-      html: verse.data,
-      chapters:chaptersLength,
-      index
-    })
-    // console.log(verse)
-    */
   }
   
   _nextChapter = () => {
@@ -235,21 +206,74 @@ class BiblePageScreen extends Component {
     })
   }
 
+  _showHistory = () => {
+    this.setState({ historyVisible: true });
+  }
+
   //endregion
 
   //region action view
   _renderActionView = () => {
     const iconColor = 'white'
-    return (
-      <View style={{ flexDirection: 'row', position: 'absolute', bottom: 4, left: 0, right: 0, justifyContent: "space-between" }}>
-        <TouchableOpacity style={headerFont.container} onPress={() => { this._previousChapter() }}>
-          <FAIcon name="arrow-left" color={iconColor} size={15} />
-        </TouchableOpacity>
-        <TouchableOpacity style={headerFont.container} onPress={() => { this._nextChapter() }}>
-          <FAIcon name="arrow-right" color={iconColor} size={15} />
-        </TouchableOpacity>
-      </View>
-    )
+    if (this.state.isUnderlined){
+      return (
+        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 4, left: 0, right: 0, justifyContent: "space-around" }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+            <FAIcon name="times" color={iconColor} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+            <FAIcon name="copy" color={iconColor} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+            <FAIcon name="share" color={iconColor} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+            <FAIcon name="pencil" color={iconColor} size={20} />
+          </TouchableOpacity>
+        </View>
+      )
+    }else{
+      return (
+        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 4, left: 0, right: 0, justifyContent: "space-between" }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this._previousChapter() }}>
+            <FAIcon name="arrow-left" color={iconColor} size={15} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this._showHistory() }}>
+            <FAIcon name="history" color={iconColor} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this._nextChapter() }}>
+            <FAIcon name="arrow-right" color={iconColor} size={15} />
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+  //endregion
+
+  //region script
+  webjs = function webjs(){
+    document.onclick = onClickHandler;
+        function onClickHandler(e) {
+            var target = e.target;
+            var underline = 'underline';
+            let data = {};
+            data["verse"] = target.dataset.verse;
+            data["text"]= target.textContent;
+
+            
+            if (target.tagName.toLowerCase() == 'span') {
+                if (target.classList.contains(underline)) {
+                    target.classList.remove(underline);
+                    data["action"]= "clear";
+                } else {
+                    target.classList.add(underline);
+                    data["action"]= "underline";
+                }
+                window.postMessage(JSON.stringify(data));
+            }
+
+            
+        }
   }
   //endregion
   
@@ -258,26 +282,33 @@ class BiblePageScreen extends Component {
 
   render() {
     const { html } = this.state
-    // console.log(html)
-    const script = `
-        <script>
-          document.addEventListener('message', function(e) {
-            if (document.body.style.fontSize == "") {
-              document.body.style.fontSize = "${this.fontSize}px";
-            }
-            var delta = parseInt(e.data);
-            document.body.style.fontSize=(parseFloat(document.body.style.fontSize)+delta)+"px";
-          });
-        </script>
-    `
-    let shtml = html.replace('<script></script>',script)
+    // console.log()
     return (
       <View style={styles.mainContainer}>
-        <WebView source={{ html: shtml}} style={{ flex:1, padding:60, flexGrow:1}} ref={ref=>{this.webView = ref}}
-        // injectedJavaScript={`document.body.style.fontSize = "${this.fontSize}px"`} 
+        <WebView source={{ html: html}} style={{ flex:1, padding:60, flexGrow:1}} ref={ref=>{this.webView = ref}}
+        injectedJavaScript={String(this.webjs)+";webjs();"} 
         automaticallyAdjustContentInsets={true}
+        onMessage={(event)=> {
+          const data = JSON.parse(event.nativeEvent.data)
+          
+          if(data.action === "clear" ){
+            let zdata = this.underline.filter(o => o.verse == data.verse)[0]
+            let index = this.underline.indexOf(zdata)
+            this.underline.splice(index,1)
+          }else{
+            this.underline.push(data);
+          }
+          if(this.underline.length == 0){
+            this.setState({isUnderlined:false})
+          }else{
+            this.setState({isUnderlined:true})
+          }
+          
+        }}
         />
         {this._renderActionView()}
+
+        {/* Bible Page Screen */}
         <Modal
           animationType="fade"
           transparent={true}
@@ -304,6 +335,31 @@ class BiblePageScreen extends Component {
             
           }} />
         </Modal>
+        
+        {/* Bible History Screen */}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.historyVisible}
+          onRequestClose={() => {
+            this.setState({historyVisible:false})
+          }}>
+          <BibleHistoryScreen  
+          onClose={() => { this.setState({ historyVisible: false }) }}
+          onSelected={(chapterId)=>{
+            const {index} = this.state
+            this.setState({ historyVisible: false })
+            console.log(chapterId);
+            let nindex = index;
+            const book_chapter = chapterId.split(":")[1].split('.')
+            
+            nindex['book'] = book_chapter[0];
+            // nindex['ord'] = chapter.ord;
+            nindex['chapter'] = parseInt(book_chapter[1])
+            RNBibleRealm.setChapter(nindex)
+          }}
+           />
+          </Modal>
       </View>
     )
   }

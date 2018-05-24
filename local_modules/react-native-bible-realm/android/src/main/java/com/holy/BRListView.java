@@ -6,21 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Choreographer;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.DisplayMetricsHolder;
-import com.facebook.react.uimanager.PixelUtil;
-import com.facebook.react.uimanager.UIManagerModule;
-import com.facebook.react.uimanager.events.Event;
-import com.facebook.react.uimanager.events.EventDispatcher;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.holy.schema.Book;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;

@@ -164,7 +164,7 @@ const parseVerse = verse => {
     }
 
     //Convert all p tag to verse tag
-    vhtml = vhtml.replace(/<p class="p">/g, `<span data-verse="${verse.id}">`)
+    vhtml = vhtml.replace(/<p class="p">/g, `<span class="verse" data-verse="${verse.id}">`)
     vhtml = vhtml.replace(/<\/p>/g, '</span>')
 
     return vhtml
@@ -256,7 +256,7 @@ const saveRealm = async () => {
     await fs_ex.remove('../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm')
     await fs_ex.remove('../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm.lock')
     await fs_ex.remove('../local_modules/react-native-bible-realm/android/src/main/res/raw/bible.realm.note')
-    const zrealm = await Realm.open({ schema: [schema.BookSchema, schema.ChapterSchema, schema.VerseSchema] });
+    const zrealm = await Realm.open({ schema: [schema.BookSchema, schema.ChapterSchema, schema.VerseSchema, schema.HistorySchema] });
     const booksJson = await fetchBooks()
     const { response: { books } } = booksJson
     const booksLength = books.length

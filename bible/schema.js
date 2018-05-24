@@ -38,9 +38,21 @@ const VerseSchema = {
   }
 }
 
+const HistorySchema = {
+  name: 'History',
+  properties: {
+    date: 'date',
+    chapterId: 'string',
+    title: 'string'
+  }
+}
+
+
+
 module.exports =  {
   BookSchema,
   ChapterSchema,
-  VerseSchema
+  VerseSchema,
+  HistorySchema
 }
 
