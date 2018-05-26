@@ -19,6 +19,9 @@ import com.holy.schema.Book;
 import com.holy.schema.History;
 import com.holy.schema.Verse;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -135,17 +138,19 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
     for(Verse verse:results){
       data+= verse.getData();
     }
+    InputStream inputStream = reactContext.getResources().openRawResource(R.raw.index);
+
+    String str = "";
+
+    try {
+     str = IOUtils.toString(inputStream);
+      System.out.println(str);
+    } catch (IOException e) {
+      e.printStackTrace();
+      str = "";
+    }
     //Font size handling
-    data += "<script>\n" +
-            "        \n" +
-            "        document.addEventListener('message', function (e) {\n" +
-            "            if (document.body.style.fontSize == \"\") {\n" +
-            "                document.body.style.fontSize = \"${this.fontSize}px\";\n" +
-            "            }\n" +
-            "            var delta = parseInt(e.data);\n" +
-            "            document.body.style.fontSize = (parseFloat(document.body.style.fontSize) + delta) + \"px\";\n" +
-            "        });\n" +
-            "    </script>";
+    data += "<script>"+str+"</script>";
     data += "<div style=\"height:50px;\"></div></body></html>";
     return data;
   }

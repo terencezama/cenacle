@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   ScrollView, Text, TouchableOpacity, View,
-  Modal, DeviceEventEmitter, WebView, AsyncStorage
+  Modal, DeviceEventEmitter, WebView, AsyncStorage, Clipboard, Share
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
@@ -13,9 +13,10 @@ import { Colors } from '../Themes';
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import BiblePageSelectScreen from './BiblePageSelectScreen'
 import BibleHistoryScreen from './BibleHistoryScreen'
-import {RNBibleRealm} from 'react-native-bible-realm'
+import { RNBibleRealm } from 'react-native-bible-realm'
 // import HTMLView from 'react-native-htmlview'
 import K from '../Services/Globals'
+
 
 
 import nextFrame from 'next-frame'
@@ -117,67 +118,76 @@ class BiblePageScreen extends Component {
     biblePageScreen = this
 
     this.fontSize = 18
-    
+
   }
   componentWillMount() {
     DeviceEventEmitter.addListener('bible-realm-set-chapter', this.bibleRealmSetChapter);
 
-    AsyncStorage.getItem(K.bibleFontSizeKey).then((result)=>{
-      console.log('async result',result)
-      if(result != null){
+    AsyncStorage.getItem(K.bibleFontSizeKey).then((result) => {
+      console.log('async result', result)
+      if (result != null) {
         this.fontSize = parseInt(result)
         RNBibleRealm.setFontSize(this.fontSize)
       }
-    }).catch((error)=>{
+    }).catch((error) => {
 
     })
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     DeviceEventEmitter.removeListener('bible-realm-set-chapter');
-}
+  }
 
 
   componentDidMount() {
-    const {index} = this.state
+    const { index } = this.state
     let nindex = index
-    AsyncStorage.getItem(K.bibleLastView).then(result=>{
-      if(result){
+    AsyncStorage.getItem(K.bibleLastView).then(result => {
+      if (result) {
         nindex = JSON.parse(result);
       }
       nindex['nohistory'] = 'nohistory';
       RNBibleRealm.setChapter(nindex)
       // nindex['nohistory'] = undefined;
     })
-    
+
   }
   //endregion
 
   //region Events
   bibleRealmSetChapter = (chapter) => {
+    const { book: { name }, index } = chapter
+    const title = `${name} ${index.chapter}`
     this.setState({
       html: chapter.data,
       index: chapter.index,
-      isUnderlined: false
+      isUnderlined: false,
+      title: title
     })
     this.underline.splice(0)
-    const{ book:{name}, index} = chapter
-    this.props.navigation.setParams({ title: `${name} ${index.chapter}` })
-    AsyncStorage.setItem(K.bibleLastView,JSON.stringify(chapter.index))
+
+    this.props.navigation.setParams({ title: title })
+    AsyncStorage.setItem(K.bibleLastView, JSON.stringify(chapter.index))
   }
   //endregion
 
   //region bible user actions
   increaseFontSize = () => {
     this.fontSize++
-    this.webView.postMessage("1");
+    this.webView.postMessage(JSON.stringify({
+      action: 'font-change',
+      delta: "1"
+    }));
     RNBibleRealm.setFontSize(this.fontSize)
-    AsyncStorage.setItem(K.bibleFontSizeKey,""+this.fontSize)
+    AsyncStorage.setItem(K.bibleFontSizeKey, "" + this.fontSize)
   }
   decreaseFontSize = () => {
     this.fontSize--
-    this.webView.postMessage("-1");
+    this.webView.postMessage(JSON.stringify({
+      action: 'font-change',
+      delta: "-1"
+    }));
     RNBibleRealm.setFontSize(this.fontSize)
-    AsyncStorage.setItem(K.bibleFontSizeKey,""+this.fontSize)
+    AsyncStorage.setItem(K.bibleFontSizeKey, "" + this.fontSize)
   }
 
   _onTextPressed = (key, data) => {
@@ -190,19 +200,19 @@ class BiblePageScreen extends Component {
   }
   _setChapter = async (state) => {
   }
-  
+
   _nextChapter = () => {
-    const {index} = this.state
+    const { index } = this.state
     RNBibleRealm.changeChapter({
       index,
-      delta:1
+      delta: 1
     })
   }
   _previousChapter = () => {
-    const {index} = this.state
+    const { index } = this.state
     RNBibleRealm.changeChapter({
       index,
-      delta:-1
+      delta: -1
     })
   }
 
@@ -212,27 +222,109 @@ class BiblePageScreen extends Component {
 
   //endregion
 
+  //region UNDERLINE ACTIONS
+  parseUnderlineText = () => {
+
+    //sorting texts
+    this.underline.sort(function (a, b) {
+      const id1 = parseInt(a.id)
+      const id2 = parseInt(b.id)
+
+      return id1 - id2;
+    });
+    const underlineCount = this.underline.length
+    let lastSet = this.underline[0].verse.split('.')[2]
+    let verse = `${this.state.title}:${lastSet}`
+    if (underlineCount > 1) verse += "-"
+
+    let txt = ""
+    let prevId = parseInt(this.underline[0].id)
+    // this.underline.forEach(element => {
+    //   txt += element.text
+    // });
+    for (let i = 0; i < underlineCount; i++) {
+      let el = this.underline[i]
+      txt += el.text
+      let nextId = parseInt(el.id)
+      if (i == underlineCount - 1) {
+        if (nextId - prevId == 1) {
+          verse += `${nextId}`
+        } else if (lastSet == prevId) {
+          verse = verse.substring(0, verse.length - 1)
+          verse += `,${nextId}`
+        } else {
+          verse += nextId
+        }
+        lastSet = nextId
+      } else if (nextId - prevId > 1) {
+
+        if (i == underlineCount - 1) {
+          verse += `${prevId},${nextId}`
+        } else if (lastSet == prevId) {
+          verse = verse.substring(0, verse.length - 1)
+          verse += `,${nextId}-`
+        } else {
+          verse += `${prevId},${nextId}-`
+        }
+        lastSet = nextId
+      }
+      // console.log(verse,prevId,nextId,lastSet)
+      prevId = nextId
+    }
+    txt = txt.replace(/(<sup(.*?)sup>)|(<span.*?>)/g, "")
+    txt = txt.replace(/(<\/span>)/g, " ")
+    txt += "\n" + verse
+    // console.log(txt)
+
+    return txt
+
+  }
+  clearSelection = () => {
+    this.webView.postMessage(JSON.stringify({
+      action: 'clear-underline'
+    }));
+    this.underline.splice(0)
+    this.setState({
+      isUnderlined: false
+    })
+
+    console.log('clear selection');
+  }
+  copyAction = () => {
+    console.log('copy action');
+    Clipboard.setString(this.parseUnderlineText());
+  }
+  shareAction = () => {
+    Share.share({
+      message:this.parseUnderlineText()
+    })
+  }
+  highlightAction = () => {
+
+  }
+  //endregion
+
   //region action view
   _renderActionView = () => {
     const iconColor = 'white'
-    if (this.state.isUnderlined){
+    if (this.state.isUnderlined) {
       return (
         <View style={{ flexDirection: 'row', position: 'absolute', bottom: 4, left: 0, right: 0, justifyContent: "space-around" }}>
-          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this.clearSelection() }}>
             <FAIcon name="times" color={iconColor} size={20} />
           </TouchableOpacity>
-          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this.copyAction() }}>
             <FAIcon name="copy" color={iconColor} size={20} />
           </TouchableOpacity>
-          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this.shareAction() }}>
             <FAIcon name="share" color={iconColor} size={20} />
           </TouchableOpacity>
-          <TouchableOpacity style={headerFont.container} onPress={() => {  }}>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this.highlightAction() }}>
             <FAIcon name="pencil" color={iconColor} size={20} />
           </TouchableOpacity>
         </View>
       )
-    }else{
+    } else {
       return (
         <View style={{ flexDirection: 'row', position: 'absolute', bottom: 4, left: 0, right: 0, justifyContent: "space-between" }}>
           <TouchableOpacity style={headerFont.container} onPress={() => { this._previousChapter() }}>
@@ -251,60 +343,46 @@ class BiblePageScreen extends Component {
   //endregion
 
   //region script
-  webjs = function webjs(){
-    document.onclick = onClickHandler;
-        function onClickHandler(e) {
-            var target = e.target;
-            var underline = 'underline';
-            let data = {};
-            data["verse"] = target.dataset.verse;
-            data["text"]= target.textContent;
+  webjs = function webjs() {
 
-            
-            if (target.tagName.toLowerCase() == 'span') {
-                if (target.classList.contains(underline)) {
-                    target.classList.remove(underline);
-                    data["action"]= "clear";
-                } else {
-                    target.classList.add(underline);
-                    data["action"]= "underline";
-                }
-                window.postMessage(JSON.stringify(data));
-            }
 
-            
-        }
   }
+
+
   //endregion
-  
+
 
 
 
   render() {
     const { html } = this.state
-    // console.log()
+
     return (
       <View style={styles.mainContainer}>
-        <WebView source={{ html: html}} style={{ flex:1, padding:60, flexGrow:1}} ref={ref=>{this.webView = ref}}
-        injectedJavaScript={String(this.webjs)+";webjs();"} 
-        automaticallyAdjustContentInsets={true}
-        onMessage={(event)=> {
-          const data = JSON.parse(event.nativeEvent.data)
-          
-          if(data.action === "clear" ){
-            let zdata = this.underline.filter(o => o.verse == data.verse)[0]
-            let index = this.underline.indexOf(zdata)
-            this.underline.splice(index,1)
-          }else{
-            this.underline.push(data);
-          }
-          if(this.underline.length == 0){
-            this.setState({isUnderlined:false})
-          }else{
-            this.setState({isUnderlined:true})
-          }
-          
-        }}
+        <WebView source={{ html: html }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
+          injectedJavaScript={String(this.webjs) + "webjs();"}
+          automaticallyAdjustContentInsets={true}
+          onMessage={(event) => {
+            const data = JSON.parse(event.nativeEvent.data)
+            console.log(event.nativeEvent.data)
+            if (data.action === "clear") {
+              let zdata = this.underline.filter(o => o.verse == data.verse)[0]
+              let index = this.underline.indexOf(zdata)
+              this.underline.splice(index, 1)
+            } else if (data.action === "underline") {
+              this.underline.push(data);
+            }
+
+
+            if (this.underline.length == 0) {
+              this.setState({ isUnderlined: false })
+            } else {
+              this.setState({ isUnderlined: true })
+            }
+
+
+
+          }}
         />
         {this._renderActionView()}
 
@@ -316,8 +394,8 @@ class BiblePageScreen extends Component {
           onRequestClose={() => {
             this.setState({ booksVisible: false })
           }}>
-          <BiblePageSelectScreen onClose={() => { this.setState({ booksVisible: false }) }} onSelected={chapter=>{
-            const {index} = this.state
+          <BiblePageSelectScreen onClose={() => { this.setState({ booksVisible: false }) }} onSelected={chapter => {
+            const { index } = this.state
             this.setState({ booksVisible: false })
             let nindex = index;
             /*
@@ -332,34 +410,34 @@ class BiblePageScreen extends Component {
             nindex['chapter'] = chapter.chapter
             RNBibleRealm.setChapter(nindex)
             // console.log('received chapter',chapter)
-            
+
           }} />
         </Modal>
-        
+
         {/* Bible History Screen */}
         <Modal
           animationType="fade"
           transparent={true}
           visible={this.state.historyVisible}
           onRequestClose={() => {
-            this.setState({historyVisible:false})
-          }}>
-          <BibleHistoryScreen  
-          onClose={() => { this.setState({ historyVisible: false }) }}
-          onSelected={(chapterId)=>{
-            const {index} = this.state
             this.setState({ historyVisible: false })
-            console.log(chapterId);
-            let nindex = index;
-            const book_chapter = chapterId.split(":")[1].split('.')
-            
-            nindex['book'] = book_chapter[0];
-            // nindex['ord'] = chapter.ord;
-            nindex['chapter'] = parseInt(book_chapter[1])
-            RNBibleRealm.setChapter(nindex)
-          }}
-           />
-          </Modal>
+          }}>
+          <BibleHistoryScreen
+            onClose={() => { this.setState({ historyVisible: false }) }}
+            onSelected={(chapterId) => {
+              const { index } = this.state
+              this.setState({ historyVisible: false })
+              console.log(chapterId);
+              let nindex = index;
+              const book_chapter = chapterId.split(":")[1].split('.')
+
+              nindex['book'] = book_chapter[0];
+              // nindex['ord'] = chapter.ord;
+              nindex['chapter'] = parseInt(book_chapter[1])
+              RNBibleRealm.setChapter(nindex)
+            }}
+          />
+        </Modal>
       </View>
     )
   }

@@ -14,6 +14,7 @@ import {reset} from '../Redux/NavigationRedux'
 import { connect } from 'react-redux'
 class Drawer extends Component {
 
+    mounted = true;
     constructor(props) {
         super(props)
         this.state = {
@@ -36,8 +37,8 @@ class Drawer extends Component {
         })
         
         // this.setState({data:_data})
-        
         this._setActive(_data)
+        
     }
 
     setMenuAsync = async () =>{
@@ -64,6 +65,11 @@ class Drawer extends Component {
 
     }
 
+    
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
     _setActive = adata => {
         const index = this.props.navigation.state.index
         const _data = adata || this.state.data
@@ -76,7 +82,11 @@ class Drawer extends Component {
         }
         data[index].active = true
         
-        this.setState({ data: data.slice(0) })
+        if(this.mounted){
+            this.setState({ data: data.slice(0) })
+        }
+        
+        
 
     }
 
