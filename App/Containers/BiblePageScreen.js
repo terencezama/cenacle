@@ -11,6 +11,7 @@ import styles from './Styles/BiblePageScreenStyle'
 import { _constructStyles } from 'react-native-render-html/src/HTMLStyles'
 import { Colors } from '../Themes';
 import FAIcon from 'react-native-vector-icons/FontAwesome'
+import MIcon from 'react-native-vector-icons/MaterialIcons'
 import BiblePageSelectScreen from './BiblePageSelectScreen'
 import BibleHistoryScreen from './BibleHistoryScreen'
 import { RNBibleRealm } from 'react-native-bible-realm'
@@ -271,13 +272,37 @@ class BiblePageScreen extends Component {
       // console.log(verse,prevId,nextId,lastSet)
       prevId = nextId
     }
-    txt = txt.replace(/(<sup(.*?)sup>)|(<span.*?>)/g, "")
     txt = txt.replace(/(<\/span>)/g, " ")
+    txt = txt.replace(/(<sup(.*?)sup>)|(<.*?>)/g, "")
     txt += "\n" + verse
     // console.log(txt)
 
     return txt
 
+  }
+
+  parseUnderlineVerse = () => {
+    this.underline.sort(function (a, b) {
+      const id1 = parseInt(a.id)
+      const id2 = parseInt(b.id)
+
+      return id1 - id2;
+    });
+
+    let versesRef = []
+    this.underline.forEach(element => {
+      const verse = element.verse.split('.')
+      const book = verse[0]
+      const chapterId = `${book}.${verse[1]}`
+      const verseIndex = parseInt(verse[2])
+      versesRef.push({
+        chapterId,
+        verseId: element.verse,
+        verseIndex
+      })
+    })
+
+    return versesRef
   }
   clearSelection = () => {
     this.webView.postMessage(JSON.stringify({
@@ -287,19 +312,42 @@ class BiblePageScreen extends Component {
     this.setState({
       isUnderlined: false
     })
-
-    console.log('clear selection');
   }
   copyAction = () => {
-    console.log('copy action');
     Clipboard.setString(this.parseUnderlineText());
   }
   shareAction = () => {
     Share.share({
-      message:this.parseUnderlineText()
+      message: this.parseUnderlineText()
     })
   }
   highlightAction = () => {
+    const verses = this.parseUnderlineVerse()
+
+    const msg = {
+      action: "highlight",
+      // verses:verses
+    }
+    this.webView.postMessage(JSON.stringify(msg));
+    this.underline.length = 0
+    this.setState({ isUnderlined: false })
+    RNBibleRealm.highlight(verses)
+  }
+
+  clearHighlight = () => {
+    const highlights = this.underline.filter(element => {
+      return element.highlighted == true;
+    })
+    const msg = {
+      action: "unhighlight",
+      highlights
+    }
+    this.webView.postMessage(JSON.stringify(msg));
+    this.clearSelection()
+    highlights.forEach(element => {
+      const verseId = element.verse
+      RNBibleRealm.unhighlight({ verseId });
+    });
 
   }
   //endregion
@@ -308,6 +356,16 @@ class BiblePageScreen extends Component {
   _renderActionView = () => {
     const iconColor = 'white'
     if (this.state.isUnderlined) {
+      let isHighlighted = false
+      isHighlighted =  this.underline.some(element => {
+        return element.highlighted == true;
+      })
+      const highlightRender = !isHighlighted ? null : (
+        <TouchableOpacity style={[headerFont.container,{backgroundColor:"black"}]} onPress={() => { this.clearHighlight() }}>
+          <MIcon name="format-clear" color={Colors.primary} size={20} />
+        </TouchableOpacity>
+      )
+
       return (
         <View style={{ flexDirection: 'row', position: 'absolute', bottom: 4, left: 0, right: 0, justifyContent: "space-around" }}>
           <TouchableOpacity style={headerFont.container} onPress={() => { this.clearSelection() }}>
@@ -320,8 +378,9 @@ class BiblePageScreen extends Component {
             <FAIcon name="share" color={iconColor} size={20} />
           </TouchableOpacity>
           <TouchableOpacity style={headerFont.container} onPress={() => { this.highlightAction() }}>
-            <FAIcon name="pencil" color={iconColor} size={20} />
+            <MIcon name="highlight" color={iconColor} size={20} />
           </TouchableOpacity>
+          {highlightRender}
         </View>
       )
     } else {
@@ -371,6 +430,8 @@ class BiblePageScreen extends Component {
               this.underline.splice(index, 1)
             } else if (data.action === "underline") {
               this.underline.push(data);
+            } else if (data.action == "unhighlight") {
+              RNBibleRealm.unhighlight({ verseId: data.verse });
             }
 
 

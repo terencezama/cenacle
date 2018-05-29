@@ -25,7 +25,8 @@
     "android:emulator": "~/Library/Android/sdk/emulator/emulator -avd Nexus_5X_API_P",
     "android:bundle-release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "android:bundle-debug": "react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-    "android:install-x": "cd android;./gradlew assembleRelease -x bundleReleaseJsAndAssets&& ./gradlew installRelease -x bundleReleaseJsAndAssets",
+    "android:assemble-x": "cd android;./gradlew assembleRelease -x bundleReleaseJsAndAssets",
+    "android:install-x":"cd android;./gradlew installRelease -x bundleReleaseJsAndAssets",
     "android:shakex": "adb shell input keyevent 82",
     "android:reload": "adb shell input text \"RR\""
   },

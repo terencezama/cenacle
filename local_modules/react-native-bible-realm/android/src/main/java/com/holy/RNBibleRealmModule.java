@@ -11,11 +11,13 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.holy.schema.Book;
+import com.holy.schema.Highlight;
 import com.holy.schema.History;
 import com.holy.schema.Verse;
 
@@ -31,6 +33,7 @@ import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -127,16 +130,96 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
   }
   //endregion
 
+  //region Highlight Api
+  @ReactMethod
+  public void highlight(final ReadableArray arr){
+    new Handler().post(new Runnable() {
+      @Override
+      public void run() {
+        Realm realm = null;
+        try {
+          realm = Realm.getInstance(config);
+          realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+              Date date = new Date();
+              int arrsize = arr.size();
+              for(int i=0; i<arrsize; i++){
+                ReadableMap map = arr.getMap(i);
+                Highlight highlight = new Highlight();
+                highlight.setChapterId(map.getString("chapterId"));
+                highlight.setDate(date);
+                highlight.setVerseId(map.getString("verseId"));
+                highlight.setVerseIndex(map.getInt("verseIndex"));
+                realm.insertOrUpdate(highlight);
+              }
+
+            }
+          });
+        } finally {
+          if(realm != null) {
+            realm.close();
+          }
+        }
+      }
+    });
+  }
+  @ReactMethod
+  public void unhighlight(final ReadableMap map){
+    new Handler().post(new Runnable() {
+      @Override
+      public void run() {
+        Realm realm = null;
+        try {
+          realm = Realm.getInstance(config);
+          realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+              String verseId = map.getString("verseId");
+              realm.where(Highlight.class).equalTo("verseId",verseId).findAll().deleteAllFromRealm();
+            }
+          });
+        } finally {
+          if(realm != null) {
+            realm.close();
+          }
+        }
+      }
+    });
+  }
+  //endregion
+
   //region Bible Page Api Method
-  private String parseVerses(RealmResults<Verse> results){
+  private String parseVerses(RealmResults<Verse> results,Realm realm,String chapterId){
 
     String data = "<html>" +
             "<meta name=\"viewport\" content=\"initial-scale=1.0, maximum-scale=1.0\">" +
             //add styles
-            "<style>.underline{border-bottom: 2px dotted;color:rgb(247, 105, 38);}</style>"+
+            //rgb(247, 105, 38)
+            "<style>.underline{border-bottom: 2px dotted;color:rgb(247, 105, 38);}.highlight{color:white;background-color:rgb(247, 105, 38);}" +
+            ".underline.highlight{background-color:black;border-bottom: 2px dotted;color:rgb(247, 105, 38);line-height:"+(fontSize+5)+"px;}" +
+            ".verse{display: inline;}</style>"+
             "<body style=\"font-size:"+fontSize+"px;\">\n";
+
+    RealmResults<Highlight> highlights = realm.where(Highlight.class).equalTo("chapterId",chapterId).findAll();
+
     for(Verse verse:results){
-      data+= verse.getData();
+      boolean isHighlighted = false;
+      for (Highlight highlight:highlights) {
+        if(highlight.getVerseIndex() == verse.getOrd() ){
+          isHighlighted = true;
+          break;
+        }
+      }
+
+      if(isHighlighted == false){
+        data+= verse.getData();
+      }else{
+        String verseString  = verse.getData();
+        verseString = verseString.replace("class=\"verse\"","class=\"verse highlight\"");
+        data += verseString;
+      }
+
     }
     InputStream inputStream = reactContext.getResources().openRawResource(R.raw.index);
 
@@ -186,7 +269,7 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
               ord = book.getOrd();
 
               RealmResults<Verse> results = realm.where(Verse.class).equalTo("chapterId",chapterId).findAll();
-              String data = parseVerses(results);
+              String data = parseVerses(results,realm,chapterId);
               WritableMap map = Arguments.createMap();
               map.putString("data",data);
               map.putMap("index",index);
@@ -241,7 +324,7 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
               String chapterId = bookId+"."+chapter;
               RealmResults<Verse> results = realm.where(Verse.class).equalTo("chapterId",chapterId).findAll();
 
-              String data = parseVerses(results);
+              String data = parseVerses(results,realm,chapterId);
 
               WritableMap index = Arguments.createMap();
 //              index.merge(map);

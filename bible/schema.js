@@ -47,12 +47,23 @@ const HistorySchema = {
   }
 }
 
+const HighlightSchema = {
+  name: 'Highlight',
+  primaryKey: 'verseId',
+  properties:{
+    chapterId: 'string',
+    verseId: 'string',
+    verseIndex: 'int',
+    date: 'date',
+  }
+}
 
 
 module.exports =  {
   BookSchema,
   ChapterSchema,
   VerseSchema,
-  HistorySchema
+  HistorySchema,
+  HighlightSchema
 }
 
