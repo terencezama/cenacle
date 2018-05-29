@@ -233,46 +233,46 @@ class BiblePageScreen extends Component {
 
       return id1 - id2;
     });
-    const underlineCount = this.underline.length
-    let lastSet = this.underline[0].verse.split('.')[2]
-    let verse = `${this.state.title}:${lastSet}`
-    if (underlineCount > 1) verse += "-"
+    const count = this.underline.length
+    let verse = `${this.state.title}:`
+    
 
     let txt = ""
-    let prevId = parseInt(this.underline[0].id)
-    // this.underline.forEach(element => {
-    //   txt += element.text
-    // });
-    for (let i = 0; i < underlineCount; i++) {
+    // let prevId = parseInt(this.underline[0].id)
+    // let el = this.underline[i]
+    //   txt += el.text
+
+    for(let i=0; i<count; i++){
       let el = this.underline[i]
       txt += el.text
-      let nextId = parseInt(el.id)
-      if (i == underlineCount - 1) {
-        if (nextId - prevId == 1) {
-          verse += `${nextId}`
-        } else if (lastSet == prevId) {
-          verse = verse.substring(0, verse.length - 1)
-          verse += `,${nextId}`
-        } else {
-          verse += nextId
-        }
-        lastSet = nextId
-      } else if (nextId - prevId > 1) {
 
-        if (i == underlineCount - 1) {
-          verse += `${prevId},${nextId}`
-        } else if (lastSet == prevId) {
-          verse = verse.substring(0, verse.length - 1)
-          verse += `,${nextId}-`
-        } else {
-          verse += `${prevId},${nextId}-`
+      let c_i = parseInt(this.underline[i].id) //current index 
+      let n_i = parseInt(i==count-1?null:this.underline[i+1].id) //next index
+      let p_i = parseInt(i==0?null:this.underline[i-1].id ) //previous index
+
+      if(i==0){
+        verse += `${c_i}`
+      }else if (i==count-1){
+        if(c_i-p_i == 1){
+          verse += `-${c_i}`
+        }else{
+          verse += `,${c_i}`
         }
-        lastSet = nextId
+      }else if (c_i-p_i==1 && n_i-c_i==1 ){
+        //contine
+      }else if (c_i-p_i!=1 && n_i-c_i==1){
+        //1 3# 4 5 
+        verse += `,${c_i}`
+
+      }else if (c_i-p_i!=1 && n_i-c_i!=1){
+        verse += `,${c_i}`
+      }else if (c_i-p_i==1 && n_i-c_i!=1){
+        verse += `-${c_i}`
       }
-      // console.log(verse,prevId,nextId,lastSet)
-      prevId = nextId
+
     }
-    txt = txt.replace(/(<\/span>)/g, " ")
+
+    txt = txt.replace(/(<\/p>)/g, " ")
     txt = txt.replace(/(<sup(.*?)sup>)|(<.*?>)/g, "")
     txt += "\n" + verse
     // console.log(txt)

@@ -5,6 +5,7 @@ var mkdirp = require('mkdirp');
 const Realm = require('realm')
 var schema = require('../schema')
 var fs_ex = require('fs-extra')
+const cheerio = require('cheerio');
 
 const version = "fra-LSG"
 const username = "bhouNU2wkiTEIv6sTrHZRDkTBMuFn6XXbg0l1InP"
@@ -163,6 +164,11 @@ const parseVerse = verse => {
         vhtml = vhtml.replace(vtext[0], ntext)
     }
 
+    // const $ = cheerio.load(vhtml);
+    // console.log(vhtml)
+    // console.log($.html('.p'))
+
+
     
     //Convert all p tag to verse tag
     // vhtml = vhtml.replace(/<p class="p">/g, `<span class="verse" data-verse="${verse.id}">`)
@@ -173,10 +179,10 @@ const parseVerse = verse => {
 
     // vhtml = `<span class="verse" data-verse="${verse.id}">`+vhtml
 
-    vhtml = vhtml.replace("<p class=\"b\"></p>","<h2></h2>")
-    vhtml = vhtml.replace(/<p class="(p|q)">/, `<div class="verse" data-verse="${verse.id}"><p class="p">`)
-    vhtml = vhtml.replace(/<p class="(p|q)">/g, `<span>`)
-    vhtml = vhtml.replace(/<\/p>/g, '</span>')
+    // vhtml = vhtml.replace("<p class=\"b\"></p>","<h2></h2>")
+    vhtml = vhtml.replace(/<p class="p"><sup/, `<div class="verse" data-verse="${verse.id}"><p class="p"><sup`)
+    vhtml = vhtml.replace(/<p class="q"><sup/, `<div class="verse" data-verse="${verse.id}"><p class="q"><sup`)
+    // vhtml = vhtml.replace(/<\/p>/g, '</span>')
     vhtml = vhtml+ "</div>"
     // <\/p>$
     // vhtml = vhtml.replace(/<\/p>$/, '</span>')
@@ -259,8 +265,20 @@ const main = async () => {
 
 const test = async () => {
     let chapterId = 'fra-LSG:Gen.1'
-    let verseJson = await fetchVerse(chapterId)
-    parseVerseToHtml(chapterId, verseJson)
+    let versesJson = await fetchVerse(chapterId)
+    
+    // parseVerseToHtml(chapterId, verseJson)
+    const { response: { verses } } = versesJson
+    let text = ""
+    const versesLength = verses.length
+
+    // for (let i = 0; i < versesLength; i++) {
+    //     const verse = verses[i]
+    //     text += parseVerse(verse)
+    // }
+
+    parseVerse(verses[0])
+    process.exit();
 }
 
 const saveRealm = async () => {
@@ -344,6 +362,6 @@ const saveRealm = async () => {
 // generateJsonIndex()
 
 
-// saveRealm()
+saveRealm()
 
 

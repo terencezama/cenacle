@@ -196,9 +196,12 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
             "<meta name=\"viewport\" content=\"initial-scale=1.0, maximum-scale=1.0\">" +
             //add styles
             //rgb(247, 105, 38)
-            "<style>.underline{border-bottom: 2px dotted;color:rgb(247, 105, 38);}.highlight{color:white;background-color:rgb(247, 105, 38);}" +
-            ".underline.highlight{background-color:black;border-bottom: 2px dotted;color:rgb(247, 105, 38);line-height:"+(fontSize+5)+"px;}" +
-            ".verse{display: inline;}</style>"+
+            "<style>.underline{text-decoration-line: underline;text-decoration-style: solid;color:rgb(247, 105, 38);}" +
+            ".highlight{color:white;background-color:rgb(247, 105, 38);}" +
+            ".underline.highlight{background-color:black;color:rgb(247, 105, 38);line-height:"+(fontSize+5)+"px;}" +
+            ".verse{display: inline;}" +
+            ".p{display: inline;}" +
+            ".q{background-color: inherit; display: table;}</style>"+
             "<body style=\"font-size:"+fontSize+"px;\">\n";
 
     RealmResults<Highlight> highlights = realm.where(Highlight.class).equalTo("chapterId",chapterId).findAll();
