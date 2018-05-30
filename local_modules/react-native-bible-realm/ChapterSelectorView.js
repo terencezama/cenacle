@@ -7,6 +7,7 @@ var iface = {
   propTypes: {
     order: PropTypes.number,
     viewType: PropTypes.number,
+    scrollPosition: PropTypes.number,
     // indeterminate: PropTypes.bool,
     ...View.propTypes // include the default view properties
   },

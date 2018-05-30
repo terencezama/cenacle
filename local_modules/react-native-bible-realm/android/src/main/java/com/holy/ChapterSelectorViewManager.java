@@ -3,6 +3,7 @@ package com.holy;
 import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,17 @@ public class ChapterSelectorViewManager extends SimpleViewManager<View> {
         Log.d("nice","logging type "+type);
         _chaptersView.setVisibility(View.INVISIBLE);
         _listLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    @ReactProp(name = "scrollPosition")
+    public void setScrollPosition(View parent, int position){
+        BRListView list = (BRListView) parent.findViewById(R.id.list);
+        Log.d("nice","scrolling to position"+position);
+        list.adapter.selectedPosition = position;
+        list.scrollToPosition(position);
+//        RecyclerView.ViewHolder viewHolder = list.findViewHolderForAdapterPosition(position);
+//        list.scrollToPositionWithOffset(0,viewHolder.itemView.getTop());
 
     }
 

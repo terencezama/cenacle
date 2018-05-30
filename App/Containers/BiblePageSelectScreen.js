@@ -149,6 +149,7 @@ class BiblePageSelectScreen extends Component {
                     style={styles.chapterSelectorView}
                     order={order}
                     viewType={viewType}
+                    scrollPosition={this.props.cindex.ord-1}
                     onBookSelected={event => {
                         console.log('received event')
                         this.setState({

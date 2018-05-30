@@ -1,5 +1,6 @@
 package com.holy;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class ChapterSelectorViewAdapter extends RecyclerView.Adapter<ChapterSele
     OrderedRealmCollection<Book> _data;
     Context _context;
     Callback _callback;
+    public  int selectedPosition;
     public void sortByOrder(){
         _data = _data.sort("ord");
         notifyDataSetChanged();
@@ -52,6 +54,12 @@ public class ChapterSelectorViewAdapter extends RecyclerView.Adapter<ChapterSele
         holder.data = book;
         holder.title.setText(book.getName());
         Log.d("nice","Binding");
+        if(position == selectedPosition){
+            holder.title.setTextColor(Color.parseColor("#F76926"));
+        }else{
+            holder.title.setTextColor(Color.parseColor("#757575"));
+
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

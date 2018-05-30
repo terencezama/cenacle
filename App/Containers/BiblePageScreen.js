@@ -455,7 +455,7 @@ class BiblePageScreen extends Component {
           onRequestClose={() => {
             this.setState({ booksVisible: false })
           }}>
-          <BiblePageSelectScreen onClose={() => { this.setState({ booksVisible: false }) }} onSelected={chapter => {
+          <BiblePageSelectScreen cindex={this.state.index} onClose={() => { this.setState({ booksVisible: false }) }} onSelected={chapter => {
             const { index } = this.state
             this.setState({ booksVisible: false })
             let nindex = index;
