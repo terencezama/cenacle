@@ -1,5 +1,8 @@
 package com.holy.schema;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -25,6 +28,16 @@ public class Verse extends RealmObject {
 
     @Required
     private  String chapterId;
+
+    public WritableMap getWritableMap(){
+        WritableMap map = Arguments.createMap();
+        map.putString("id",getId());
+        map.putString("data",getData());
+        map.putInt("ord",getOrd());
+        map.putString("bookId",getBookId());
+        map.putString("chapterId",getChapterId());
+        return map;
+    }
 
     public String getId() {
         return id;

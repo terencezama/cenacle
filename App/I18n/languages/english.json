@@ -68,7 +68,10 @@
 
    "bible/menutitle":"Bible LSG",
    "bible/traditional":"Traditional",
-   "bible/alphabetical":"Alphabetical"
+   "bible/alphabetical":"Alphabetical",
+
+   "screenShareTitle":"Share",
+   "screenShareEditorTitle":"Add Share"
 
 
 

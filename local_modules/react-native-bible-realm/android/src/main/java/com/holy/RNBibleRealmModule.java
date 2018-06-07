@@ -151,6 +151,8 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
                 highlight.setDate(date);
                 highlight.setVerseId(map.getString("verseId"));
                 highlight.setVerseIndex(map.getInt("verseIndex"));
+                highlight.setTitle(map.getString("title"));
+                highlight.setData(map.getString("data"));
                 realm.insertOrUpdate(highlight);
               }
 
@@ -177,6 +179,40 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
             public void execute(Realm realm) {
               String verseId = map.getString("verseId");
               realm.where(Highlight.class).equalTo("verseId",verseId).findAll().deleteAllFromRealm();
+            }
+          });
+        } finally {
+          if(realm != null) {
+            realm.close();
+          }
+        }
+      }
+    });
+  }
+
+  @ReactMethod
+  public void fetchHighlights(final Promise promise){
+    new Handler().post(new Runnable() {
+      @Override
+      public void run() {
+        Realm realm = null;
+        try {
+          realm = Realm.getInstance(config);
+          realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+
+              RealmResults<Highlight> result = realm.where(Highlight.class).findAll().sort("date", Sort.DESCENDING);
+
+              WritableArray highlights = Arguments.createArray();
+              for(Highlight highlight:result){
+                WritableMap map  = highlight.getWritableMap();
+                highlights.pushMap(map);
+              }
+              promise.resolve(highlights);
+
+
             }
           });
         } finally {

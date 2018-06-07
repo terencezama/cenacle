@@ -10,7 +10,7 @@ import Images from '../Themes/Images'
 import firebase from 'react-native-firebase'
 import Menu from '../Config/Menu'
 import DrawerItem from '../Components/DrawerItem'
-import {reset} from '../Redux/NavigationRedux'
+import { reset } from '../Redux/NavigationRedux'
 import { connect } from 'react-redux'
 class Drawer extends Component {
 
@@ -22,28 +22,31 @@ class Drawer extends Component {
         }
     }
 
-    setMenu = (role)=>{
+    setMenu = (role) => {
         menu = Menu[role]
         const _data = Object.keys(menu).map(key => {
             let title = 'Fake'
             if (typeof menu[key].screen.navigationOptions == 'function') {
                 title = menu[key].screen.navigationOptions(this.props.navigation).title
-                
+
             } else {
                 title = menu[key].screen.navigationOptions.title
             }
 
             return { key: key, title: title, active: false }
         })
-        
+
         // this.setState({data:_data})
         this._setActive(_data)
-        
+
     }
 
-    setMenuAsync = async () =>{
-        
+    setMenuAsync = async () => {
+
         const { uid } = firebase.auth().currentUser
+        let role = await AsyncStorage.getItem(uid)
+        if(role)this.setMenu(role);
+        /*
         let role = await AsyncStorage.getItem(uid)
         if(role){
             
@@ -56,7 +59,13 @@ class Drawer extends Component {
             await AsyncStorage.setItem(uid,role)
             this.setMenu(role)
         }
-        
+        */
+        const details = firebase.firestore().collection('cenacle').doc('user').collection('details')
+        let doc = await details.doc(uid).get()
+        role = doc.data().role
+
+        await AsyncStorage.setItem(uid, role)
+        this.setMenu(role)
     }
 
     componentWillMount() {
@@ -65,7 +74,7 @@ class Drawer extends Component {
 
     }
 
-    
+
     componentWillUnmount() {
         this.mounted = false;
     }
@@ -73,31 +82,31 @@ class Drawer extends Component {
     _setActive = adata => {
         const index = this.props.navigation.state.index
         const _data = adata || this.state.data
-        if(!_data) return;
+        if (!_data) return;
         const data = _data.slice(0)
-        
-        
+
+
         for (let i in data) {
             data[i].active = false
         }
         data[index].active = true
-        
-        if(this.mounted){
+
+        if (this.mounted) {
             this.setState({ data: data.slice(0) })
         }
-        
-        
+
+
 
     }
 
     componentWillReceiveProps() {
-        
-        
-        
+
+
+
         this._setActive()
     }
 
-    _logout= ()=>{
+    _logout = () => {
         firebase.auth().signOut();
         this.props.reset('login')
     }
@@ -123,9 +132,9 @@ class Drawer extends Component {
                     <FlatList
                         data={this.state.data}
                         renderItem={({ item, index }) => {
-                            return (<DrawerItem item={item} index={index} onPress={() => { 
-                                this.props.navigation.navigate(item.key) 
-                                this.setState({index:this.props.navigation.index})
+                            return (<DrawerItem item={item} index={index} onPress={() => {
+                                this.props.navigation.navigate(item.key)
+                                this.setState({ index: this.props.navigation.index })
                             }} />)
                         }}
                         keyExtractor={(item, index) => index}
@@ -138,10 +147,10 @@ class Drawer extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        reset:payload => dispatch(reset(payload))
+        reset: payload => dispatch(reset(payload))
     }
-  }
-  
+}
+
 export default connect(null, mapDispatchToProps)(Drawer)
 const styles = StyleSheet.create({
     item: {

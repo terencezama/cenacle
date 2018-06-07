@@ -1,4 +1,6 @@
 rootProject.name = 'cenacle'
+include ':react-native-richtextview'
+project(':react-native-richtextview').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-richtextview/android')
 include ':react-native-calendar-events'
 project(':react-native-calendar-events').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-calendar-events/android')
 include ':react-native-sensitive-info'
@@ -21,4 +23,6 @@ include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
 include ':react-native-bible-realm'
 project(':react-native-bible-realm').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-bible-realm/android')
+include ':app', ':react-native-webview-bridge'
+project(':react-native-webview-bridge').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-webview-bridge/android')
 include ':app'

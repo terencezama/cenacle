@@ -14,6 +14,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome'
 import MIcon from 'react-native-vector-icons/MaterialIcons'
 import BiblePageSelectScreen from './BiblePageSelectScreen'
 import BibleHistoryScreen from './BibleHistoryScreen'
+import HighlightsScreen from './HighlightsScreen'
 import { RNBibleRealm } from 'react-native-bible-realm'
 // import HTMLView from 'react-native-htmlview'
 import K from '../Services/Globals'
@@ -111,6 +112,7 @@ class BiblePageScreen extends Component {
     this.state = {
       isUnderlined: false,
       historyVisible: false,
+      highlightsVisible: false,
       booksVisible: false,
       index: index,
       html: '<h1>Welcome to cenacle</h1>',
@@ -221,6 +223,10 @@ class BiblePageScreen extends Component {
     this.setState({ historyVisible: true });
   }
 
+  _showHighlights = () => {
+    this.setState({ highlightsVisible: true });
+  }
+
   //endregion
 
   //region UNDERLINE ACTIONS
@@ -298,7 +304,9 @@ class BiblePageScreen extends Component {
       versesRef.push({
         chapterId,
         verseId: element.verse,
-        verseIndex
+        verseIndex,
+        data: element.text,
+        title: this.state.title
       })
     })
 
@@ -391,6 +399,9 @@ class BiblePageScreen extends Component {
           </TouchableOpacity>
           <TouchableOpacity style={headerFont.container} onPress={() => { this._showHistory() }}>
             <FAIcon name="history" color={iconColor} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.container} onPress={() => { this._showHighlights() }}>
+            <MIcon name="bookmark" color={iconColor} size={20} />
           </TouchableOpacity>
           <TouchableOpacity style={headerFont.container} onPress={() => { this._nextChapter() }}>
             <FAIcon name="arrow-right" color={iconColor} size={15} />
@@ -495,6 +506,32 @@ class BiblePageScreen extends Component {
               nindex['book'] = book_chapter[0];
               // nindex['ord'] = chapter.ord;
               nindex['chapter'] = parseInt(book_chapter[1])
+              RNBibleRealm.setChapter(nindex)
+            }}
+          />
+        </Modal>
+
+        {/* Bible Highlights Screen */}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.highlightsVisible}
+          onRequestClose={() => {
+            this.setState({ highlightsVisible: false })
+          }}>
+          <HighlightsScreen
+            onClose={() => { this.setState({ highlightsVisible: false }) }}
+            onSelected={(chapterId) => {
+              const { index } = this.state
+              this.setState({ highlightsVisible: false })
+              console.log(chapterId);
+              let nindex = index;
+              const book_chapter = chapterId.split(":")[1].split('.')
+
+              nindex['book'] = book_chapter[0];
+              // nindex['ord'] = chapter.ord;
+              nindex['chapter'] = parseInt(book_chapter[1])
+              nindex['nohistory'] = 'nohistory';
               RNBibleRealm.setChapter(nindex)
             }}
           />

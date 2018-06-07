@@ -65,7 +65,7 @@ class EventDetailsScreen extends Component {
     }
 
 
-    otron.log(diff)
+    // otron.log(diff)
 
     let eventStartDate = new Date(date.setHours(hour, min))
     //13-x=7

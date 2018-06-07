@@ -1,5 +1,8 @@
 package com.holy.schema;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
+
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -21,7 +24,37 @@ public class Highlight extends RealmObject {
 
     private int verseIndex;
 
+    @Required
+    private String title;
 
+    @Required
+    private String data;
+
+    public WritableMap getWritableMap(){
+        WritableMap map = Arguments.createMap();
+        map.putString("chapterId",getChapterId());
+        map.putString("date",getDate().toString());
+        map.putInt("verseIndex",getVerseIndex());
+        map.putString("title",getTitle());
+        map.putString("data",getData());
+        return map;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     @Required
     private Date date;

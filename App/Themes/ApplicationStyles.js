@@ -44,6 +44,17 @@ const ApplicationStyles = {
       ...Fonts.style.h2,
       fontSize: 14,
       color: Colors.text
+    },
+    button:{
+      backgroundColor:Colors.primary,
+      height:50,
+      justifyContent:'center',
+      alignItems: 'center',
+    },
+    buttonTitle:{
+      fontSize:18,
+      fontWeight: 'bold',
+      color: 'white'
     }
   },
   darkLabelContainer: {

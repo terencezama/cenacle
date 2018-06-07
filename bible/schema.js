@@ -55,6 +55,8 @@ const HighlightSchema = {
     verseId: 'string',
     verseIndex: 'int',
     date: 'date',
+    title: 'string',
+    data: 'string'
   }
 }
 
