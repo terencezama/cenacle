@@ -13,7 +13,7 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 16
@@ -32,10 +32,10 @@ repositories {
 
 dependencies {
     implementation 'com.android.support:support-v4:23.4.0'
-    compile 'com.facebook.react:react-native:+'
+    implementation 'com.facebook.react:react-native:+'
     implementation 'com.android.support:recyclerview-v7:23.4.0'
     implementation 'com.android.support:design:23.4.0'
     implementation 'io.realm:android-adapters:2.1.1'
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
 }
   

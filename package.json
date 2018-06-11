@@ -54,7 +54,7 @@
     "react-native-device-info": "0.11.0",
     "react-native-easy-toast": "^1.1.0",
     "react-native-elements": "^0.19.1",
-    "react-native-firebase": "^4.0.4",
+    "react-native-firebase": "^4.2.0",
     "react-native-fs": "^2.9.12",
     "react-native-google-place-picker": "file:local_modules/react-native-google-place-picker",
     "react-native-html-render": "^1.0.5",

@@ -84,7 +84,7 @@ class SharesManagerScreen extends Component {
     console.log("item",item)
     return (
       <View style={styles.item}>
-        <View style={styles.itemContainer}>
+        <View style={[styles.itemContainer,{flex:0.6}]}>
           <View style={styles.dateContent}>
             <Text style={styles.dateText}>{moment(date).format('DD/MM/YY')}</Text>
             <Text style={styles.timeText}>{moment(date).format('h:mm a')}</Text>
@@ -94,8 +94,11 @@ class SharesManagerScreen extends Component {
             <Text numberOfLines={2} ellipsizeMode='tail' style={styles.descText}>{content}</Text>
           </View>
         </View>
-        <View style={styles.actionView}>
-          {/* <TouchableOpacity style={styles.editView} onPress={()=>{this._editAction(item)}}>
+        <View style={[styles.actionView,{flex:0.4}]}>
+          {/* <TouchableOpacity style={styles.notifView} onPress={()=>{this._editAction(item)}}>
+            <AwesomeIcon size={30} name='bell' color={'white'} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.editView} onPress={()=>{this._editAction(item)}}>
             <AwesomeIcon size={30} name='edit' color={'white'} />
           </TouchableOpacity> */}
           <TouchableOpacity style={styles.deleteView} onPress={() => { this._deleteAction(item) }}>

@@ -11,6 +11,12 @@ export default StyleSheet.create({
     flex:0.3,
     flexDirection: 'row',
   },
+  notifView:{
+    flex:1,
+    backgroundColor:Colors.flatGreen,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   editView:{
     flex:1,
     backgroundColor:Colors.flatBlue,

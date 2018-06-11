@@ -1,4 +1,6 @@
 rootProject.name = 'cenacle'
+include ':react-native-firebase'
+project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
 include ':react-native-richtextview'
 project(':react-native-richtextview').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-richtextview/android')
 include ':react-native-calendar-events'
