@@ -1,5 +1,5 @@
 
-package com.holy;
+package com.reactlibrary;
 
 import android.app.Activity;
 import android.widget.Toast;

@@ -163,7 +163,7 @@ dependencies {
     compile(project(':react-native-firebase')) {
         transitive = false
     }
-    compile project(':react-native-richtextview')
+//    compile project(':react-native-richtextview')
     implementation project(':react-native-calendar-events')
     implementation project(':react-native-sensitive-info')
     implementation project(':react-native-vector-icons')

@@ -1,8 +1,8 @@
 rootProject.name = 'cenacle'
 include ':react-native-firebase'
 project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
-include ':react-native-richtextview'
-project(':react-native-richtextview').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-richtextview/android')
+//include ':react-native-richtextview'
+//project(':react-native-richtextview').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-richtextview/android')
 include ':react-native-calendar-events'
 project(':react-native-calendar-events').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-calendar-events/android')
 include ':react-native-sensitive-info'
@@ -12,7 +12,7 @@ project(':react-native-vector-icons').projectDir = new File(rootProject.projectD
 include ':react-native-i18n'
 project(':react-native-i18n').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-i18n/android')
 include ':react-native-google-place-picker'
-project(':react-native-google-place-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-place-picker/android')
+project(':react-native-google-place-picker').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-google-place-picker/android')
 include ':react-native-firebase'
 project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
 include ':react-native-device-info'

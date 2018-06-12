@@ -5,12 +5,12 @@ import android.app.Application;
 //import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
-import com.holy.RNRichtextviewPackage;
+
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.holy.RNBibleRealmPackage;
-import com.holy.RNGooglePlacePickerPackage;
+
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
@@ -25,6 +25,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.calendarevents.CalendarEventsPackage;
+import com.reactlibrary.RNGooglePlacePickerPackage;
 import com.rnfs.RNFSPackage;
 
 import java.util.Arrays;
@@ -45,7 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNFirebasePackage(),
-            new RNRichtextviewPackage(),
             new RNSensitiveInfoPackage(),
             new VectorIconsPackage(),
             new ReactNativeI18n(),
