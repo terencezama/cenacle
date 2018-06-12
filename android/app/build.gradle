@@ -166,9 +166,9 @@ dependencies {
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-i18n')
     implementation project(':react-native-google-place-picker')
-//    implementation(project(':react-native-firebase')) {
-//        transitive = false
-//    }
+    implementation(project(':react-native-firebase')) {
+        transitive = false
+    }
     //    implementation project(':react-native-maps')
     //    compile("com.google.android.gms:play-services:15.0.0")
 //    implementation 'com.google.android.gms:play-services-base:15.0.1'
@@ -180,7 +180,7 @@ dependencies {
     implementation project(':react-native-config')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:23.4.0'
-    compile ('com.facebook.react:react-native:0.50.4') {force = true}
+    implementation ('com.facebook.react:react-native:0.50.4') {force = true}
     // From node_modules
 //    implementation project(':react-native-maps')
     implementation project(':react-native-calendar-events')
