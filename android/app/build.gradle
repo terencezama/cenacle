@@ -160,18 +160,15 @@ project.afterEvaluate {
 }
 
 dependencies {
-    compile(project(':react-native-firebase')) {
-        transitive = false
-    }
 //    compile project(':react-native-richtextview')
     implementation project(':react-native-calendar-events')
     implementation project(':react-native-sensitive-info')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-i18n')
     implementation project(':react-native-google-place-picker')
-    implementation(project(':react-native-firebase')) {
-        transitive = false
-    }
+//    implementation(project(':react-native-firebase')) {
+//        transitive = false
+//    }
     //    implementation project(':react-native-maps')
     //    compile("com.google.android.gms:play-services:15.0.0")
 //    implementation 'com.google.android.gms:play-services-base:15.0.1'
