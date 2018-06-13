@@ -71,7 +71,7 @@ class SharesManagerScreen extends Component {
     });
   }
   _editAction = (item) => {
-    this.props.navigation.navigate('EventFormEditScreen', {
+    this.props.navigation.navigate('ShareUpdateScreen', {
       update: item,
       title: 'Update'
     })
@@ -83,17 +83,18 @@ class SharesManagerScreen extends Component {
     });
   }
   _notifAction = (item) => {
+    const {item:{title,content}} = item
     let message = {
       to:"cMYm3g9GeaA:APA91bHSzL99lKl3U_jw6zl_2AeoPKbqxmpm3UI8O7eq9hBT3TzmjMLIXbPbh7SMoxOxMSGdAnJfSkvCFG8YC_GXKOIfzuLyp7cqblL46TWy2VI0BFUrII4H9A_6arD8bUAERHzZVAa7",
       data:{
         type:"notif",
-        message:"Je taime",
-        title:"Lina"
+        message:title,
+        title:"Nouvelle Partage"
       },
       priority:"high"
     }
 
-    console.log(message);
+    console.log(item);
     this.props.pnotify(message);
   }
   //endregion

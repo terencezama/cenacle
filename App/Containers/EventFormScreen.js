@@ -3,7 +3,6 @@ import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
 import { connect,dispatch } from 'react-redux'
 import {reset} from 'redux-form'
 import EventForm from '../Components/Forms/EventForm'
-import Reactoctron from 'reactotron-react-native'
 import i18n from 'react-native-i18n'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase'
@@ -53,7 +52,6 @@ class EventFormScreen extends Component {
     this.props.reset()
     const {params} = this.props.navigation.state
     if(params != undefined && 'update' in params){
-      Reactoctron.log(params)
       // this.props.navigationOptions.t
       this.props.navigation.setParams({title:'Update Event'})
       this.setState({

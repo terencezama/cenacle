@@ -11,11 +11,26 @@ import { Colors } from '../Themes';
 import MIcon from 'react-native-vector-icons/MaterialIcons'
 import firebase from 'react-native-firebase'
 class ShareEditorScreen extends Component {
-  static navigationOptions = {
-    title: i18n.t('screenShareEditorTitle'),
-  };
+  static navigationOptions = ({ navigation }) => {
+    const options = {}
+    if(navigation == null || navigation == undefined){
+      options.title = i18n.t('screenShareEditorTitle')
+      return options
+   }
+    const {params} = navigation.state
+    if(params != undefined && 'title' in params){
+      options.title = params.title
+    }else{
+      options.title = i18n.t('screenShareEditorTitle')
+    }
+    return options
+  }
   state = {
-    loading:false
+    loading:false,
+    initialValues: {
+      title: '',
+      content: ''
+    },
   }
 
   constructor(props){
@@ -25,6 +40,16 @@ class ShareEditorScreen extends Component {
 
   componentDidMount(){
     // this.refs.toast.show('hello world!');
+    const {params} = this.props.navigation.state
+    if(params != undefined && 'update' in params){
+      
+      // this.props.navigationOptions.t
+      this.props.navigation.setParams({title:'Update Event'})
+      this.setState({
+        initialValues: params.update.item,
+        update: true
+      })
+    }
 
   }
 
@@ -42,11 +67,22 @@ class ShareEditorScreen extends Component {
       return;
     }
 
-    this.ref.add({
-      title,
-      content,
-      date:new Date()
-    })
+    const {update, initialValues} = this.state;
+    
+    if(!update){
+      this.ref.add({
+        title,
+        content,
+        date:new Date()
+      })
+    }else{
+      this.ref.doc(initialValues.key).update({
+        title,
+        content
+      })
+    }
+
+    
 
     this.refs.toast.show('Shared');
 
@@ -57,13 +93,14 @@ class ShareEditorScreen extends Component {
   }
 
   render() {
+    const {initialValues:{title,content},update} = this.state
     return (
         <View style={styles.container}>
           <RichTextEditor
               ref={(r)=>this.richtext = r}
               style={styles.richText}
-              initialTitleHTML={''}
-              initialContentHTML={''}
+              initialTitleHTML={title}
+              initialContentHTML={content}
               editorInitializedCallback={() => this.onEditorInitialized()}
               contentPlaceholder={'Please insert a title and description'}
           />
@@ -78,7 +115,7 @@ class ShareEditorScreen extends Component {
           />
           {Platform.OS === 'ios' && <KeyboardSpacer/>}
           <TouchableOpacity style={styles.button} onPress={()=>{this._shareAction()}}> 
-            <Text style={styles.buttonTitle}>Share</Text>
+            <Text style={styles.buttonTitle}>{update?'Update':'Share'}</Text>
           </TouchableOpacity>
           <LoadingView loading={this.state.loading}/>
           <Toast ref="toast" position="center"/>
