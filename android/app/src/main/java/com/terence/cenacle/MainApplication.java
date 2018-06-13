@@ -3,6 +3,8 @@ package com.terence.cenacle;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 //import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
@@ -35,7 +37,7 @@ import java.util.List;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -83,12 +85,16 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    Log.d("nice","oncreate");
     SoLoader.init(this, /* native exopackage */ false);
   }
 
   @Override
   protected void attachBaseContext(Context base) {
     super.attachBaseContext(base);
+    Log.d("nice","attachBaseContext");
     MultiDex.install(this);
   }
+
+
 }
