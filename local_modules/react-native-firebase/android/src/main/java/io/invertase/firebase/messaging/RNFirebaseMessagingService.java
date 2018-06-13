@@ -21,9 +21,8 @@ public class RNFirebaseMessagingService extends FirebaseMessagingService {
 
   @Override
   public void onMessageReceived(RemoteMessage message) {
-    Log.d(TAG, "onMessageReceived nice event received");
-      Map<String,String> data = message.getData();
-      Log.d(TAG, "map:"+data.toString());
+    Log.d(TAG, "onMessageReceived event received");
+
     if (message.getNotification() != null) {
       // It's a notification, pass to the Notifications module
       Intent notificationEvent = new Intent(REMOTE_NOTIFICATION_EVENT);
@@ -34,18 +33,6 @@ public class RNFirebaseMessagingService extends FirebaseMessagingService {
     } else {
       // It's a data message
 
-
-      if(data.containsKey("type") && data.get("type").equalsIgnoreCase("notif")){
-        //Background Heads up Notification message
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.notif)
-                .setContentTitle(data.get("title"))
-                .setContentText(data.get("message"))
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-
-        return;
-      }
       // If the app is in the foreground we send it to the Messaging module
       if (Utils.isAppInForeground(this.getApplicationContext())) {
         Intent messagingEvent = new Intent(MESSAGE_EVENT);
