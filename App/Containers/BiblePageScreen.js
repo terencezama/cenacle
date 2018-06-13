@@ -429,7 +429,7 @@ class BiblePageScreen extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <WebView source={{ html: html }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
+        <WebView source={{ html: html, baseUrl:'' }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
           injectedJavaScript={String(this.webjs) + "webjs();"}
           automaticallyAdjustContentInsets={true}
           onMessage={(event) => {
