@@ -1,6 +1,13 @@
 var underline = 'underline';
 
 document.addEventListener('message', function (e) {
+    messageReceived(e);
+});
+// window.addEventListener('message', function (e) {
+//     messageReceived(e);
+// });
+
+function messageReceived(e){
     var data = JSON.parse(e.data);
     //data work with actions 
     // window.postMessage(data);
@@ -38,10 +45,8 @@ document.addEventListener('message', function (e) {
             break;
         }
     }
-
-});
-
-document.addEventListener('click', function (e) {
+}
+function clickAction(e){
     var target = e.target;
     var div = null;
     if (target.tagName.toLowerCase() == 'div') {
@@ -68,4 +73,10 @@ document.addEventListener('click', function (e) {
         console.log(data);
         window.postMessage(JSON.stringify(data));
     }
+}
+document.addEventListener('click', function (e) {
+    clickAction(e);
 });
+// window.addEventListener('click', function (e) {
+//     clickAction(e);
+// });

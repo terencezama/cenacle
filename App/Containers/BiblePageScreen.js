@@ -432,6 +432,8 @@ class BiblePageScreen extends Component {
         <WebView source={{ html: html, baseUrl:'' }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
           injectedJavaScript={String(this.webjs) + "webjs();"}
           automaticallyAdjustContentInsets={true}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
           onMessage={(event) => {
             const data = JSON.parse(event.nativeEvent.data)
             console.log(event.nativeEvent.data)

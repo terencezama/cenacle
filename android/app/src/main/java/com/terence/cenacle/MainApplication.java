@@ -2,9 +2,11 @@ package com.terence.cenacle;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
+import android.webkit.WebView;
 
 //import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
@@ -87,6 +89,9 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     super.onCreate();
     Log.d("nice","oncreate");
     SoLoader.init(this, /* native exopackage */ false);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      WebView.setWebContentsDebuggingEnabled(true);
+    }
   }
 
   @Override
