@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { FlatList, View, Text, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment-with-locales-es6'
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import NotifyActions from '../Redux/NotifyRedux'
 
 // Styles
 import styles from './Styles/EventsManagerScreenStyle'
@@ -60,20 +61,40 @@ class SharesManagerScreen extends Component {
     )
 
   }
-  _deleteItem= (item) => {
+  _deleteItem = (item) => {
     const { key } = item.item;
 
     firebase.firestore().collection('cenacle').doc('app').collection('shares').doc(key).delete().then(function () {
-      
+
     }).catch(function (error) {
       console.log(error)
     });
   }
   _editAction = (item) => {
-    this.props.navigation.navigate('EventFormEditScreen',{
-      update:item,
-      title:'Update'
+    this.props.navigation.navigate('EventFormEditScreen', {
+      update: item,
+      title: 'Update'
     })
+  }
+  _uuidv4 = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  _notifAction = (item) => {
+    let message = {
+      to:"cMYm3g9GeaA:APA91bHSzL99lKl3U_jw6zl_2AeoPKbqxmpm3UI8O7eq9hBT3TzmjMLIXbPbh7SMoxOxMSGdAnJfSkvCFG8YC_GXKOIfzuLyp7cqblL46TWy2VI0BFUrII4H9A_6arD8bUAERHzZVAa7",
+      data:{
+        type:"notif",
+        message:"Je taime",
+        title:"Lina"
+      },
+      priority:"high"
+    }
+
+    console.log(message);
+    this.props.pnotify(message);
   }
   //endregion
 
@@ -81,10 +102,10 @@ class SharesManagerScreen extends Component {
   _renderItem = (item, index) => {
     const { date, time, title, content } = item.item;
 
-    console.log("item",item)
+    console.log("item", item)
     return (
       <View style={styles.item}>
-        <View style={[styles.itemContainer,{flex:0.6}]}>
+        <View style={[styles.itemContainer, { flex: 0.6 }]}>
           <View style={styles.dateContent}>
             <Text style={styles.dateText}>{moment(date).format('DD/MM/YY')}</Text>
             <Text style={styles.timeText}>{moment(date).format('h:mm a')}</Text>
@@ -94,18 +115,18 @@ class SharesManagerScreen extends Component {
             <Text numberOfLines={2} ellipsizeMode='tail' style={styles.descText}>{content}</Text>
           </View>
         </View>
-        <View style={[styles.actionView,{flex:0.4}]}>
-          {/* <TouchableOpacity style={styles.notifView} onPress={()=>{this._editAction(item)}}>
+        <View style={[styles.actionView, { flex: 0.4 }]}>
+          <TouchableOpacity style={styles.notifView} onPress={() => { this._notifAction(item) }}>
             <AwesomeIcon size={30} name='bell' color={'white'} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.editView} onPress={()=>{this._editAction(item)}}>
+          <TouchableOpacity style={styles.editView} onPress={() => { this._editAction(item) }}>
             <AwesomeIcon size={30} name='edit' color={'white'} />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity style={styles.deleteView} onPress={() => { this._deleteAction(item) }}>
             <AwesomeIcon size={30} name='trash' color={'white'} />
           </TouchableOpacity>
         </View>
-        <Toast ref="toast" position="center"/>
+        <Toast ref="toast" position="center" />
       </View>
     )
 
@@ -126,11 +147,13 @@ class SharesManagerScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    pnotify  :(body)=>dispatch(NotifyActions.notifyRequest(body)),
   }
 }
 

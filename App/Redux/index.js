@@ -10,7 +10,8 @@ export const reducers = combineReducers({
   
   nav: require('./NavigationRedux').reducer,
   form: form,
-  auth: require('./AuthRedux').reducer
+  auth: require('./AuthRedux').reducer,
+  notify: require('./NotifyRedux').reducer
 })
 
 export default () => {
