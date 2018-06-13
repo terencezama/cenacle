@@ -13,6 +13,8 @@ import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
 
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
+
+import com.jordansexton.react.crosswalk.webview.CrosswalkWebViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.holy.RNBibleRealmPackage;
@@ -39,7 +41,7 @@ import java.util.List;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 
 
-public class MainApplication extends MultiDexApplication implements ReactApplication {
+public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -67,7 +69,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 //              new MapsPackage(),
               new CalendarEventsPackage(),
               new RNBibleRealmPackage(),
-              new WebViewBridgePackage()
+              new WebViewBridgePackage(),
+              new CrosswalkWebViewPackage()
 
 
       );

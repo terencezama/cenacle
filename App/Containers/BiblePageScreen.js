@@ -17,6 +17,7 @@ import BibleHistoryScreen from './BibleHistoryScreen'
 import HighlightsScreen from './HighlightsScreen'
 import { RNBibleRealm } from 'react-native-bible-realm'
 // import HTMLView from 'react-native-htmlview'
+import Crosswalk from 'react-native-webview-crosswalk'
 import K from '../Services/Globals'
 
 
@@ -429,7 +430,7 @@ class BiblePageScreen extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <WebView source={{ html: html, baseUrl:'' }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
+        <Crosswalk source={{ html: html, baseUrl:'' }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
           injectedJavaScript={String(this.webjs) + "webjs();"}
           automaticallyAdjustContentInsets={true}
           javaScriptEnabled={true}
