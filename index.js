@@ -22,7 +22,7 @@ firebase.messaging().getToken()
             // user doesn't have a device token yet
         }
     });
-
+firebase.messaging().subscribeToTopic("all");
 
 firebase.messaging().onMessage((message) => {
     // Process your message as required
@@ -34,6 +34,7 @@ firebase.messaging().onMessage((message) => {
         .setBody(data.message);
     notification
         .android.setChannelId('cenacle-channel')
+        .android.setPriority(1)
         .android.setSmallIcon('notif');
     firebase.notifications().displayNotification(notification)
 

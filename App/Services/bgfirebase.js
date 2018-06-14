@@ -11,7 +11,9 @@ export default async (message) => {
         .setBody(data.message);
     notification
         .android.setChannelId('cenacle-channel')
+        .android.setPriority(1)
         .android.setSmallIcon('notif');
     firebase.notifications().displayNotification(notification)
+    
     return Promise.resolve();
 }

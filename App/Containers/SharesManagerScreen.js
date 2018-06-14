@@ -85,7 +85,7 @@ class SharesManagerScreen extends Component {
   _notifAction = (item) => {
     const {item:{title,content}} = item
     let message = {
-      to:"cMYm3g9GeaA:APA91bHSzL99lKl3U_jw6zl_2AeoPKbqxmpm3UI8O7eq9hBT3TzmjMLIXbPbh7SMoxOxMSGdAnJfSkvCFG8YC_GXKOIfzuLyp7cqblL46TWy2VI0BFUrII4H9A_6arD8bUAERHzZVAa7",
+      to:"/topics/all",
       data:{
         type:"notif",
         message:title,

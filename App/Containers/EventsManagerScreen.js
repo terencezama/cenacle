@@ -10,6 +10,7 @@ import styles from './Styles/EventsManagerScreenStyle'
 import firebase from 'react-native-firebase'
 import otron from 'reactotron-react-native'
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import NotifyActions from '../Redux/NotifyRedux'
 
 class EventsManagerScreen extends Component {
   static navigationOptions = {
@@ -75,6 +76,22 @@ class EventsManagerScreen extends Component {
       title:'Update'
     })
   }
+
+  _notifAction = (item) => {
+    const {item:{title,content}} = item
+    let message = {
+      to:"/topics/all",
+      data:{
+        type:"notif",
+        message:title,
+        title:"Nouvelle Évenement"
+      },
+      priority:"high"
+    }
+
+    console.log(item);
+    this.props.pnotify(message);
+  }
   //endregion
 
   //region Flatlist
@@ -93,8 +110,11 @@ class EventsManagerScreen extends Component {
             <Text numberOfLines={2} ellipsizeMode='tail' style={styles.descText}>{desc}</Text>
           </View>
         </View>
-        <View style={styles.actionView}>
-          <TouchableOpacity style={styles.editView} onPress={()=>{this._editAction(item)}}>
+        <View style={[styles.actionView, { flex: 0.4 }]}>
+          <TouchableOpacity style={styles.notifView} onPress={() => { this._notifAction(item) }}>
+            <AwesomeIcon size={30} name='bell' color={'white'} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.editView} onPress={() => { this._editAction(item) }}>
             <AwesomeIcon size={30} name='edit' color={'white'} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.deleteView} onPress={() => { this._deleteAction(item) }}>
@@ -126,6 +146,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    pnotify  :(body)=>dispatch(NotifyActions.notifyRequest(body)),
   }
 }
 
