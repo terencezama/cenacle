@@ -19,7 +19,7 @@ import openDate from '../Lib/OpenDates'
 class EventDetailsScreen extends Component {
 
   static navigationOptions = {
-    title: 'Details',
+    title: 'Détails',
 
   };
   constructor(props) {

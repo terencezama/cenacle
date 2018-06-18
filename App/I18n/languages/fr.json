@@ -23,5 +23,51 @@
   "deviceDetails": "Détails du périphérique",
   "noItems": "Aucun",
 
-  "screenEventTitle": "Evenement"
+  "screenEventTitle": "Évenement",
+  "eventTitleInputField": "Titre",
+  "eventDescInputField": "Description",
+  "eventDateInputField": "Date",
+  "eventTitleContactField":"Contact",
+  "screenEventFormTitle":"Créer Évènement",
+
+  "fieldUsername":"Nom d'utilisateur",
+  "fieldFirstName":"Prénom",
+  "fieldLastName":"Nom de famille",
+  "fieldNickname":"Nom Préféré",
+  "fieldEmail":"Email",
+  "fieldPassword":"Mot de passe",
+  "fieldConfirm":"Confirmez",
+  "fieldSignin":"SE CONNECTER",
+  "fieldSignup":"S'INSCRIRE",
+  "fieldForgetPassword":"Soumettre",
+  "fieldMobile":"Numéro de portable",
+
+  "forgotPassword":"MOT DE PASSE OUBLIÉ",
+  "register":"S'INSCRIRE",
+  "login":"SE CONNECTER",
+
+  "success-forgetpassword":"Un e-mail avec le lien de réinitialisation vous a été envoyé. Vérifiez s'il vous plaît.",
+
+  "auth/account-exists-with-different-credential":"Le compte existe déjà",
+  "auth/invalid-credential":"Accréditation non valide",
+  "auth/operation-not-allowed":"Opération non autorisée",
+  "auth/user-disabled":"Utilisateur désactivé",
+  "auth/user-not-found":"Utilisateur non trouvé",
+  "auth/wrong-password":"Mauvais mot de passe",
+  "auth/invalid-verification-code":"Code de vérification invalide",
+  "auth/invalid-verification-id":"Identifiant de validation incorrect",
+  "auth/email-already-in-use":"Email déjà utilisé",
+  "auth/invalid-email":"Adresse e-mail invalide",
+  "auth/weak-password":"Le mot de passe est faible",
+
+  "event/viewlocation":"Cliquez pour voir l'emplacement",
+  "event/call":"Cliquez pour appeler",
+  "event/schedule":"Cliquez pour planifier",
+
+  "bible/menutitle":"Bible LSG",
+  "bible/traditional":"Traditionnel",
+  "bible/alphabetical":"Alphabétique",
+
+  "screenShareTitle":"Partage",
+  "screenShareEditorTitle":"Ajouter Partage"
 }

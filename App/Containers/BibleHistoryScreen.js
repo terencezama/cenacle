@@ -37,7 +37,7 @@ class BibleHistoryScreen extends Component {
   _renderHeader = () => {
     return (
       <View style={styles.navbar}>
-        <Text style={styles.titleText}>History </Text>
+        <Text style={styles.titleText}>Histoire </Text>
         <TouchableOpacity style={styles.iconContainer} onPress={() => { this.props.onClose() }}>
           <FAIcon name={'close'} color="#fff" size={30} size={15} />
         </TouchableOpacity>

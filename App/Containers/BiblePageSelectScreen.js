@@ -85,7 +85,7 @@ class BiblePageSelectScreen extends Component {
         const { onBookSelected, viewType, currentBook } = this.state
         const close = () => (
             <View style={styles.navbar}>
-                <Text style={styles.titleText}>Books </Text>
+                <Text style={styles.titleText}>Livres </Text>
                 <TouchableOpacity style={styles.iconContainer} onPress={() => { this.props.onClose() }}>
                     <FAIcon name={'close'} color="#fff" size={30} size={15} />
                 </TouchableOpacity>

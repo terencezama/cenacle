@@ -12,6 +12,7 @@ import Menu from '../Config/Menu'
 import DrawerItem from '../Components/DrawerItem'
 import { reset } from '../Redux/NavigationRedux'
 import { connect } from 'react-redux'
+import i18n from 'react-native-i18n'
 class Drawer extends Component {
 
     mounted = true;
@@ -118,7 +119,7 @@ class Drawer extends Component {
         return (
             <TouchableOpacity style={styles.item} onPress={() => { this._logout() }}>
                 <FAIcon style={styles.icon} name="sign-out" size={20} color={Colors.flatRed} />
-                <Text style={styles.text}>{'Logout'}</Text>
+                <Text style={styles.text}>{i18n.t('logOut')}</Text>
             </TouchableOpacity>
         )
     }

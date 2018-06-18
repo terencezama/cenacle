@@ -26,7 +26,7 @@ export default class LoadingView extends Component {
           <View style={styles.indicatorContainer}>
             <View style={styles.indicator} />
             <ActivityIndicator size="large" color="#fff" />
-            <Text style={styles.text}>{'Loading ...'}</Text>
+            <Text style={styles.text}>{'Chargement ...'}</Text>
           </View>
         </View>
       )

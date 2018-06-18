@@ -24,12 +24,12 @@
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Traditional" />
+                android:text="Traditionnel" />
 
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alphabetical" />
+                android:text="Alphabétique" />
 
 
         </android.support.design.widget.TabLayout>

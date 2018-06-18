@@ -10,7 +10,7 @@ const nodes = {
         const{value} = el
         
         if(tag == 'ul'){
-            return (<Text key={i+200}>{'⬤  '}<Text key={i} style={[styles.t,s]}>{value}</Text></Text>)
+            return (<Text key={i+200}>{'•  '}<Text key={i} style={[styles.t,s]}>{value}</Text></Text>)
         }else if(tag == 'ol'){
             return (<Text style={[styles.t,styles.b]} key={i+200}>{`${i+1}. `}<Text key={i} style={[styles.t,s]}>{value}</Text></Text>)
         }else{

@@ -35,6 +35,8 @@ firebase.messaging().onMessage((message) => {
     notification
         .android.setChannelId('cenacle-channel')
         .android.setPriority(1)
+        .android.setVibrate([1000,1000])
+        .android.setDefaults([firebase.notifications.Android.Defaults.Vibrate])
         .android.setSmallIcon('notif');
     firebase.notifications().displayNotification(notification)
 
