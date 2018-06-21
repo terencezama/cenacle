@@ -3,7 +3,7 @@ import { AppRegistry } from 'react-native'
 import App from './App/Containers/App'
 import firebase from 'react-native-firebase'
 import bgfirebase from './App/Services/bgfirebase'
-
+import notify from './App/Services/notif'
 AppRegistry.registerComponent('cenacle', () => App)
 AppRegistry.registerHeadlessTask('RNFirebaseBackgroundMessage', () => bgfirebase);
 
@@ -23,21 +23,11 @@ firebase.messaging().getToken()
         }
     });
 firebase.messaging().subscribeToTopic("all");
-
+if(__DEV__){
+    firebase.messaging().subscribeToTopic("debug"); 
+}
 firebase.messaging().onMessage((message) => {
-    // Process your message as required
-    const { data } = message
-    console.log("fcm-inapp", data);
-    const notification = new firebase.notifications.Notification()
-        .setNotificationId('notificationId')
-        .setTitle(data.title)
-        .setBody(data.message);
-    notification
-        .android.setChannelId('cenacle-channel')
-        .android.setPriority(1)
-        .android.setVibrate([1000,1000])
-        .android.setDefaults([firebase.notifications.Android.Defaults.Vibrate])
-        .android.setSmallIcon('notif');
-    firebase.notifications().displayNotification(notification)
+    console.log("fcm-inapp", message);
+    notify(message);
 
 });
