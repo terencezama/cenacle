@@ -160,7 +160,6 @@ project.afterEvaluate {
 }
 
 dependencies {
-//    compile project(':react-native-richtextview')
     implementation project(':react-native-calendar-events')
     implementation project(':react-native-sensitive-info')
     implementation project(':react-native-vector-icons')
@@ -169,9 +168,6 @@ dependencies {
     implementation(project(':react-native-firebase')) {
         transitive = false
     }
-    //    implementation project(':react-native-maps')
-    //    compile("com.google.android.gms:play-services:15.0.0")
-//    implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation 'com.google.firebase:firebase-firestore:17.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.1'
@@ -181,14 +177,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:23.4.0'
     implementation ('com.facebook.react:react-native:0.50.4') {force = true}
-    // From node_modules
-//    implementation project(':react-native-maps')
     implementation project(':react-native-calendar-events')
-//    implementation project(':realm')
     implementation project(':react-native-fs')
     implementation project(':react-native-bible-realm')
     implementation project(':react-native-webview-bridge')
-//    implementation (name: "crosswalk-23.53.589.4", ext: "aar")
     implementation (name: "xwalk_core_library-22.52.561.4", ext: "aar")
     implementation project(':CrosswalkWebView')
 
