@@ -73,7 +73,7 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-        
+        <service android:enabled="true" android:name="com.terence.cenacle.nativeModules.radio.RadioService"></service>
     </application>
 
 </manifest>
