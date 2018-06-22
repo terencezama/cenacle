@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
+import StreamingScreen from '../Containers/StreamingScreen'
 // create our store
 const store = createStore()
 
@@ -22,7 +23,7 @@ class App extends Component {
     
     return (
       <Provider store={store}>
-        <RootContainer />
+        <StreamingScreen />
       </Provider>
     )
   }
