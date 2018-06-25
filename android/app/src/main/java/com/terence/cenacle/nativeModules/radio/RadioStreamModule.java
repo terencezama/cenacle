@@ -123,12 +123,9 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            //Action strings to know if radio is playing or paused
-            String value = intent.getStringExtra(Constants.BROADCAST_PROGRESS_PARAM);
-
             WritableMap actionMap = Arguments.createMap();
             actionMap.putString("type", Constants.RADIO_PROGRESS);
-            actionMap.putString("value", value);
+            actionMap.putInt("value", intent.getIntExtra(Constants.BROADCAST_PROGRESS_PARAM, 0));
 
             WritableMap params = Arguments.createMap();
             params.putMap(Constants.RN_ACTION, actionMap);
@@ -159,15 +156,15 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
      */
 
     public void  getPlayerDuration(){
-        String progress = "";
-        if(radioService != null){
-            progress = radioService.getMediaPlayerDuration();
 
+        int value = 0;
+        if(radioService != null){
+            value = radioService.getMediaPlayerDuration();
         }
 
         WritableMap durationMap = Arguments.createMap();
         durationMap.putString("type", Constants.RADIO_DURATION);
-        durationMap.putString("value", progress);
+        durationMap.putInt("value", value);
 
         WritableMap params = Arguments.createMap();
         params.putMap (Constants.RN_ACTION, durationMap );

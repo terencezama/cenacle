@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
+import { View, Text, Slider, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import styles from './Styles/StreamingScreenStyle'
 import { ToastModule, RadioStreamModule } from '../NativeModules';
 import params from '../Services/Globals';
-import otron from 'reactotron-react-native'
+import otron from 'reactotron-react-native';
+import Utils from '../Services/Utils';
 
 class StreamingScreen extends Component {
 
@@ -13,8 +14,9 @@ class StreamingScreen extends Component {
         this.state = {
             isPlaying: false,
             loading: false,
-            progess: '0:00',
-            duration: '0:00'
+            progess: '00:00',
+            duration: '00:00',
+            progressVal: 0
         }
     }
 
@@ -37,9 +39,9 @@ class StreamingScreen extends Component {
                 ToastModule.show(`Error playing the file`, ToastModule.SHORT)
             }
         }else if(type === "duration"){
-            this.setState({duration: value})
+            this.setState({duration: Utils.convertMillisToTime(value)});
         }else if(type === "progress"){
-            this.setState({progess: value})
+            this.setState({progess: Utils.convertMillisToTime(value)});
         }
     };
 
@@ -53,10 +55,6 @@ class StreamingScreen extends Component {
             RadioStreamModule.playRadio(params.STREAMING_URL)
             ToastModule.show("Playing Radio", ToastModule.SHORT)
         }
-    }
-
-    _onButtonGetProgressPressed(){
-        RadioStreamModule.getPlayerDuration();
     }
 
     //Display Play or Pause Button depending of the state
@@ -105,15 +103,14 @@ class StreamingScreen extends Component {
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity 
-                style={styles.button}
-                onPress={() => this._onButtonGetProgressPressed()}>
-                <Text style={styles.buttonText}>
-                    Progess
-                </Text>
-            </TouchableOpacity>
-
         </View>
+
+        <Slider
+            minimumValue={0}
+            maximumValue={100}
+            step={1}
+            value={50}
+        />
 
         <View style={styles.horizontalContainer}>
             <Text style={styles.progressText}>

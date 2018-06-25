@@ -227,28 +227,9 @@ public class RadioService extends Service implements
     /**
      * For updating UI Views
      * */
-    public String getMediaPlayerDuration(){
-        final int HOUR = 60*60*1000;
-        final int MINUTE = 60*1000;
-        final int SECOND = 1000;
-
-        if(duration > 0){
-            int durationHour = duration/HOUR;
-            int durationMint = (duration%HOUR)/MINUTE;
-            int durationSec = (duration%MINUTE)/SECOND;
-
-            if(durationHour > 0){
-                return String.format("%02d:%02d:%02d",durationHour,durationMint,durationSec);
-            }else{
-                return String.format("%02d:%02d",durationMint,durationSec);
-            }
-
-        }else{
-            return  "0";
-        }
+    public int getMediaPlayerDuration(){
+        return  duration;
     }
-
-
 
     /**
      *Intents for notification view layout buttons
@@ -339,30 +320,11 @@ public class RadioService extends Service implements
         @Override
         public void run() {
 
-            int currentPosition = mediaPlayer.getCurrentPosition();
-
             Intent broadcastIntent = new Intent(Constants.BROADCAST_PROGRESS_ACTION);
-            broadcastIntent.putExtra(Constants.BROADCAST_PROGRESS_PARAM, convertMillisToDuration(currentPosition));
+            broadcastIntent.putExtra(Constants.BROADCAST_PROGRESS_PARAM, mediaPlayer.getCurrentPosition());
             sendBroadcast(broadcastIntent);
             mSeekbarUpdateHandler.postDelayed(this, 1000);
         }
     };
 
-    private String convertMillisToDuration(int duration){
-        final int HOUR = 60*60*1000;
-        final int MINUTE = 60*1000;
-        final int SECOND = 1000;
-
-        int durationHour = duration/HOUR;
-        int durationMint = (duration%HOUR)/MINUTE;
-        int durationSec = (duration%MINUTE)/SECOND;
-
-        if(durationHour > 0){
-            return String.format("%02d:%02d:%02d",durationHour,durationMint,durationSec);
-        }else{
-            return String.format("%02d:%02d",durationMint,durationSec);
-        }
-
-
-    }
 }
