@@ -15,7 +15,12 @@ const Utils = {
         }else{
             return `${minutes > 10 ? minutes : '0'+minutes}:${sec > 10 ? sec : '0'+sec}`;
         }
-    }
+    },
+
+    // getSeekbarVal : (progress, totalDuration) => {
+    //     let second = 
+    //     return (totalDuration/100) * progress;
+    // }
 }
 
 export default Utils;

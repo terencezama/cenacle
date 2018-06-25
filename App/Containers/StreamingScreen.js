@@ -14,9 +14,10 @@ class StreamingScreen extends Component {
         this.state = {
             isPlaying: false,
             loading: false,
-            progess: '00:00',
-            duration: '00:00',
-            progressVal: 0
+            progressStr: '00:00',
+            durationStr: '00:00',
+            progress: 0,
+            duration: 0
         }
     }
 
@@ -39,9 +40,16 @@ class StreamingScreen extends Component {
                 ToastModule.show(`Error playing the file`, ToastModule.SHORT)
             }
         }else if(type === "duration"){
-            this.setState({duration: Utils.convertMillisToTime(value)});
+            this.setState({
+                durationStr: Utils.convertMillisToTime(value),
+                duration:value
+            });
         }else if(type === "progress"){
-            this.setState({progess: Utils.convertMillisToTime(value)});
+            otron.log(`Percent ${this.state.duration}`)
+            this.setState({
+                progress: value,
+                progressStr: Utils.convertMillisToTime(value)
+            });
         }
     };
 
@@ -107,18 +115,18 @@ class StreamingScreen extends Component {
 
         <Slider
             minimumValue={0}
-            maximumValue={100}
+            maximumValue={this.state.duration}
             step={1}
-            value={50}
+            value={this.state.progress}
         />
 
         <View style={styles.horizontalContainer}>
             <Text style={styles.progressText}>
-                {this.state.progess}
+                {this.state.progressStr}
             </Text>
 
             <Text style={styles.progressText}>
-                {this.state.duration}
+                {this.state.durationStr}
             </Text>
 
         </View>
