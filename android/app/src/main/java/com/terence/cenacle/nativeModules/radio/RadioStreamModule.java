@@ -90,6 +90,8 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
 
     /**
      * Broadcast receivers
+     *
+     * RECEIVER FOR PLAY PAUSE
      */
     private BroadcastReceiver radioServiceReceiver = new BroadcastReceiver() {
         @Override
@@ -113,9 +115,34 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
         }
     };
 
+    /***
+     *
+     * RECEIVER FOR FILE PROGRESS
+     */
+    private BroadcastReceiver streamProgressReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            //Action strings to know if radio is playing or paused
+            String value = intent.getStringExtra(Constants.BROADCAST_PROGRESS_PARAM);
+
+            WritableMap actionMap = Arguments.createMap();
+            actionMap.putString("type", Constants.RADIO_PROGRESS);
+            actionMap.putString("value", value);
+
+            WritableMap params = Arguments.createMap();
+            params.putMap(Constants.RN_ACTION, actionMap);
+            sendEvent(getReactApplicationContext(), Constants.BROADCAST_ACTION, params);
+
+        }
+    };
+
     private void registerRadioReceivers() {
         IntentFilter filter = new IntentFilter(Constants.BROADCAST_ACTION);
         getReactApplicationContext().registerReceiver(radioServiceReceiver, filter);
+
+        IntentFilter filterProgress = new IntentFilter(Constants.BROADCAST_PROGRESS_ACTION);
+        getReactApplicationContext().registerReceiver(streamProgressReceiver, filterProgress);
     }
 
      /*

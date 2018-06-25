@@ -12,12 +12,14 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.facebook.react.bridge.ReactContext;
 import com.terence.cenacle.MainActivity;
@@ -45,6 +47,9 @@ public class RadioService extends Service implements
     private boolean isRadioPlaying;
     public int duration = 0;
     public String mMediaUrl;
+
+    //for updating UI with file progress
+    private Handler mSeekbarUpdateHandler = new Handler();
 
     public class LocalBinder extends Binder {
         public RadioService getService() {
@@ -173,6 +178,11 @@ public class RadioService extends Service implements
             Intent broadcastIntent = new Intent(Constants.BROADCAST_ACTION);
             broadcastIntent.putExtra(Constants.BROADCAST_ACTION_PARAM, Constants.PLAY_RADIO);
             sendBroadcast(broadcastIntent);
+
+
+            //update UI's progress seekbar
+
+            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
         }
     }
 
@@ -192,6 +202,8 @@ public class RadioService extends Service implements
         Intent broadcastIntent = new Intent(Constants.BROADCAST_ACTION);
         broadcastIntent.putExtra(Constants.BROADCAST_ACTION_PARAM, Constants.PAUSE_RADIO);
         sendBroadcast(broadcastIntent);
+
+        mSeekbarUpdateHandler.removeCallbacks(mUpdateSeekbar);
     }
 
     public void pauseMedia() {
@@ -207,6 +219,8 @@ public class RadioService extends Service implements
             Intent broadcastIntent = new Intent(Constants.BROADCAST_ACTION);
             broadcastIntent.putExtra(Constants.BROADCAST_ACTION_PARAM, Constants.PAUSE_RADIO);
             sendBroadcast(broadcastIntent);
+
+            mSeekbarUpdateHandler.removeCallbacks(mUpdateSeekbar);
         }
     }
 
@@ -318,5 +332,37 @@ public class RadioService extends Service implements
         //Register playNewMedia receiver
         IntentFilter filter = new IntentFilter(Constants.BROADCAST_SERVICE_ACTION);
         registerReceiver(radioServiceReceiver, filter);
+    }
+
+    //function to send event to update UI's Seekbar
+    private Runnable mUpdateSeekbar = new Runnable() {
+        @Override
+        public void run() {
+
+            int currentPosition = mediaPlayer.getCurrentPosition();
+
+            Intent broadcastIntent = new Intent(Constants.BROADCAST_PROGRESS_ACTION);
+            broadcastIntent.putExtra(Constants.BROADCAST_PROGRESS_PARAM, convertMillisToDuration(currentPosition));
+            sendBroadcast(broadcastIntent);
+            mSeekbarUpdateHandler.postDelayed(this, 1000);
+        }
+    };
+
+    private String convertMillisToDuration(int duration){
+        final int HOUR = 60*60*1000;
+        final int MINUTE = 60*1000;
+        final int SECOND = 1000;
+
+        int durationHour = duration/HOUR;
+        int durationMint = (duration%HOUR)/MINUTE;
+        int durationSec = (duration%MINUTE)/SECOND;
+
+        if(durationHour > 0){
+            return String.format("%02d:%02d:%02d",durationHour,durationMint,durationSec);
+        }else{
+            return String.format("%02d:%02d",durationMint,durationSec);
+        }
+
+
     }
 }

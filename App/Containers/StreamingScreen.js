@@ -25,6 +25,9 @@ class StreamingScreen extends Component {
 
     handleRadioStreamModuleEvents = (event) => {
         const { type, value } = event.action;
+        otron.log(`TYPE : ${type}`);
+        otron.log(`VALUE : ${value}`);
+
         if(type === "action"){
             if(value === params.PLAY_RADIO){
                 this.setState({isPlaying: true, loading:false})
@@ -35,6 +38,8 @@ class StreamingScreen extends Component {
             }
         }else if(type === "duration"){
             this.setState({duration: value})
+        }else if(type === "progress"){
+            this.setState({progess: value})
         }
     };
 

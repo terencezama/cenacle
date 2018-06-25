@@ -21,6 +21,9 @@ public class Constants {
     public static String BROADCAST_ACTION = "rc_radio_broadcast_action";
     public static String BROADCAST_ACTION_PARAM = "rc_radio_broadcast_action_param";
 
+    public static String BROADCAST_PROGRESS_ACTION = "rc_radio_Progress_action";
+    public static String BROADCAST_PROGRESS_PARAM = "rc_radio_progress_param";
+
     //from view to service.  User presses play pause on view, update notification bar view + pause service
     public static String BROADCAST_SERVICE_ACTION = "rc_radio_broadcast_service_action";
 
