@@ -57,6 +57,13 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
         getReactApplicationContext().sendBroadcast(broadcastIntent);
     }
 
+    @ReactMethod
+    public void seekTo(int position){
+        if(radioService != null){
+            radioService.seekMediaTo(position);
+        }
+    }
+
     //Binding this Client to the AudioPlayer Service
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override

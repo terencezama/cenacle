@@ -51,6 +51,10 @@ public class RadioService extends Service implements
     //for updating UI with file progress
     private Handler mSeekbarUpdateHandler = new Handler();
 
+    public void seekMediaTo(int position) {
+        mediaPlayer.seekTo(position);
+    }
+
     public class LocalBinder extends Binder {
         public RadioService getService() {
             return RadioService.this;

@@ -65,6 +65,11 @@ class StreamingScreen extends Component {
         }
     }
 
+    //Seek the native media player
+    _onSeek(value){
+        RadioStreamModule.seekTo(value);
+    }
+
     //Display Play or Pause Button depending of the state
     _renderButtonAction(){
         let actionText = "";
@@ -118,6 +123,7 @@ class StreamingScreen extends Component {
             maximumValue={this.state.duration}
             step={1}
             value={this.state.progress}
+            onValueChange={(value) => this._onSeek(value)}
         />
 
         <View style={styles.horizontalContainer}>
