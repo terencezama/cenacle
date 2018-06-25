@@ -226,7 +226,7 @@ public class RadioService extends Service implements
             if(durationHour > 0){
                 return String.format("%02d:%02d:%02d",durationHour,durationMint,durationSec);
             }else{
-                return String.format("%02d:%02d",durationHour,durationMint,durationSec);
+                return String.format("%02d:%02d",durationMint,durationSec);
             }
 
         }else{
