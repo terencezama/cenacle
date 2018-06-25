@@ -12,6 +12,10 @@ public class Constants {
     public static String STOP_RADIO  = "rc_stop_radio";
     public static String RADIO_ERROR = "rc_radio_error";
 
+    public static String RADIO_ACTION = "action";
+    public static String RADIO_DURATION = "duration";
+    public static String RADIO_PROGRESS = "progress";
+
     //from service to view
     public static String RN_ACTION = "action";
     public static String BROADCAST_ACTION = "rc_radio_broadcast_action";

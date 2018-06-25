@@ -8,6 +8,6 @@ export default {
     PLAY_RADIO: "rc_play_radio",
     PAUSE_RADIO: "rc_pause_radio",
     RADIO_ERROR: "rc_radio_error",
-    STREAMING_URL: "http://202.123.27.133/hls-live/rodfm/_definst_/liveevent/livestream.m3u8",
+    STREAMING_URL: "https://audio.emcitv.com/audio/bible/fr/audio-bible/AT/genese/genese-03.mp3",
 
 }

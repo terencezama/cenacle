@@ -3,11 +3,13 @@ import { Colors } from '../../Themes/'
 
 export default StyleSheet.create({
   container:{
-    flexDirection: 'row',
-    justifyContent: 'space-around',
     backgroundColor:Colors.white,
     margin: 4,
     borderRadius: 10,
+  },
+  horizontalContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   button: {
     backgroundColor: 'red',
@@ -18,5 +20,10 @@ export default StyleSheet.create({
   buttonText:{
     color: '#fff',
     fontSize: 20
+  },
+  progressText:{
+    color: '#000',
+    textAlign: 'center',
+    fontSize:20
   }
 })

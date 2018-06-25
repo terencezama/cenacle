@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -42,6 +43,8 @@ public class RadioService extends Service implements
     private NotificationManagerCompat notificationManager;
     private ReactContext reactContext;
     private boolean isRadioPlaying;
+    public int duration = 0;
+    public String mMediaUrl;
 
     public class LocalBinder extends Binder {
         public RadioService getService() {
@@ -100,6 +103,7 @@ public class RadioService extends Service implements
      * When user presses play on UI, service is initiated here
      */
     private void initMediaPlayer(String mediaUrl) {
+        mMediaUrl = mediaUrl;
         mediaPlayer = new MediaPlayer();
         //Set up MediaPlayer event listeners
         mediaPlayer.setOnCompletionListener(this);
@@ -207,6 +211,32 @@ public class RadioService extends Service implements
     }
 
     /**
+     * For updating UI Views
+     * */
+    public String getMediaPlayerDuration(){
+        final int HOUR = 60*60*1000;
+        final int MINUTE = 60*1000;
+        final int SECOND = 1000;
+
+        if(duration > 0){
+            int durationHour = duration/HOUR;
+            int durationMint = (duration%HOUR)/MINUTE;
+            int durationSec = (duration%MINUTE)/SECOND;
+
+            if(durationHour > 0){
+                return String.format("%02d:%02d:%02d",durationHour,durationMint,durationSec);
+            }else{
+                return String.format("%02d:%02d",durationHour,durationMint,durationSec);
+            }
+
+        }else{
+            return  "0";
+        }
+    }
+
+
+
+    /**
      *Intents for notification view layout buttons
      */
     private PendingIntent pauseRadio(){
@@ -264,6 +294,9 @@ public class RadioService extends Service implements
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
+        MediaPlayer mp = MediaPlayer.create(this, Uri.parse(mMediaUrl));
+        duration = mp.getDuration();
+        mp.release();
         playMedia();
     }
 

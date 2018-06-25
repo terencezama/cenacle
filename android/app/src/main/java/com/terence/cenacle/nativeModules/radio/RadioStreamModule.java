@@ -94,9 +94,22 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
     private BroadcastReceiver radioServiceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            //Action strings to know if radio is playing or paused
+            String value = intent.getStringExtra(Constants.BROADCAST_ACTION_PARAM);
+
+            WritableMap actionMap = Arguments.createMap();
+            actionMap.putString("type", Constants.RADIO_ACTION);
+            actionMap.putString("value", value);
+
             WritableMap params = Arguments.createMap();
-            params.putString(Constants.RN_ACTION, intent.getStringExtra(Constants.BROADCAST_ACTION_PARAM));
+            params.putMap(Constants.RN_ACTION, actionMap);
             sendEvent(getReactApplicationContext(), Constants.BROADCAST_ACTION, params);
+
+            //update the ui wih the duration of the file once the file is ready and playing
+            if(value.equals(Constants.PLAY_RADIO)){
+                getPlayerDuration();
+            }
         }
     };
 
@@ -112,6 +125,26 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
         reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
+    }
+
+    /**
+     * Utils
+     */
+
+    public void  getPlayerDuration(){
+        String progress = "";
+        if(radioService != null){
+            progress = radioService.getMediaPlayerDuration();
+
+        }
+
+        WritableMap durationMap = Arguments.createMap();
+        durationMap.putString("type", Constants.RADIO_DURATION);
+        durationMap.putString("value", progress);
+
+        WritableMap params = Arguments.createMap();
+        params.putMap (Constants.RN_ACTION, durationMap );
+        sendEvent(getReactApplicationContext(), Constants.BROADCAST_ACTION, params);
     }
 
 }
