@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 import {NavigationActions} from 'react-navigation'
-import firebase from 'react-native-firebase'
+
 import otron from 'reactotron-react-native'
 import SInfo from 'react-native-sensitive-info'
 import k from '../Services/Globals'
@@ -50,31 +50,12 @@ class RootContainer extends Component {
 
     const { launched } = this.state
 
-    if (!launched) {
-      setTimeout(() => {
-        this.setState({ launched: true })
-        this._reset(this.state.action,this.state.key)
-      }, timeoutInt)
-    }
-
-    this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      // otron.log(user)
-      let navigator = ''
-      if (user == undefined || user == null) {
-        SInfo.getItem(k.key_device_init, {}).then(value => {
-          if (value == undefined) {
-            navigator = 'register'
-          } else {
-            navigator = 'login'
-          }
-          this._setNavigator(navigator)
-        });
-      } else {
-        navigator = 'menu'
-        this._setNavigator(navigator)
-      }  
-      this.unsubscribe()
-    });
+    // if (!launched) {
+    //   setTimeout(() => {
+    //     this.setState({ launched: true })
+    //     this._reset(this.state.action,this.state.key)
+    //   }, timeoutInt)
+    // }
   }
 
   componentWillMount(){

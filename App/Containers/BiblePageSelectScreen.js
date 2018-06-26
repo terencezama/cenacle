@@ -146,6 +146,10 @@ class BiblePageSelectScreen extends Component {
             <View style={styles.container}>
                 {this._renderHeader()}
                 <ChapterSelectorView
+                    tabText={{
+                        "0":i18n.t("bible/traditional"),
+                        "1":i18n.t("bible/alphabetical")
+                    }}
                     style={styles.chapterSelectorView}
                     order={order}
                     viewType={viewType}

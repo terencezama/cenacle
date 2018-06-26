@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -36,6 +37,7 @@ public class ChapterSelectorViewManager extends SimpleViewManager<View> {
     BRChapterView _chaptersView;
     LinearLayout _listLayout;
     EventDispatcher eventDispatcher;
+    TabLayout tabLayout;
 
     public static final String REACT_CLASS = "ChapterSelector";
 
@@ -84,7 +86,7 @@ public class ChapterSelectorViewManager extends SimpleViewManager<View> {
         };
 
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -103,6 +105,15 @@ public class ChapterSelectorViewManager extends SimpleViewManager<View> {
         });
 
         return view;
+    }
+
+    @ReactProp(name = "tabText")
+    public void setTabText(View parent, ReadableMap map){
+        String t0 = map.getString("0");
+        if(t0 != null) tabLayout.getTabAt(0).setText(t0);
+
+        String t1 = map.getString("1");
+        if(t1 != null) tabLayout.getTabAt(1).setText(t1);
     }
 
     @ReactProp(name = "order")

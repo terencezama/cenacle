@@ -5,6 +5,7 @@ import { NativeModules, requireNativeComponent, View } from 'react-native';
 var iface = {
   name: 'ChapterSelector',
   propTypes: {
+    tabText: PropTypes.object,
     order: PropTypes.number,
     viewType: PropTypes.number,
     scrollPosition: PropTypes.number,
