@@ -20,25 +20,7 @@
 
 
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/notif" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/channel_name"/>
-
-
-
-
-      <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCIwn3w6Mjsn639rUADVzhODuyvWTM1g8s" />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

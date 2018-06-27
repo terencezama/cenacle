@@ -1,4 +1,7 @@
 {
-    "buildNumber":14,
-    "versionName":"1.0"
+    "buildNumber":3,
+    "versionName":"1.0",
+    "appId":"com.terence.bible.lsg",
+    "appName":"LSG"
+
 }

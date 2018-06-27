@@ -101,12 +101,13 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "com.terence.cenacle"
+        applicationId config.appId
         minSdkVersion 17
         targetSdkVersion 23
         multiDexEnabled true
         versionCode config.buildNumber
         versionName config.versionName
+        resValue "string", "app_name", config.appName
 //        ndk {
 //            abiFilters "armeabi-v7a", "x86"
 //        }
