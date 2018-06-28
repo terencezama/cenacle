@@ -11,13 +11,28 @@ class StreamingScreen extends Component {
     constructor(props){
         super(props)
 
-        this.state = {
+        this.state = { 
             isPlaying: false,
             loading: false,
             progressStr: '00:00',
             durationStr: '00:00',
             progress: 0,
-            duration: 0
+            duration: 0,
+            currentPosition: 0,
+            mediaUrls: [
+                {
+                    title: 'Genese 1',
+                    url: 'https://audio.emcitv.com/audio/bible/fr/audio-bible/AT/genese/genese-01.mp3'
+                },
+                {
+                    title: 'Genese 2',
+                    url: 'https://audio.emcitv.com/audio/bible/fr/audio-bible/AT/genese/genese-02.mp3'
+                },
+                {
+                    title: 'Genese 3',
+                    url: 'https://audio.emcitv.com/audio/bible/fr/audio-bible/AT/genese/genese-03.mp3'
+                }
+            ]
         }
     }
 
@@ -28,8 +43,6 @@ class StreamingScreen extends Component {
 
     handleRadioStreamModuleEvents = (event) => {
         const { type, value } = event.action;
-        otron.log(`TYPE : ${type}`);
-        otron.log(`VALUE : ${value}`);
 
         if(type === "action"){
             if(value === params.PLAY_RADIO){
@@ -59,8 +72,11 @@ class StreamingScreen extends Component {
             this.setState({isPlaying: false})
             RadioStreamModule.pauseRadio()
         }else{
+            const { mediaUrls, currentPosition } = this.state;
+            const { url } = mediaUrls[currentPosition];
+
             this.setState({loading: true})
-            RadioStreamModule.playRadio(params.STREAMING_URL)
+            RadioStreamModule.playRadio(url)
             ToastModule.show("Playing Radio", ToastModule.SHORT)
         }
     }
@@ -70,6 +86,47 @@ class StreamingScreen extends Component {
         RadioStreamModule.seekTo(value);
     }
 
+    _onButtonNextPressed(){
+        let { currentPosition, mediaUrls } = this.state;
+        const urlsCount = (mediaUrls.length -1);
+        if(currentPosition < urlsCount ){
+            currentPosition++;
+        }else if(currentPosition === urlsCount){
+            currentPosition = 0;
+        }
+
+        this.setState({ currentPosition: currentPosition});
+        this._changeTrack(currentPosition);
+    }
+
+    _onButtonPreviousPressed(){
+        let { currentPosition, mediaUrls } = this.state;
+        if(currentPosition > 0){
+            //go to previous url
+            currentPosition--;
+        }else if(currentPosition === 0){
+            //go to last url
+            currentPosition = (mediaUrls.length -1)
+        }
+
+        this.setState({ currentPosition: currentPosition});
+        this._changeTrack(currentPosition);
+    }
+
+    _changeTrack(trackNumber){
+        this.setState({
+            progressStr: '00:00',
+            durationStr: '00:00',
+            progress: 0,
+            duration: 0,
+        })
+
+        const { url } = this.state.mediaUrls[trackNumber];
+        if(this.state.isPlaying){
+            this.setState({ loading: true })
+            RadioStreamModule.playRadio(url)
+        } 
+    }
     //Display Play or Pause Button depending of the state
     _renderButtonAction(){
         let actionText = "";
@@ -98,11 +155,27 @@ class StreamingScreen extends Component {
         )
     }
 
+    _renderTrackTitle(){
+        const { mediaUrls, currentPosition } = this.state;
+        const { title } = mediaUrls[currentPosition];
+        return(
+            <Text style={styles.titleText}>
+                {title}
+            </Text>
+        )
+    }
+
   render() {    
     return (
       <View style={styles.container}>
+
+        {this._renderTrackTitle()}
+
         <View style={styles.horizontalContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => this._onButtonPreviousPressed()}
+                >
                 <Text style={styles.buttonText}>
                     Prev
                 </Text>
@@ -110,7 +183,9 @@ class StreamingScreen extends Component {
 
             {this._renderButtonAction()}
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => this._onButtonNextPressed()}>
                 <Text style={styles.buttonText}>
                     Next
                 </Text>

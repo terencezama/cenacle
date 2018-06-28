@@ -47,6 +47,7 @@ public class RadioService extends Service implements
     private boolean isRadioPlaying;
     public int duration = 0;
     public String mMediaUrl;
+    public String currentUrl = "";
 
     //for updating UI with file progress
     private Handler mSeekbarUpdateHandler = new Handler();
@@ -82,9 +83,14 @@ public class RadioService extends Service implements
         try {
             //Called from activity if service not bound
             if (intent.getAction().equals(Constants.PLAY_RADIO)) {
-                if(mediaPlayer == null){
-                    initMediaPlayer(intent.getStringExtra(Constants.MEDIA_URL));
-                }else{
+
+                String url = intent.getStringExtra(Constants.MEDIA_URL);
+
+                if(mediaPlayer == null || !currentUrl.equals(url)){
+                    currentUrl = url;
+                    initMediaPlayer(url);
+                }
+                else{
                     playMedia();
                 }
             }
@@ -109,9 +115,27 @@ public class RadioService extends Service implements
     }
 
     /**
+     * Release instance of mediaPlayer if file is playing
+     */
+
+    private void releaseMP() {
+        if (mediaPlayer != null) {
+            try {
+                mediaPlayer.release();
+                mediaPlayer = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * When user presses play on UI, service is initiated here
      */
     private void initMediaPlayer(String mediaUrl) {
+
+        releaseMP();
+        
         mMediaUrl = mediaUrl;
         mediaPlayer = new MediaPlayer();
         //Set up MediaPlayer event listeners

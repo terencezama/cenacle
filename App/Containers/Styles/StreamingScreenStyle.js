@@ -17,6 +17,12 @@ export default StyleSheet.create({
     margin: 5,
     padding: 5
   },
+  titleText:{
+    color: '#000',
+    fontSize: 15,
+    margin:10,
+    fontWeight: '700'
+  },
   buttonText:{
     color: '#fff',
     fontSize: 20
