@@ -5,6 +5,7 @@ import { ToastModule, RadioStreamModule } from '../NativeModules';
 import params from '../Services/Globals';
 import otron from 'reactotron-react-native';
 import Utils from '../Services/Utils';
+import RNFS from 'react-native-fs';
 
 class StreamingScreen extends Component {
 
@@ -19,6 +20,7 @@ class StreamingScreen extends Component {
             progress: 0,
             duration: 0,
             currentPosition: 0,
+            isCurrentFileSaved: false,
             mediaUrls: [
                 {
                     title: 'Genese 1',
@@ -39,6 +41,20 @@ class StreamingScreen extends Component {
     //This component will listen to events sent from the native module
     componentWillMount(){
         DeviceEventEmitter.addListener(params.BROADCAST_ACTION, this.handleRadioStreamModuleEvents.bind(this));
+    }
+
+    //Check if current file is saved
+    componentDidMount(){
+        let { currentPosition, mediaUrls } = this.state;
+        const { url } = mediaUrls[currentPosition];
+        this._checkFileStatus(url);
+    }
+
+    _checkFileStatus(url){
+        this._isFileSaved(url)
+        .then((found) => {
+            this.setState({isCurrentFileSaved: found});
+        })
     }
 
     handleRadioStreamModuleEvents = (event) => {
@@ -113,6 +129,68 @@ class StreamingScreen extends Component {
         this._changeTrack(currentPosition);
     }
 
+    /**
+     * For saving downloaded file, need a file name
+     */
+    _getFileNameFromUrl(url){
+
+        let urlArr = url.split('/');
+
+        return urlArr[(urlArr.length-1)];
+    }
+
+    /**
+     * This function has 2 roles.
+     * 1. Show/Hide icon to save file
+     * 2. When play is pressed, if file present locally, play it
+     */
+    _isFileSaved(url){
+
+        let found = false;
+
+        const fileName = this._getFileNameFromUrl(url);
+        const audioDirectory = `${RNFS.ExternalDirectoryPath}/cenacleAudio/`;
+
+        return new Promise((resolve, reject) => {
+            RNFS.readDir(audioDirectory)
+            .then((result) => {
+
+                result.forEach(file => {
+                    if(file.name === fileName){
+                        found = true;
+                    }
+                })
+
+                resolve(found);
+            })
+            .catch((err) => {
+                reject(`Error CODE: ${err.code} `);
+            });
+        })
+    }
+
+    _onButtonSavePressed(){
+        let { currentPosition, mediaUrls } = this.state;
+        const { url } = mediaUrls[currentPosition];
+
+        const fileName = this._getFileNameFromUrl(url);
+
+        const audioDirectory = `${RNFS.ExternalDirectoryPath}/cenacleAudio/`; 
+
+        RNFS.downloadFile(
+            {
+                fromUrl: url,
+                toFile: `${audioDirectory}${fileName}`
+            }
+        ).promise.then(() => {
+            otron.log("Download completed")
+        }
+        ).catch(e => {
+            otron.log("Download Failed")
+            otron.log(e)
+        })
+    }
+
     _changeTrack(trackNumber){
         this.setState({
             progressStr: '00:00',
@@ -126,6 +204,8 @@ class StreamingScreen extends Component {
             this.setState({ loading: true })
             RadioStreamModule.playRadio(url)
         } 
+
+        this._checkFileStatus(url);
     }
     //Display Play or Pause Button depending of the state
     _renderButtonAction(){
@@ -165,6 +245,20 @@ class StreamingScreen extends Component {
         )
     }
 
+    _renderButtonSave(){
+        if(this.state.isCurrentFileSaved){
+            return(
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => this._onButtonSavePressed()}>
+                    <Text style={styles.buttonText}>
+                        Save
+                    </Text>
+                </TouchableOpacity>
+            );
+        }
+    }
+
   render() {    
     return (
       <View style={styles.container}>
@@ -190,6 +284,8 @@ class StreamingScreen extends Component {
                     Next
                 </Text>
             </TouchableOpacity>
+
+            {this._renderButtonSave()}
 
         </View>
 

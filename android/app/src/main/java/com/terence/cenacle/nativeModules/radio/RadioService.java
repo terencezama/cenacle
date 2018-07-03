@@ -135,7 +135,7 @@ public class RadioService extends Service implements
     private void initMediaPlayer(String mediaUrl) {
 
         releaseMP();
-        
+
         mMediaUrl = mediaUrl;
         mediaPlayer = new MediaPlayer();
         //Set up MediaPlayer event listeners
