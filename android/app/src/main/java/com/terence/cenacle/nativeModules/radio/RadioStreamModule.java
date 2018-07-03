@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -48,6 +51,20 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
         getReactApplicationContext().startService(playerIntent);
 
         getReactApplicationContext().bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @ReactMethod
+    public void playSavedAudio(String filePath){
+        try {
+            Toast.makeText(getReactApplicationContext(), "Playing", Toast.LENGTH_SHORT).show();
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(filePath);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        }catch (Exception e){
+            Toast.makeText(getReactApplicationContext(), "Exception " + e, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @ReactMethod
