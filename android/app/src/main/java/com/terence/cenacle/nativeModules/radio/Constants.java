@@ -6,6 +6,8 @@ package com.terence.cenacle.nativeModules.radio;
 
 public class Constants {
     public static String MEDIA_URL  = "media_url";
+    public static String IS_LOCAL   = "is_local";
+    public static String LOCAL_PATH = "local_path";
 
     public static String PLAY_RADIO  = "rc_play_radio";
     public static String PAUSE_RADIO = "rc_pause_radio";

@@ -43,28 +43,16 @@ public class RadioStreamModule extends ReactContextBaseJavaModule implements Lif
     }
 
     @ReactMethod
-    public void playRadio(String radioUrl) {
+    public void playRadio(String radioUrl, boolean isLocal, String localPath) {
 
         Intent playerIntent = new Intent(getReactApplicationContext(), RadioService.class);
         playerIntent.putExtra(Constants.MEDIA_URL, radioUrl );
+        playerIntent.putExtra(Constants.IS_LOCAL, isLocal);
+        playerIntent.putExtra(Constants.LOCAL_PATH, localPath);
         playerIntent.setAction(Constants.PLAY_RADIO);
         getReactApplicationContext().startService(playerIntent);
 
         getReactApplicationContext().bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @ReactMethod
-    public void playSavedAudio(String filePath){
-        try {
-            Toast.makeText(getReactApplicationContext(), "Playing", Toast.LENGTH_SHORT).show();
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(filePath);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        }catch (Exception e){
-            Toast.makeText(getReactApplicationContext(), "Exception " + e, Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @ReactMethod

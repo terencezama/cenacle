@@ -21,6 +21,10 @@ class StreamingScreen extends Component {
             duration: 0,
             currentPosition: 0,
             isCurrentFileSaved: false,
+            isDownloadingFile: false,
+            currentDownloadTotalSize: 0,
+            currentDownloadProgress:0,
+            currentDownloadJobId:0,
             mediaUrls: [
                 {
                     title: 'Genese 1',
@@ -50,6 +54,7 @@ class StreamingScreen extends Component {
         this._checkFileStatus(url);
     }
 
+    //check if current file is saved locally. Using url to identify the file
     _checkFileStatus(url){
         this._isFileSaved(url)
         .then((found) => {
@@ -57,6 +62,7 @@ class StreamingScreen extends Component {
         })
     }
 
+    //handle events received from native codes
     handleRadioStreamModuleEvents = (event) => {
         const { type, value } = event.action;
 
@@ -74,7 +80,6 @@ class StreamingScreen extends Component {
                 duration:value
             });
         }else if(type === "progress"){
-            otron.log(`Percent ${this.state.duration}`)
             this.setState({
                 progress: value,
                 progressStr: Utils.convertMillisToTime(value)
@@ -92,8 +97,13 @@ class StreamingScreen extends Component {
             const { url } = mediaUrls[currentPosition];
 
             this.setState({loading: true})
-            RadioStreamModule.playRadio(url)
-            ToastModule.show("Playing Radio", ToastModule.SHORT);
+
+            if(this.state.isCurrentFileSaved){
+                let filePath = `${RNFS.ExternalDirectoryPath}/cenacleAudio/${this._getFileNameFromUrl(url)}`;
+                RadioStreamModule.playRadio(url, true, filePath)
+            }else{
+                RadioStreamModule.playRadio(url, false, null)
+            }
         }
     }
 
@@ -154,7 +164,6 @@ class StreamingScreen extends Component {
         return new Promise((resolve, reject) => {
             RNFS.readDir(audioDirectory)
             .then((result) => {
-
                 result.forEach(file => {
                     if(file.name === fileName){
                         found = true;
@@ -169,6 +178,9 @@ class StreamingScreen extends Component {
         })
     }
 
+    /**
+     *  REGION Download File
+     */
     _onButtonSavePressed(){
         let { currentPosition, mediaUrls } = this.state;
         const { url } = mediaUrls[currentPosition];
@@ -180,17 +192,53 @@ class StreamingScreen extends Component {
         RNFS.downloadFile(
             {
                 fromUrl: url,
-                toFile: `${audioDirectory}${fileName}`
+                toFile: `${audioDirectory}${fileName}`,
+                begin: this._downloadBeginCallback,
+                progress: this._downloadProgressCallback,
+                progressDivider: 5
             }
         ).promise.then(() => {
-            otron.log("Download completed")
+            this._resetDownload();
+            ToastModule.show("File Saved Successfully", ToastModule.SHORT);
         }
         ).catch(e => {
-            otron.log("Download Failed")
-            otron.log(e)
+            this._resetDownload();
+            ToastModule.show(`Error saving the file : ${e}`, ToastModule.SHORT);
         })
     }
 
+    _resetDownload = () => {
+        this.setState({
+            isDownloadingFile: false,
+            currentDownloadTotalSize: 0,
+            currentDownloadProgress: 0,
+            currentDownloadJobId: 0,
+        });
+    }
+
+    _downloadBeginCallback = (data) =>{
+        const { jobId, contentLength } = data;
+        let totalSize = Utils.bytesToSize(contentLength);
+
+        this.setState({
+            isDownloadingFile: true,
+            currentDownloadJobId: jobId,
+            currentDownloadTotalSize: totalSize,
+        })
+    }
+
+    _downloadProgressCallback = (data) => {
+        const { jobId, contentLength, bytesWritten } = data;
+       
+        let progress = Utils.bytesToSize(bytesWritten);
+        this.setState({
+            currentDownloadProgress: progress
+        });
+    }
+
+    /**
+     * End Region Download File
+     */
     _onButtonDeletePressed(){
         let { currentPosition, mediaUrls } = this.state;
         const { url } = mediaUrls[currentPosition];
@@ -202,7 +250,6 @@ class StreamingScreen extends Component {
         return RNFS.unlink(`${audioDirectory}${fileName}`)
         .then(() => {
             //refresh the view save/delete
-            ToastModule.show("Deleted Successfully", ToastModule.SHORT);
             this._checkFileStatus(url);
         })
         // `unlink` will throw an error, if the item to unlink does not exist
@@ -212,6 +259,14 @@ class StreamingScreen extends Component {
     }
 
     _changeTrack(trackNumber){
+
+        //cancel any ongoing downloads
+
+        if(this.state.isDownloadingFile){
+            RNFS.stopDownload(this.state.currentDownloadJobId);
+            this._onButtonDeletePressed();
+        }
+
         this.setState({
             progressStr: '00:00',
             durationStr: '00:00',
@@ -221,8 +276,19 @@ class StreamingScreen extends Component {
 
         const { url } = this.state.mediaUrls[trackNumber];
         if(this.state.isPlaying){
-            this.setState({ loading: true })
-            RadioStreamModule.playRadio(url)
+            this.setState({ loading: true });
+           
+            this._isFileSaved(url)
+            .then((found) => {
+                if(found){
+                    otron.log(`Saved`)
+                    let filePath = `${RNFS.ExternalDirectoryPath}/cenacleAudio/${this._getFileNameFromUrl(url)}`;
+                    RadioStreamModule.playRadio(url, true, filePath)
+                }else{
+                    otron.log(`Not Saved`)
+                    RadioStreamModule.playRadio(url, false, null)
+                }
+            })
         } 
 
         this._checkFileStatus(url);
@@ -275,6 +341,14 @@ class StreamingScreen extends Component {
                         Delete
                     </Text>
                 </TouchableOpacity>
+            );
+        }
+
+        if(this.state.isDownloadingFile){
+            return(
+                <Text>
+                    {this.state.currentDownloadProgress}/{this.state.currentDownloadTotalSize}
+                </Text>
             );
         }
 

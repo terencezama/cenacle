@@ -86,11 +86,17 @@ public class RadioService extends Service implements
 
                 String url = intent.getStringExtra(Constants.MEDIA_URL);
 
-                if(mediaPlayer == null || !currentUrl.equals(url)){
-                    currentUrl = url;
-                    initMediaPlayer(url);
-                }
-                else{
+                if(mediaPlayer == null || url != null){
+                    if(!currentUrl.equals(url)){
+                        currentUrl = url;
+                        initMediaPlayer(
+                                url,
+                                intent.getBooleanExtra(Constants.IS_LOCAL, false),
+                                intent.getStringExtra(Constants.LOCAL_PATH));
+                    }else{
+                        playMedia();
+                    }
+                } else{
                     playMedia();
                 }
             }
@@ -132,21 +138,31 @@ public class RadioService extends Service implements
     /**
      * When user presses play on UI, service is initiated here
      */
-    private void initMediaPlayer(String mediaUrl) {
+    private void initMediaPlayer(String mediaUrl, boolean isLocal, String localPath) {
 
         releaseMP();
 
-        mMediaUrl = mediaUrl;
+        if(isLocal){
+            mMediaUrl = localPath;
+        }else{
+            mMediaUrl = mediaUrl;
+        }
+
         mediaPlayer = new MediaPlayer();
         //Set up MediaPlayer event listeners
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
         mediaPlayer.setOnPreparedListener(this);
 
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mediaPlayer.setDataSource(mediaUrl);
 
+            if(isLocal){
+                mediaPlayer.setDataSource(localPath);
+            }
+            else{
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setDataSource(mediaUrl);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             stopSelf();
