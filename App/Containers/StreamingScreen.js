@@ -93,7 +93,7 @@ class StreamingScreen extends Component {
 
             this.setState({loading: true})
             RadioStreamModule.playRadio(url)
-            ToastModule.show("Playing Radio", ToastModule.SHORT)
+            ToastModule.show("Playing Radio", ToastModule.SHORT);
         }
     }
 
@@ -191,6 +191,26 @@ class StreamingScreen extends Component {
         })
     }
 
+    _onButtonDeletePressed(){
+        let { currentPosition, mediaUrls } = this.state;
+        const { url } = mediaUrls[currentPosition];
+
+        const fileName = this._getFileNameFromUrl(url);
+
+        const audioDirectory = `${RNFS.ExternalDirectoryPath}/cenacleAudio/`; 
+
+        return RNFS.unlink(`${audioDirectory}${fileName}`)
+        .then(() => {
+            //refresh the view save/delete
+            ToastModule.show("Deleted Successfully", ToastModule.SHORT);
+            this._checkFileStatus(url);
+        })
+        // `unlink` will throw an error, if the item to unlink does not exist
+        .catch((err) => {
+            ToastModule.show(`Error Deleting the file ${err.message}`, ToastModule.SHORT);
+        });
+    }
+
     _changeTrack(trackNumber){
         this.setState({
             progressStr: '00:00',
@@ -250,13 +270,23 @@ class StreamingScreen extends Component {
             return(
                 <TouchableOpacity 
                     style={styles.button}
-                    onPress={() => this._onButtonSavePressed()}>
+                    onPress={() => this._onButtonDeletePressed()}>
                     <Text style={styles.buttonText}>
-                        Save
+                        Delete
                     </Text>
                 </TouchableOpacity>
             );
         }
+
+        return(
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => this._onButtonSavePressed()}>
+                <Text style={styles.buttonText}>
+                    Save
+                </Text>
+            </TouchableOpacity>
+        );
     }
 
   render() {    
