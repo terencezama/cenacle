@@ -304,6 +304,12 @@ public class RadioService extends Service implements
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+
+        //when finished reading file
+        Intent broadcastIntent = new Intent(Constants.BROADCAST_ACTION);
+        broadcastIntent.putExtra(Constants.BROADCAST_ACTION_PARAM, Constants.RADIO_FINISHED);
+        sendBroadcast(broadcastIntent);
+
         stopRadio();
         stopSelf();
     }

@@ -13,6 +13,7 @@ public class Constants {
     public static String PAUSE_RADIO = "rc_pause_radio";
     public static String STOP_RADIO  = "rc_stop_radio";
     public static String RADIO_ERROR = "rc_radio_error";
+    public static String RADIO_FINISHED = "rc_radio_finished";
 
     public static String RADIO_ACTION = "action";
     public static String RADIO_DURATION = "duration";

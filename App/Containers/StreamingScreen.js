@@ -67,10 +67,15 @@ class StreamingScreen extends Component {
         const { type, value } = event.action;
 
         if(type === "action"){
-            if(value === params.PLAY_RADIO){
+            otron.log(`TYPE: ${type} - ${value}`)
+;            if(value === params.PLAY_RADIO){
                 this.setState({isPlaying: true, loading:false})
             }else if(value === params.PAUSE_RADIO){
                 this.setState({isPlaying: false})
+            }else if(value === params.RADIO_FINISHED){
+                //current audio completed
+                //play next file
+                this._onButtonNextPressed();
             }else{
                 ToastModule.show(`Error playing the file`, ToastModule.SHORT)
             }
