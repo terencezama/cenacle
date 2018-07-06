@@ -6,6 +6,7 @@ import params from '../Services/Globals';
 import otron from 'reactotron-react-native';
 import Utils from '../Services/Utils';
 import RNFS from 'react-native-fs';
+import MIcon from 'react-native-vector-icons/MaterialIcons'
 
 class StreamingScreen extends Component {
 
@@ -46,7 +47,7 @@ class StreamingScreen extends Component {
     componentWillMount(){
         DeviceEventEmitter.addListener(params.BROADCAST_ACTION, this.handleRadioStreamModuleEvents.bind(this));
         RNFS.mkdir(`${RNFS.ExternalDirectoryPath}/cenacleAudio/`).then((result)=>{
-            ToastModule.show("dir created Successfully", ToastModule.SHORT);
+            // ToastModule.show("dir created Successfully", ToastModule.SHORT);
         }).catch((error)=>{
             ToastModule.show("Saving requires External Directory", ToastModule.SHORT);
         });
@@ -314,9 +315,9 @@ class StreamingScreen extends Component {
         }
 
         if(this.state.isPlaying){
-            actionText = "Pause";
+            actionText = "pause";
         }else{
-            actionText = "Play";
+            actionText = "play-arrow";
         }
 
         return(
@@ -324,9 +325,7 @@ class StreamingScreen extends Component {
                 style={styles.button}
                 onPress={() => this._onButtonRadioActionPressed()}
                 >
-                <Text style={styles.buttonText}>
-                    {actionText}
-                </Text>
+                <MIcon name={actionText} size={30} color={'white'} />
             </TouchableOpacity>
         )
     }
@@ -347,9 +346,7 @@ class StreamingScreen extends Component {
                 <TouchableOpacity 
                     style={styles.button}
                     onPress={() => this._onButtonDeletePressed()}>
-                    <Text style={styles.buttonText}>
-                        Delete
-                    </Text>
+                    <MIcon name="delete" size={30} color={'white'} />
                 </TouchableOpacity>
             );
         }
@@ -366,9 +363,7 @@ class StreamingScreen extends Component {
             <TouchableOpacity 
                 style={styles.button}
                 onPress={() => this._onButtonSavePressed()}>
-                <Text style={styles.buttonText}>
-                    Save
-                </Text>
+                <MIcon name="save" size={30} color={'white'} />
             </TouchableOpacity>
         );
     }
