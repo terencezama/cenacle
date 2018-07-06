@@ -39,6 +39,7 @@ import com.rnfs.RNFSPackage;
 import java.util.Arrays;
 import java.util.List;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
+import com.terence.cenacle.nativeModules.nativeModulesReactPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -70,7 +71,8 @@ public class MainApplication extends Application implements ReactApplication {
               new CalendarEventsPackage(),
               new RNBibleRealmPackage(),
               new WebViewBridgePackage(),
-              new CrosswalkWebViewPackage()
+              new CrosswalkWebViewPackage(),
+              new nativeModulesReactPackage()
 
 
       );
