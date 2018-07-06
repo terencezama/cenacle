@@ -45,6 +45,11 @@ class StreamingScreen extends Component {
     //This component will listen to events sent from the native module
     componentWillMount(){
         DeviceEventEmitter.addListener(params.BROADCAST_ACTION, this.handleRadioStreamModuleEvents.bind(this));
+        RNFS.mkdir(`${RNFS.ExternalDirectoryPath}/cenacleAudio/`).then((result)=>{
+            ToastModule.show("dir created Successfully", ToastModule.SHORT);
+        }).catch((error)=>{
+            ToastModule.show("Saving requires External Directory", ToastModule.SHORT);
+        });
     }
 
     //Check if current file is saved
