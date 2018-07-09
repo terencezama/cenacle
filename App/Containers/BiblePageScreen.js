@@ -19,8 +19,7 @@ import { RNBibleRealm } from 'react-native-bible-realm'
 // import HTMLView from 'react-native-htmlview'
 import Crosswalk from 'react-native-webview-crosswalk'
 import K from '../Services/Globals'
-
-
+import StreamingScreen from './StreamingScreen'
 
 import nextFrame from 'next-frame'
 
@@ -37,6 +36,16 @@ const headerFont = {
     marginRight: 8,
     marginLeft: 8,
   },
+  navbutton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 20,
+    marginRight: 4,
+    marginLeft: 4,
+  },
   text: {
     fontSize: 20,
     color: Colors.white
@@ -51,7 +60,7 @@ const navTitleStyle = {
     padding: 5,
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Colors.white
   }
@@ -87,10 +96,13 @@ class BiblePageScreen extends Component {
       ),
       headerRight: (
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity style={headerFont.container} onPress={() => { biblePageScreen.increaseFontSize() }}>
+          <TouchableOpacity style={headerFont.navbutton} onPress={() => { biblePageScreen.showAudioOptions() }}>
+            <MIcon name="volume-up" color={Colors.white} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity style={headerFont.navbutton} onPress={() => { biblePageScreen.increaseFontSize() }}>
             <Text style={headerFont.text}>A+</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={headerFont.container} onPress={() => { biblePageScreen.decreaseFontSize() }}>
+          <TouchableOpacity style={headerFont.navbutton} onPress={() => { biblePageScreen.decreaseFontSize() }}>
             <Text style={headerFont.text}>A-</Text>
           </TouchableOpacity>
         </View>
@@ -117,7 +129,8 @@ class BiblePageScreen extends Component {
       booksVisible: false,
       index: index,
       html: '<h1>Welcome to cenacle</h1>',
-      chapters: -1
+      chapters: -1,
+      audioVisible : false,
     }
     biblePageScreen = this
 
@@ -175,6 +188,11 @@ class BiblePageScreen extends Component {
   //endregion
 
   //region bible user actions
+  showAudioOptions = () => {
+    this.setState({
+      audioVisible:!this.state.audioVisible
+    })
+  }
   increaseFontSize = () => {
     this.fontSize++
     this.webView.postMessage(JSON.stringify({
@@ -242,38 +260,38 @@ class BiblePageScreen extends Component {
     });
     const count = this.underline.length
     let verse = `${this.state.title}:`
-    
+
 
     let txt = ""
     // let prevId = parseInt(this.underline[0].id)
     // let el = this.underline[i]
     //   txt += el.text
 
-    for(let i=0; i<count; i++){
+    for (let i = 0; i < count; i++) {
       let el = this.underline[i]
       txt += el.text
 
       let c_i = parseInt(this.underline[i].id) //current index 
-      let n_i = parseInt(i==count-1?null:this.underline[i+1].id) //next index
-      let p_i = parseInt(i==0?null:this.underline[i-1].id ) //previous index
+      let n_i = parseInt(i == count - 1 ? null : this.underline[i + 1].id) //next index
+      let p_i = parseInt(i == 0 ? null : this.underline[i - 1].id) //previous index
 
-      if(i==0){
+      if (i == 0) {
         verse += `${c_i}`
-      }else if (i==count-1){
-        if(c_i-p_i == 1){
+      } else if (i == count - 1) {
+        if (c_i - p_i == 1) {
           verse += `-${c_i}`
-        }else{
+        } else {
           verse += `,${c_i}`
         }
-      }else if (c_i-p_i==1 && n_i-c_i==1 ){
+      } else if (c_i - p_i == 1 && n_i - c_i == 1) {
         //contine
-      }else if (c_i-p_i!=1 && n_i-c_i==1){
+      } else if (c_i - p_i != 1 && n_i - c_i == 1) {
         //1 3# 4 5 
         verse += `,${c_i}`
 
-      }else if (c_i-p_i!=1 && n_i-c_i!=1){
+      } else if (c_i - p_i != 1 && n_i - c_i != 1) {
         verse += `,${c_i}`
-      }else if (c_i-p_i==1 && n_i-c_i!=1){
+      } else if (c_i - p_i == 1 && n_i - c_i != 1) {
         verse += `-${c_i}`
       }
 
@@ -366,11 +384,11 @@ class BiblePageScreen extends Component {
     const iconColor = 'white'
     if (this.state.isUnderlined) {
       let isHighlighted = false
-      isHighlighted =  this.underline.some(element => {
+      isHighlighted = this.underline.some(element => {
         return element.highlighted == true;
       })
       const highlightRender = !isHighlighted ? null : (
-        <TouchableOpacity style={[headerFont.container,{backgroundColor:"black"}]} onPress={() => { this.clearHighlight() }}>
+        <TouchableOpacity style={[headerFont.container, { backgroundColor: "black" }]} onPress={() => { this.clearHighlight() }}>
           <MIcon name="format-clear" color={Colors.primary} size={20} />
         </TouchableOpacity>
       )
@@ -426,11 +444,16 @@ class BiblePageScreen extends Component {
 
 
   render() {
-    const { html } = this.state
-
+    const { html,audioVisible ,index} = this.state
     return (
       <View style={styles.mainContainer}>
-        <Crosswalk source={{ html: html, baseUrl:'' }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
+      
+      <StreamingScreen index={index} visible={audioVisible} nextChapter={()=>{
+        // console.log("move to next chapter");
+        this._nextChapter();
+      }}/>
+        
+        <Crosswalk source={{ html: html, baseUrl: '' }} style={{ flex: 1, padding: 60, flexGrow: 1 }} ref={ref => { this.webView = ref }}
           injectedJavaScript={String(this.webjs) + "webjs();"}
           automaticallyAdjustContentInsets={true}
           javaScriptEnabled={true}

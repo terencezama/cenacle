@@ -13,6 +13,7 @@ import DrawerItem from '../Components/DrawerItem'
 import { reset } from '../Redux/NavigationRedux'
 import { connect } from 'react-redux'
 import i18n from 'react-native-i18n'
+import Metrics from '../Themes/Metrics'
 class Drawer extends Component {
 
     mounted = true;
@@ -128,7 +129,7 @@ class Drawer extends Component {
         return (
             <ScrollView>
                 <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always', horizontal: 'never' }}>
-                    <Image style={styles.image} source={Images.logo} resizeMode='contain' />
+                    <Image style={styles.image} source={Images.menu} resizeMode='cover' />
                     {/* <DrawerItems {...this.props} /> */}
                     <FlatList
                         data={this.state.data}
@@ -171,8 +172,10 @@ const styles = StyleSheet.create({
         color: Colors.flatRed,
     },
     image: {
-        height: 200,
-        width: 200,
+        // flex:0.3,
+        // height: 300,
+        width: Metrics.screenWidth*(934/1080),
         alignSelf: 'center',
+        //934/1080
     }
 });
