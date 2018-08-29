@@ -35,7 +35,8 @@ const colors = {
   flatYellow: '#f1c40f',
   ecstasy: '#F76926',
   normal: '#1d1d26',
-  body:'#808080'
+  body:'#808080',
+  expired:'#cccccc'
 
 }
 

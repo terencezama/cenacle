@@ -24,11 +24,13 @@
   "noItems": "Aucun",
 
   "screenEventTitle": "Évenement",
+  "screenEventMemberTitle": "Évenement Membre",
   "eventTitleInputField": "Titre",
   "eventDescInputField": "Description",
   "eventDateInputField": "Date",
   "eventTitleContactField":"Contact",
   "screenEventFormTitle":"Créer Évènement",
+  "screenEventMemberFormTitle": "Créer Évènement Membre",
 
   "fieldUsername":"Nom d'utilisateur",
   "fieldFirstName":"Prénom",

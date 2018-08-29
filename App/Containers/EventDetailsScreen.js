@@ -25,7 +25,7 @@ class EventDetailsScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      event: props.navigation.state.params.event
+      ...props.navigation.state.params
     }
     // otron.log(props)
 
@@ -35,6 +35,9 @@ class EventDetailsScreen extends Component {
     this.props.navigation.setParams({ title: 'Update Event' })
   }
 
+  _color = () => {
+    return this.state.color || Colors.primary
+  }
   //region Action
   _locationAction = location => {
     const { longitude, name, latitude, address } = location
@@ -92,10 +95,10 @@ class EventDetailsScreen extends Component {
     return (<TouchableOpacity style={styles.default} onPress={() => { this._locationAction(location) }}>
       <View style={styles.locTextContainer}>
         <Text style={styles.locAddressText}>{address}</Text>
-        <Text style={styles.locationText}>{`${latitude},${longitude}`}</Text>
+        <Text style={[styles.locationText,{color:this._color()}]}>{`${latitude},${longitude}`}</Text>
         <Text>{I18n.t('event/viewlocation')}</Text>
       </View>
-      <View style={styles.iconContainer}>
+      <View style={[styles.iconContainer,{backgroundColor:this._color()}]}>
         <FAIcon name={'map-marker'} size={50} color={Colors.white} />
       </View>
     </TouchableOpacity>)
@@ -106,7 +109,7 @@ class EventDetailsScreen extends Component {
     }
     return (
       <TouchableOpacity style={styles.default} onPress={() => { this._callAction(mobile) }}>
-        <View style={styles.iconContainer}>
+        <View style={[styles.iconContainer,{backgroundColor:this._color()}]}>
           <FAIcon name={'phone'} size={50} color={Colors.white} />
         </View>
         <View style={styles.mobileTextContainer} >
@@ -125,15 +128,15 @@ class EventDetailsScreen extends Component {
     const year = date[2]
     return (
       <TouchableOpacity style={styles.default} onPress={() => { this._saveEvent(event) }}>
-        <View style={styles.iconContainer}>
+        <View style={[styles.iconContainer,{backgroundColor:this._color()}]}>
           <Text style={styles.scheduleDayText}>{day}</Text>
           <Text style={styles.scheduleMonthText}>{month}</Text>
         </View>
-        <View style={styles.scheduleYearContainer}>
+        <View style={[styles.scheduleYearContainer,{backgroundColor:this._color()}]}>
           <Text style={styles.scheduleYearText}>{year}</Text>
         </View>
         <View style={styles.scheduleTimeContainer}>
-          <Text style={styles.scheduleTimeText}>{time}</Text>
+          <Text style={[styles.scheduleTimeText,{color:this._color()}]}>{time}</Text>
           <Text style={styles.guide}>{I18n.t('event/schedule')}</Text>
         </View>
       </TouchableOpacity>

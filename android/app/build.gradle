@@ -97,7 +97,7 @@ def config = new groovy.json.JsonSlurper().parseText(jsonFile.text)
 println "config.json"
 println config
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {

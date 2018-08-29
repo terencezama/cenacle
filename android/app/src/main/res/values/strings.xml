@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cenacle</string>
+    <string name="app_name">Cenacle</string>
     <string name="channel_name">cenacle-channel</string>
     <string name="channel_description">cenacle-channel</string>
     <string name="notif_player_title">Cenacle</string>

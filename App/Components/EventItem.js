@@ -22,7 +22,8 @@ export default class EventItem extends Component {
   //   data: {}
   // }
   _color = () => {
-    return Colors.primary
+    
+    return this.props.data.expired? Colors.expired :this.props.color ||  Colors.primary
   }
 
   _dateView = (datestr) => {

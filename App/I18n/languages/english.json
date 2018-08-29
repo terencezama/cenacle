@@ -31,6 +31,7 @@
    "eventDateInputField": "Date",
    "eventTitleContactField":"Contact",
    "screenEventFormTitle":"Create Event",
+   "screenEventMemberFormTitle": "Create Member Event",
 
    "fieldUsername":"Username",
    "fieldFirstName":"First Name",

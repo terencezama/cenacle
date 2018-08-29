@@ -10,17 +10,17 @@ import firebase from 'react-native-firebase'
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
-import styles from './Styles/EventScreenStyle'
+import styles from './Styles/EventMemberScreenStyle'
 import otron from 'reactotron-react-native'
 import { Colors } from '../Themes';
-class EventScreen extends Component {
+class EventMemberScreen extends Component {
   static navigationOptions = {
-    title: i18n.t('screenEventTitle'),
+    title: i18n.t('screenEventMemberTitle'),
   };
 
   constructor(props) {
     super(props)
-    this.ref = firebase.firestore().collection('events').orderBy('values.date','asc')
+    this.ref = firebase.firestore().collection('member_events').orderBy('values.date','asc')
 
     this.unsubscribe = null;
     this.state = {
@@ -75,7 +75,7 @@ class EventScreen extends Component {
 
   //region FlatList
   _onCellPress = (item, index) => {
-    this.props.navigation.navigate('EventDetailsScreen', { event: item, color: item.expired?Colors.expired:Colors.primary})
+    this.props.navigation.navigate('EventDetailsScreen', { event: item, color: item.expired?Colors.expired:Colors.flatRed })
 
   }
   //endregion
@@ -85,7 +85,7 @@ class EventScreen extends Component {
     return (
       <FlatList
         data={events}
-        renderItem={({ item, index }) => <EventItem onPress={() => { this._onCellPress(item, index) }} index={index} data={item} />}
+        renderItem={({ item, index }) => <EventItem color={Colors.flatRed} onPress={() => { this._onCellPress(item, index) }} index={index} data={item} />}
         keyExtractor={(item, index) => index}
       />
     )
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EventMemberScreen)
