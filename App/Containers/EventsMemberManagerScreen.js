@@ -64,14 +64,14 @@ class EventMemberManagerScreen extends Component {
   _deleteItem(item) {
     const { key } = item.item;
     // otron.log(item);
-    firebase.firestore().collection('events').doc(key).delete().then(function () {
+    firebase.firestore().collection('member_events').doc(key).delete().then(function () {
       // otron.log("Document successfully deleted!");
     }).catch(function (error) {
       otron.error("Error removing document: ", error);
     });
   }
   _editAction = (item) => {
-    this.props.navigation.navigate('EventFormEditScreen',{
+    this.props.navigation.navigate('EventMemberFormScreen',{
       update:item,
       title:'Update'
     })
@@ -80,11 +80,11 @@ class EventMemberManagerScreen extends Component {
   _notifAction = (item) => {
     const {item:{title,content}} = item
     let message = {
-      to:"/topics/all",
+      to:"/topics/member",
       data:{
         type:"notif",
         message:title,
-        title:"Nouvelle Évenement"
+        title:"Nouvelle Évenement Membre"
       },
       priority:"high"
     }

@@ -41,6 +41,12 @@ class Drawer extends Component {
         // this.setState({data:_data})
         this._setActive(_data)
 
+        if(role == 'admin' || role == 'member'){
+            firebase.messaging().subscribeToTopic('member');
+        }else{
+            firebase.messaging().unsubscribeFromTopic('member');
+        }
+
     }
 
     setMenuAsync = async () => {

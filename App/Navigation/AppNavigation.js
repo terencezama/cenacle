@@ -10,6 +10,7 @@ import LaunchScreen from '../Containers/LaunchScreen'
 import EventDetailsScreen from '../Containers/EventDetailsScreen'
 import styles from './Styles/NavigationStyles'
 import EventFormScreen from '../Containers/EventFormScreen'
+import EventMemberFormScreen from '../Containers/EventMemberFormScreen'
 import ShareEditorScreen from '../Containers/ShareEditorScreen'
 
 // Manifest of possible screens
@@ -24,6 +25,7 @@ const PrimaryNav = StackNavigator({
   EventDetailsScreen : {screen: EventDetailsScreen},
   menu:{screen: MenuNavigator},
   EventFormEditScreen: {screen:EventFormScreen},
+  EventMemberFormScreen: {screen:EventMemberFormScreen},
   ShareUpdateScreen: { screen: ShareEditorScreen },
 }, {
   // Default config for all screens

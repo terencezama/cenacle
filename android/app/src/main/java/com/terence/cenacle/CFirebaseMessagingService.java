@@ -1,5 +1,6 @@
 package com.terence.cenacle;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
@@ -62,14 +63,14 @@ public class CFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentTitle(data.get("title"))
                         .setContentText(data.get("message"))
                         .setPriority(NotificationCompat.PRIORITY_HIGH);
-                mBuilder.build();
+                Notification notification = mBuilder.build();
 
 
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
                 // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(0, mBuilder.build());
+                notificationManager.notify((int) System.currentTimeMillis(), notification);
 
 
                 return;
@@ -78,6 +79,7 @@ public class CFirebaseMessagingService extends FirebaseMessagingService {
             if (Utils.isAppInForeground(this.getApplicationContext())) {
                 Intent messagingEvent = new Intent(MESSAGE_EVENT);
                 messagingEvent.putExtra("message", message);
+
                 // Broadcast it so it is only available to the RN Application
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messagingEvent);
             } else {
