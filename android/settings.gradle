@@ -1,10 +1,6 @@
 rootProject.name = 'cenacle'
 include ':react-native-firebase'
 project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-firebase/android')
-include ':CrosswalkWebView', ':app'
-project(':CrosswalkWebView').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-webview-crosswalk')
-//include ':react-native-richtextview'
-//project(':react-native-richtextview').projectDir = new File(rootProject.projectDir, '../local_modules/react-native-richtextview/android')
 include ':react-native-calendar-events'
 project(':react-native-calendar-events').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-calendar-events/android')
 include ':react-native-sensitive-info'
@@ -19,8 +15,6 @@ include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-config'
 project(':react-native-config').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-config/android')
-//include ':realm'
-//project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/android')
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
 include ':react-native-bible-realm'

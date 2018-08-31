@@ -14,7 +14,6 @@ import io.invertase.firebase.RNFirebasePackage;
 
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 
-import com.jordansexton.react.crosswalk.webview.CrosswalkWebViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.holy.RNBibleRealmPackage;
@@ -71,7 +70,6 @@ public class MainApplication extends Application implements ReactApplication {
               new CalendarEventsPackage(),
               new RNBibleRealmPackage(),
               new WebViewBridgePackage(),
-              new CrosswalkWebViewPackage(),
               new nativeModulesReactPackage()
 
 
@@ -92,18 +90,18 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    Log.d("nice","oncreate");
+
     SoLoader.init(this, /* native exopackage */ false);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-      WebView.setWebContentsDebuggingEnabled(true);
-    }
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//      WebView.setWebContentsDebuggingEnabled(true);
+//    }
   }
 
   @Override
   protected void attachBaseContext(Context base) {
     super.attachBaseContext(base);
-    Log.d("nice","attachBaseContext");
-    MultiDex.install(this);
+
+//    MultiDex.install(this);
   }
 
 

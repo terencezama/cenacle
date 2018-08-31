@@ -266,13 +266,13 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
 
     try {
      str = IOUtils.toString(inputStream);
-      System.out.println(str);
+//      System.out.println(str);
     } catch (IOException e) {
       e.printStackTrace();
       str = "";
     }
     //Font size handling
-    data += "<script>"+str+"</script>";
+//    data += "<script>"+str+"</script>";
     data += "<div style=\"height:50px;\"></div></body></html>";
     return data;
   }

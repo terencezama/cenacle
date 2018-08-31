@@ -181,10 +181,6 @@ dependencies {
     implementation project(':react-native-fs')
     implementation project(':react-native-bible-realm')
     implementation project(':react-native-webview-bridge')
-    implementation (name: "xwalk_core_library-22.52.561.4", ext: "aar")
-    implementation project(':CrosswalkWebView')
-
-    implementation 'com.android.support:multidex:1.0.1'
 }
 
 // Run this once to be able to run the application with BUCK
