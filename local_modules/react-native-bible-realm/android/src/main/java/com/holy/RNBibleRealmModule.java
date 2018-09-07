@@ -272,7 +272,7 @@ public class RNBibleRealmModule extends ReactContextBaseJavaModule {
       str = "";
     }
     //Font size handling
-//    data += "<script>"+str+"</script>";
+    data += "<script>"+str+"</script>";
     data += "<div style=\"height:50px;\"></div></body></html>";
     return data;
   }
